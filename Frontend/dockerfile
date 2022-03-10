@@ -1,12 +1,14 @@
+# Get latest node-alpine
 from node:alpine
-
 RUN apk update
 RUN apk upgrade
 
+# Copy over app files
 WORKDIR /usr/app
 COPY ./ /usr/app
 RUN npm install
 
+# Make port reachable externally
 EXPOSE 3001
 
 CMD [ "node", "index.js" ]
