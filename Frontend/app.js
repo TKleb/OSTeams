@@ -5,8 +5,13 @@ import session from 'express-session';
 import exphbs from 'express-handlebars';
 
 import {indexRoutes} from './routes/index-routes.js';
+import {moduleRouter} from "./routes/module-routes.js";
+import {accountRouter} from "./routes/account-routes.js";
+import {loginRouter} from "./routes/login-routes.js";
+import {teamsRouter} from "./routes/teams-routes.js";
 import {helpers} from './utils/handlebar-util.js'
 import {sessionUserSettings} from './utils/session-middleware.index.js'
+
 
 
 export const app = express();
@@ -29,3 +34,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use("/", indexRoutes);
+app.use("/", moduleRouter);
+app.use("/", accountRouter);
+app.use("/", loginRouter);
+app.use("/", teamsRouter);
