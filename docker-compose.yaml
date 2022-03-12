@@ -4,6 +4,26 @@ services:
     build:
       context: ./Frontend
     command: node index.js
+    restart: always
     working_dir: /usr/app
     ports:
       - "3001:3001"
+    depends_on:
+      - db
+  db:
+    image: postgres:latest
+    build:
+      context: ./Database
+    environment:
+      # TODO: Get values from environment variables
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: osteams
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data:rwx
+
+volumes:
+  db-data:
+    driver: local
