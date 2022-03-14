@@ -1,0 +1,8 @@
+{
+  "ignore": [],
+  "watch": [
+    "**/*"
+  ],
+  "ext": "js,mjs,json,jbs,html,ts,css,png",
+  "delay": 2500
+}

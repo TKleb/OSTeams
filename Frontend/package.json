@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "start:dev": "nodemon -L",
     "test": "mocha tests/*.test.js"
   },
   "type": "module",
@@ -24,5 +25,8 @@
     "nedb-promises": "^5.0.0",
     "sinon": "^11.1.2",
     "node": "^16.13.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

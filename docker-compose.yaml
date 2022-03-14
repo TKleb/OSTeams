@@ -4,9 +4,16 @@ services:
   web:
     build:
       context: ./Frontend
-    command: node index.js
+      target: dev
+    command: npm run start:dev
     restart: always
     working_dir: /usr/app
+    volumes:
+      - ./Frontend/:/usr/app/
+      - /usr/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DEBUG=nodejs-docker-express:*
     ports:
       - "3001:3001"
     depends_on:

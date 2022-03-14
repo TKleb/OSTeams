@@ -1,14 +1,41 @@
+# Reference: https://blog.logrocket.com/node-js-docker-improve-dx/
+
+################################################################################
+# Shared base image
+################################################################################
 # Get latest node-alpine
-from node:alpine
+FROM node:alpine as base
 RUN apk update
 RUN apk upgrade
-
-# Copy over app files
 WORKDIR /usr/app
-COPY ./ /usr/app
-RUN npm install
+COPY package.json .
 
 # Make port reachable externally
 EXPOSE 3001
 
+################################################################################
+# Production build
+################################################################################
+# Install dependencies
+FROM base as production
+ENV NODE_ENV=production
+RUN npm install
+
+# Copy over app files
+COPY . ./
+
 CMD [ "node", "index.js" ]
+
+################################################################################
+# Development build
+################################################################################
+# Install dependencies
+FROM base as dev
+ENV NODE_ENV=development
+RUN npm install -g nodemon
+RUN npm install
+
+# Copy over app files
+COPY . ./
+
+CMD [ "nodemon", "index.js" ]
