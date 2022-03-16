@@ -1,14 +1,41 @@
-# Get latest node-alpine
-from node:alpine
-RUN apk update
-RUN apk upgrade
+# Reference: https://blog.logrocket.com/node-js-docker-improve-dx/
 
-# Copy over app files
+################################################################################
+# Shared base image
+################################################################################
+# Get latest node-alpine
+FROM node:17.7.1-alpine3.15 as base
+RUN apk update && apk upgrade
 WORKDIR /usr/app
-COPY ./ /usr/app
-RUN npm install
 
 # Make port reachable externally
 EXPOSE 3001
 
-CMD [ "node", "index.js" ]
+################################################################################
+# Production build
+################################################################################
+# Install dependencies
+FROM base as production
+ENV NODE_ENV=production
+COPY package.json .
+RUN npm install
+
+# Copy over app files
+COPY . ./
+
+CMD [ "npm", "run", "start:production"]
+
+################################################################################
+# Development build
+################################################################################
+# Install dependencies
+FROM base as development
+ENV NODE_ENV=development
+ENV DEBUG=nodejs-docker-express:*
+RUN npm install -g nodemon
+COPY package.json .
+RUN npm install
+
+# Copy over app files
+COPY . ./
+CMD [ "npm", "run", "start:development"]
