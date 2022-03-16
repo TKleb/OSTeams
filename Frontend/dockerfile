@@ -23,18 +23,18 @@ RUN npm install
 # Copy over app files
 COPY . ./
 
-CMD [ "node", "index.js" ]
+CMD [ "npm", "run", "start:production"]
 
 ################################################################################
 # Development build
 ################################################################################
 # Install dependencies
-FROM base as dev
+FROM base as development
 ENV NODE_ENV=development
+ENV DEBUG=nodejs-docker-express:*
 RUN npm install -g nodemon
 RUN npm install
 
 # Copy over app files
 COPY . ./
-
-CMD [ "nodemon", "index.js" ]
+CMD [ "npm", "run", "start:development"]

@@ -4,16 +4,12 @@ services:
   web:
     build:
       context: ./Frontend
-      target: dev
-    command: npm run start:dev
+      target: ${TARGET:-development}
     restart: always
     working_dir: /usr/app
     volumes:
       - ./Frontend/:/usr/app/
       - /usr/app/node_modules
-    environment:
-      - NODE_ENV=development
-      - DEBUG=nodejs-docker-express:*
     ports:
       - "3001:3001"
     depends_on:
@@ -27,12 +23,11 @@ services:
     build:
       context: ./Database
     environment:
-      # TODO: Get values from environment variables
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: osteams
+      POSTGRES_USER: ${POSTGRES_USER:-user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-osteams}
     ports:
-      - '5432:5432'
+      - '${POSTGRES_PORT:-5432}:5432'
     volumes:
       - postgres-db:/var/lib/postgresql/data
     networks:
@@ -44,10 +39,9 @@ services:
     image: dpage/pgadmin4
     restart: always
     environment:
-      # TODO: Get values from environment variables
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: root
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-root}
+      PGADMIN_CONFIG_SERVER_MODE: ${PGADMIN_CONFIG_SERVER_MODE:-False}
     volumes:
       - ./data/pgadmin-data:/var/lib/pgadmin
     networks:

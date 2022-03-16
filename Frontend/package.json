@@ -4,8 +4,9 @@
   "description": "Vorlage",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "start:dev": "nodemon -L",
+    "start": "if-env NODE_ENV=development ?? npm run start:development || npm run start:production",
+    "start:production": "node index.js",
+    "start:development": "nodemon -L",
     "test": "mocha tests/*.test.js"
   },
   "type": "module",
