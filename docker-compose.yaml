@@ -19,7 +19,7 @@ services:
   # Postgres Database
   db:
     container_name: database
-    image: postgres:latest
+    image: postgres:14.2-alpine
     build:
       context: ./Database
     environment:
