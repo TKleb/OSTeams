@@ -7,7 +7,6 @@
 FROM node:17.7.1-alpine3.15 as base
 RUN apk update && apk upgrade
 WORKDIR /usr/app
-COPY package.json .
 
 # Make port reachable externally
 EXPOSE 3001
@@ -18,6 +17,7 @@ EXPOSE 3001
 # Install dependencies
 FROM base as production
 ENV NODE_ENV=production
+COPY package.json .
 RUN npm install
 
 # Copy over app files
@@ -33,6 +33,7 @@ FROM base as development
 ENV NODE_ENV=development
 ENV DEBUG=nodejs-docker-express:*
 RUN npm install -g nodemon
+COPY package.json .
 RUN npm install
 
 # Copy over app files
