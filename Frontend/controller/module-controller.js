@@ -1,7 +1,5 @@
 import pgPromise from 'pg-promise';
-export class ModuleController {
-    module(req, res) {
-        const pgp = pgPromise({});
+const pgp = pgPromise({});
 
         const cn = {
             host: 'database',
@@ -12,14 +10,18 @@ export class ModuleController {
             max: 30 // use up to 30 connections
         };
         const db = pgp(cn);
+
+export class ModuleController {
+    module(req, res) {
+        
         db.func('get_subjects')
         .then(data => {
             console.log('DATA:', data);
-            res.render("module", {title: data});
+            res.render("module", {modules: data});
         })
         .catch(error => {
             console.log('ERROR:', error); // print the error;
-            res.render("module", {title: error});
+            res.render("module", {modules: "Datbase Access didn't work: " + error});
         });
     };
 }

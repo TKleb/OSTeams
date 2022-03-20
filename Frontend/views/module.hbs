@@ -2,5 +2,7 @@
 <a href="/">Home</a>
 
 <ul>
-    <li>{{title}}</li>
+    {{#each modules}}
+    <li>{{id}} | {{abbreviation}} | {{name}}</li>
+    {{/each}}
 </ul>
