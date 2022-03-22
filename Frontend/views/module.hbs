@@ -2,6 +2,10 @@
 <a href="/">Home</a>
 
 <ul>
+    {{info}}
+    <form action="/module" method="post">
+        <button type="submit" id="loadModules">Load Modules</button>
+    </form>
     {{#each modules}}
     <li>{{id}} | {{abbreviation}} | {{name}}</li>
     {{/each}}
