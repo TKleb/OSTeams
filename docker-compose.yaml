@@ -23,13 +23,14 @@ services:
     build:
       context: ./Database
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-user}
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
       POSTGRES_DB: ${POSTGRES_DB:-osteams}
     ports:
       - '${POSTGRES_PORT:-5432}:5432'
-    volumes:
-      - postgres-db:/var/lib/postgresql/data
+    # TODO: Volume currently disabled to make it volatile. Uncomment to make it persistent.
+    #volumes:
+    #  - postgres-db:/var/lib/postgresql/data
     networks:
       - backend-db
       - db-pgadmin4
