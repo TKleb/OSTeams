@@ -3,12 +3,12 @@ services:
   # Website
   web:
     build:
-      context: ./Frontend
+      context: ./Website
       target: ${TARGET:-development}
     restart: always
     working_dir: /usr/app
     volumes:
-      - ./Frontend/:/usr/app/
+      - ./Website/:/usr/app/
       - /usr/app/node_modules
     ports:
       - "3001:3001"
