@@ -1,5 +1,5 @@
 export class TeamsController {
-    teams(req, res) {
+    index(req, res) {
         res.render("teams", {title: "Your Teams"});
     };
 }

@@ -1,33 +1,17 @@
-import pgPromise from 'pg-promise';
-const pgp = pgPromise({});
-
-        const cn = {
-            host: 'database',
-            port: 5432,
-            database: 'osteams',
-            user: 'backend',
-            password: 'password',
-            max: 30 // use up to 30 connections
-        };
-        const db = pgp(cn);
+import { pgConnector } from "../services/pg-connector.js";
 
 export class ModuleController {
-    default(req, res) {
-        console.log("default case");
-        res.render("module", {info: "Initial Data"});
+    index(req, res) {
+        res.render("module");
     }
-    module(req, res) {
-        console.log(req);
-
-        db.func('get_subjects')
-        .then(data => {
-            console.log('DATA:', data);
-            res.render("module", {modules: data});
+   
+    async module (req, res) {
+        pgConnector.executeStoredProcedure('get_subjects')
+        .then(subjects => {
+            res.render("module", {modules: subjects});
+        }).catch(error => {
+            res.render("module", {modules: [], error: error});
         })
-        .catch(error => {
-            console.log('ERROR:', error);
-            res.render("module", {modules: "Datbase Access didn't work: " + error});
-        });
     };
 }
 
