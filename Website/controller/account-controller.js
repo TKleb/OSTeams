@@ -1,5 +1,5 @@
 export class AccountController {
-    account(req, res) {
+    index(req, res) {
         res.render("account", {title: "Account"});
     };
 }

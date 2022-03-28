@@ -20,12 +20,15 @@
 <div id="control-panel">
     <a class="control-button" href="/">Home</a>
     <a class="control-button" href="/module">Module</a>
-    <a class="control-button" href="/yourteams">Your Teams</a>
+    <a class="control-button" href="/teams">Your Teams</a>
     <a class="control-button" id="account-button" href="/account">Account</a>
     <a class="control-button" id="login-button" href="/account/login">Login</a>
 </div>
 <div id="background">
     <div id="container">
+    {{#if error}}
+        <p>An error occurred!</p>
+    {{/if}}
         {{{body}}}
     </div>
 </div>

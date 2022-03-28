@@ -1,8 +1,8 @@
-import express from "express";
+import express from 'express';
 
 const router = express.Router();
 import {teamsController} from '../controller/teams-controller.js';
 
-router.get("/yourteams", teamsController.teams);
+router.get("/", teamsController.index);
 
 export const teamsRouter = router;

@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use("/", indexRoutes);
-app.use("/", moduleRouter);
-app.use("/", accountRouter);
+app.use("/module", moduleRouter);
+app.use("/account", accountRouter);
 app.use("/", loginRouter);
-app.use("/", teamsRouter);
+app.use("/teams", teamsRouter);
