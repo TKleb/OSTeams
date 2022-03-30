@@ -36,9 +36,9 @@ services:
       - db-pgadmin4
   cron:
       image: postgres:14.2-alpine
-      command: /usr/local/startup.sh && crond -f -l 8
+      command: crond -f -l 8
       volumes:
-      - ./cron_tasks_folder/1min:/etc/periodic/1min/:ro
+      - ./cron_tasks_folder/1min:/etc/periodic/1min/
       - ./scripts/startup.sh:/usr/local/startup.sh:ro
       - /host_dumps_folder/:/var/opt/
       depends_on:
