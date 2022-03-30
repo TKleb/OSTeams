@@ -1,10 +1,9 @@
-import express from 'express';
+import express from "express";
+import { loginController } from "../controller/login-controller.js";
 
 const router = express.Router();
-import {loginController} from '../controller/login-controller.js';
-
 router.get("/account/login", loginController.login);
-router.get("/account/forgot", loginController.forgotPw)
-router.get("/account/register", loginController.register)
+router.get("/account/forgot", loginController.forgotPw);
+router.get("/account/register", loginController.register);
 
 export const loginRouter = router;
