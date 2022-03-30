@@ -11,26 +11,26 @@ import exphbs from 'express-handlebars';
 import {sessionUserSettings, Settings} from "./utils/session-middleware";
 
 declare module 'express-session' {
-    interface SessionData {
-        settings: Settings;
-    }
+	interface SessionData {
+		settings: Settings;
+	}
 }
 
 declare global {
-    namespace Express {
-        interface Request {
-            settings: Settings;
-        }
-    }
+	namespace Express {
+		interface Request {
+			settings: Settings;
+		}
+	}
 }
 
 export const app = express();
 const hbs = exphbs.create({
-    extname: '.hbs',
-    defaultLayout: "default",
-    helpers: {
-        ...helpers
-    }
+	extname: '.hbs',
+	defaultLayout: "default",
+	helpers: {
+		...helpers
+	}
 });
 
 app.engine('hbs', hbs.engine);

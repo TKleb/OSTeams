@@ -40,6 +40,8 @@ RUN npm ci
 # Copy over app files
 COPY . ./
 
+# TODO: linting works, but only internally.
+# Since files are copied and not bound at build time, this has no effect on the original folders.
 RUN npm run lint
 
 CMD [ "npm", "run", "start:development"]

@@ -1,43 +1,43 @@
 {
-  "name": "osteams",
-  "version": "1.0.0",
-  "description": "OSTeams Website",
-  "main": "index.js",
-  "scripts": {
-    "start": "if-env NODE_ENV=development ?? npm run start:development || npm run start:production",
-    "start:production": "node index.js",
-    "start:development": "nodemon -L",
-    "test": "mocha tests/*.test.js",
-    "eslint": "eslint . --ext .js",
-    "stylelint": "stylelint \"**/*.css\"",
-    "lint": "npm run eslint && npm run stylelint"
-  },
-  "type": "module",
-  "author": "OSTeams",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "chai": "^4.3.4",
-    "chai-dom": "^1.9.0",
-    "chai-http": "^4.3.0",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "express-handlebars": "^5.3.3",
-    "express-session": "^1.17.2",
-    "jsdom": "^17.0.0",
-    "mocha": "^9.0.3",
-    "nedb-promises": "^5.0.0",
-    "node": "^16.13.2",
-    "pg-promise": "^10.11.1",
-    "sinon": "^11.1.2"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "eslint": "^8.12.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.4",
-    "nodemon": "^2.0.15",
-    "stylelint": "^14.6.1",
-    "stylelint-config-standard": "^25.0.0"
-  }
+    "name": "osteams",
+    "version": "1.0.0",
+    "description": "OSTeams Website",
+    "main": "index.js",
+    "scripts": {
+        "start": "if-env NODE_ENV=development ?? npm run start:development || npm run start:production",
+        "start:production": "node index.js",
+        "start:development": "nodemon -L",
+        "test": "mocha tests/*.test.js",
+        "eslint": "eslint . --ext .js",
+        "stylelint": "stylelint \"**/*.css\"",
+        "lint": "npm run eslint && npm run stylelint"
+    },
+    "type": "module",
+    "author": "OSTeams",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "chai": "^4.3.4",
+        "chai-dom": "^1.9.0",
+        "chai-http": "^4.3.0",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "express-handlebars": "^5.3.3",
+        "express-session": "^1.17.2",
+        "jsdom": "^17.0.0",
+        "mocha": "^9.0.3",
+        "nedb-promises": "^5.0.0",
+        "node": "^16.13.2",
+        "pg-promise": "^10.11.1",
+        "sinon": "^11.1.2"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.17.0",
+        "eslint": "^8.12.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-plugin-import": "^2.25.4",
+        "nodemon": "^2.0.15",
+        "stylelint": "^14.6.1",
+        "stylelint-config-standard": "^25.0.0"
+    }
 }
