@@ -44,7 +44,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-root}
       PGADMIN_CONFIG_SERVER_MODE: ${PGADMIN_CONFIG_SERVER_MODE:-False}
     volumes:
-      - ./data/pgadmin-data:/var/lib/pgadmin
+      - pgadmin:/var/lib/pgadmin
     networks:
       - db-pgadmin4
     ports:
@@ -54,6 +54,7 @@ services:
 
 volumes:
   postgres-db:
+  pgadmin:
 
 networks:
   backend-db:
