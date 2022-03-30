@@ -34,8 +34,12 @@ ENV NODE_ENV=development
 ENV DEBUG=nodejs-docker-express:*
 RUN npm install -g nodemon
 COPY package.json .
-RUN npm install
+COPY package-lock.json .
+RUN npm ci
 
 # Copy over app files
 COPY . ./
+
+RUN npm run lint
+
 CMD [ "npm", "run", "start:development"]
