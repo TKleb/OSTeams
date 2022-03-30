@@ -1,7 +1,7 @@
 import express from "express";
+import { moduleController } from "../controller/module-controller.js";
 
 const router = express.Router();
-import {moduleController} from '../controller/module-controller.js';
 
 router.get("/", moduleController.index);
 router.post("/", moduleController.module);

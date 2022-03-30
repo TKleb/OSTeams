@@ -13,9 +13,16 @@
     },
     "rules": {
         "indent": [
-            "error",
-            "tab"
-        ],
+			"error", 
+			"tab"
+		],
+        "no-tabs": 0,
+		"import/extensions": [
+			"error", 
+			"always"
+		],
+		"import/prefer-default-export": "off",
+		"class-methods-use-this": "off",
         "linebreak-style": [
             "error",
             "windows"

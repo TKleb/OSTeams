@@ -1,8 +1,7 @@
-import express from 'express';
+import express from "express";
+import { accountController } from "../controller/account-controller.js";
 
 const router = express.Router();
-import {accountController} from '../controller/account-controller.js';
-
 router.get("/", accountController.index);
 
 export const accountRouter = router;
