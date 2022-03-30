@@ -29,11 +29,20 @@ services:
     ports:
       - '${POSTGRES_PORT:-5432}:5432'
     # TODO: Volume currently disabled to make it volatile. Uncomment to make it persistent.
-    #volumes:
-    #  - postgres-db:/var/lib/postgresql/data
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
     networks:
       - backend-db
       - db-pgadmin4
+  cron:
+      image: postgres:14.2-alpine
+      command: /usr/local/startup.sh && crond -f -l 8
+      volumes:
+      - ./cron_tasks_folder/1min:/etc/periodic/1min/:ro
+      - ./scripts/startup.sh:/usr/local/startup.sh:ro
+      - /host_dumps_folder/:/var/opt/
+      depends_on:
+       - db
   # PGAdmin4 Panel
   pgadmin:
     container_name: pgadmin
