@@ -22,6 +22,7 @@ services:
     image: postgres:14.2-alpine
     build:
       context: ./Database
+      target: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
@@ -34,15 +35,6 @@ services:
     networks:
       - backend-db
       - db-pgadmin4
-  cron:
-      image: postgres:14.2-alpine
-      command: crond -f -l 8
-      volumes:
-      - ./cron_tasks_folder/1min:/etc/periodic/1min/
-      - ./scripts/startup.sh:/usr/local/startup.sh:ro
-      - /host_dumps_folder/:/var/opt/
-      depends_on:
-       - db
   # PGAdmin4 Panel
   pgadmin:
     container_name: pgadmin
