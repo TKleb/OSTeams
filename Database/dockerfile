@@ -1,12 +1,5 @@
-FROM postgres:14-alpine3.15 AS base
+FROM postgres:14-alpine3.15 AS postgres
+
 RUN apk update && apk upgrade
-
-FROM base AS cron
-RUN apk add busybox-initscripts
-RUN echo "* * * * * PGPASSWORD=\${POSTGRES_PASSWORD} pg_dump -h database -U \${POSTGRES_USER} \${POSTGRES_DB} >> /var/opt/\$(date +"%Y-%m-%d-%H-%M-%S").sql" >> /etc/crontabs/root
-RUN crond -f -l 8 &
-
-FROM cron AS postgres
 EXPOSE 5432
 COPY *.sql /docker-entrypoint-initdb.d/
-

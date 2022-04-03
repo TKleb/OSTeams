@@ -19,7 +19,6 @@ services:
   # Postgres Database
   db:
     container_name: database
-    image: postgres:14.2-alpine
     build:
       context: ./Database
       target: postgres
@@ -36,6 +35,16 @@ services:
       - backend-db
       - db-pgadmin4
   # PGAdmin4 Panel
+  cron:
+    container_name: cron
+    build:
+      context: ./Cron
+      target: cron
+    command: crond -f -l 8
+    depends_on:
+      - db
+    networks:
+      - db-pgadmin4
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
