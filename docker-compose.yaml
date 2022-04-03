@@ -19,9 +19,9 @@ services:
   # Postgres Database
   db:
     container_name: database
-    image: postgres:14.2-alpine
     build:
       context: ./Database
+      target: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
@@ -34,7 +34,20 @@ services:
     networks:
       - backend-db
       - db-pgadmin4
-  # PGAdmin4 Panel
+      - db-backup
+  # DB Backup
+  db-backup:
+    container_name: db-backup
+    build:
+      context: ./Cron
+      target: cron
+    command: crond -f -l 8
+    depends_on:
+      - db
+    networks:
+      - db-backup
+    volumes:
+      - db-backup:/var/opt/
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -55,11 +68,15 @@ services:
 volumes:
   postgres-db:
   pgadmin:
+  db-backup:
 
 networks:
   backend-db:
     ipam:
       driver: default
   db-pgadmin4:
+    ipam:
+      driver: default
+  db-backup:
     ipam:
       driver: default
