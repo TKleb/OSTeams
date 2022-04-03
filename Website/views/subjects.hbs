@@ -1,0 +1,11 @@
+<h1>Subjects</h1>
+<a href="/">Home</a>
+
+<ul>
+	<form action="/subjects" method="post">
+		<button type="submit" id="loadSubjects">Load Subjects</button>
+	</form>
+	{{#each subjects}}
+	<li>{{id}} | {{abbreviation}} | {{name}}</li>
+	{{/each}}
+</ul>
