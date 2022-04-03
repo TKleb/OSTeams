@@ -5,3 +5,4 @@
 /utils/session-middleware.index.js
 /routes/bin
 /routes/dist
+/tests/

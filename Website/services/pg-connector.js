@@ -14,8 +14,12 @@ export class PGConnector {
 		this.db = pgp(cn);
 	}
 
-	async executeStoredProcedure(name) {
-		return this.db.func(name);
+	executeStoredProcedure(name) {
+		return this.db.func(name)
+			.then((response) => response)
+			.catch(() => {
+				throw new Error("Couldn't invoke Stored Procedure");
+			});
 	}
 }
 
