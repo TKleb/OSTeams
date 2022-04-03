@@ -5,8 +5,17 @@ export class SubjectsController {
 		res.render("subjects");
 	}
 
-	async module(req, res) {
+	subjects(req, res) {
 		pgConnector.executeStoredProcedure("get_subjects")
+			.then((pSubjects) => {
+				res.render("subjects", { subjects: pSubjects });
+			}).catch((err) => {
+				res.render("subjects", { subjects: [], error: err });
+			});
+	}
+
+	insert(req, res) {
+		pgConnector.executeStoredProcedure("add_subject", [req.body.abbr, req.body.subName])
 			.then((pSubjects) => {
 				res.render("subjects", { subjects: pSubjects });
 			}).catch((err) => {
