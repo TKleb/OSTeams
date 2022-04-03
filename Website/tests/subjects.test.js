@@ -5,11 +5,11 @@ import server from "../index.js";
 chai.should();
 chai.use(chaiHttp);
 
-describe("Test module page", () => {
-	describe("GET /module", () => {
+describe("Test subjects page", () => {
+	describe("GET /subjects", () => {
 		it("It should Load the page.", (done) => {
 			chai.request(server)
-				.get("/module")
+				.get("/subjects")
 				.end((err, response) => {
 					response.should.have.status(200);
 				});
@@ -17,14 +17,13 @@ describe("Test module page", () => {
 		});
 	});
 
-	describe("POST /module", () => {
-		it("It should get a list of all modules.", (done) => {
+	describe("POST /subjects", () => {
+		it("It should get a list of all subjects.", (done) => {
 			chai.request(server)
-				.post("/module")
+				.post("/subjects")
 				.end((err, response) => {
 					response.should.have.status(200);
 				});
-
 			done();
 		});
 	});
