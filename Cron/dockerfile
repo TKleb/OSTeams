@@ -4,4 +4,4 @@ WORKDIR /root/
 RUN apk add busybox-initscripts
 COPY ./cron_tasks_folder/ .
 RUN chmod 600 .pgpass
-RUN echo "* * * * * pg_dump -h database -U admin osteams >> /var/opt/\$(date +"%Y-%m-%d-%H-%M-%S").sql" >> /etc/crontabs/root
+RUN echo "0 */8 * * * pg_dump -h database -U admin osteams >> /var/opt/\$(date +"%Y-%m-%d-%H-%M-%S").sql" >> /etc/crontabs/root
