@@ -34,9 +34,10 @@ services:
     networks:
       - backend-db
       - db-pgadmin4
-  # PGAdmin4 Panel
-  cron:
-    container_name: cron
+      - db-backup
+  # DB Backup
+  db-backup:
+    container_name: db-backup
     build:
       context: ./Cron
       target: cron
@@ -44,7 +45,9 @@ services:
     depends_on:
       - db
     networks:
-      - db-pgadmin4
+      - db-backup
+    volumes:
+      - db-backup:/var/opt/
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -65,11 +68,15 @@ services:
 volumes:
   postgres-db:
   pgadmin:
+  db-backup:
 
 networks:
   backend-db:
     ipam:
       driver: default
   db-pgadmin4:
+    ipam:
+      driver: default
+  db-backup:
     ipam:
       driver: default
