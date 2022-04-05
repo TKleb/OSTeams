@@ -16,4 +16,5 @@ before_script:
 test-web:
   stage: tests
   script:
+    - echo ${TARGET}
     - docker-compose up --build web
