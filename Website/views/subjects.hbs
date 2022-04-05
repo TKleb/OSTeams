@@ -1,0 +1,18 @@
+<h1>Subjects</h1>
+<a href="/">Home</a>
+
+<ul>
+	<form action="/subjects/add" method="post">
+		<label for="abbr">Abbreviation:</label>
+		<input type="text" id="abbr" name="abbr">
+		<label for="subName">Subject:</label>
+		<input type="text" id="subName" name="subName">
+		<button type="submit" id="loadSubjects">Save Subject</button>
+	</form>
+	<form action="/subjects" method="post">
+		<button type="submit" id="loadSubjects">Load Subjects</button>
+	</form>
+	{{#each subjects}}
+	<li>{{id}} | {{abbreviation}} | {{name}}</li>
+	{{/each}}
+</ul>
