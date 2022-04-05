@@ -1,0 +1,20 @@
+image: tmaier/docker-compose:latest
+
+stages:
+    - tests
+
+variables:
+    TARGET: test
+
+services:
+  - docker:dind
+
+before_script:
+  - docker info
+  - docker-compose --version
+
+test-web:
+  stage: tests
+  script:
+    - echo ${TARGET}
+    - docker-compose up --build web
