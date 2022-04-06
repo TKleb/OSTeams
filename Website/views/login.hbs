@@ -1,15 +1,15 @@
-<div>
+<div id="login-form-div">
 	<section>
 		<h1>Login</h1>
-		<form method="post" action="#">
+		<form method="post" action="#" id="login-form">
 			<label for="id-username"></label><input type="text" name="username" id="id-username"
-				placeholder="Enter Username">
+				placeholder="Enter Email" autocomplete="off">
 			<label for="id-password"></label><input type="password" name="password" id="id-password"
 				placeholder="Enter Password">
-			<a href="/account/forgot">Passwort vergessen</a>
-			<button class="button" type="submit">Login</button>
-			<a class="button" href="/account/register">Registrieren</a>
+			<a href="/account/forgot" id="forgot-password">Forgot Password</a>
+			<button class="button" id="login-button" type="submit">Login</button>
+			<h2><span>or</span></h2>
+			<a class="button" id="register-button" href="/account/register">Sign Up</a>
 		</form>
 	</section>
 </div>
-<a href="/">Home</a>
