@@ -107,15 +107,27 @@ GRANT ALL ON FUNCTION get_unverifiedUsers to backend;
 
 -- add unverifiedUser Function
 CREATE OR REPLACE FUNCTION add_unverifiedUser(
-    name VARCHAR(30),
-    surname VARCHAR(30),
-    email VARCHAR(40),
-    passwordHashed VARCHAR(255),
-    verificationCode VARCHAR(50),
-    dateOfRegistration DATE
-) RETURNS QUERY AS
-$$
+    unverifiedUser_name VARCHAR(30),
+    unverifiedUser_surname VARCHAR(30),
+    unverifiedUser_email VARCHAR(40),
+    unverifiedUser_passwordHashed VARCHAR(255),
+    unverifiedUser_verificationCode VARCHAR(50),
+    unverifiedUser_dateOfRegistration DATE
+)
+    RETURNS TABLE (
+        id INT,
+        name VARCHAR,
+        surname VARCHAR,
+        email VARCHAR,
+        passwordHashed VARCHAR,
+        verificationCode VARCHAR,
+        dateOfRegistration DATE
+    )
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
     BEGIN
+        RETURN QUERY
         INSERT INTO unverifiedUsers (
             unverifiedUser_name,
             unverifiedUser_surname,
@@ -124,12 +136,12 @@ $$
             unverifiedUser_verificationCode,
             unverifiedUser_dateOfRegistration
         ) VALUES (
-            name,
-            surname,
-            email,
-            passwordHashed,
-            verificationCode,
-            dateOfRegistration
+            unverifiedUser_name,
+            unverifiedUser_surname,
+            unverifiedUser_email,
+            unverifiedUser_passwordHashed,
+            unverifiedUser_verificationCode,
+            unverifiedUser_dateOfRegistration
         )
         RETURNING
             unverifiedUsers.unverifiedUser_id,
@@ -146,16 +158,29 @@ GRANT ALL ON FUNCTION add_unverifiedUser to backend;
 
 -- add Group Function
 CREATE OR REPLACE FUNCTION add_group(
-    name VARCHAR(50),
-	owner INT,
-    subject VARCHAR(30),
-    description VARCHAR(512),
-    maxMemberCount INT,
-    creationDate Date,
-    applyByDate DATE
-) RETURNS QUERY AS
-$$
+    group_name VARCHAR(50),
+	group_owner INT,
+    group_subject VARCHAR(30),
+    group_description VARCHAR(512),
+    group_maxMemberCount INT,
+    group_creationDate Date,
+    group_applyByDate DATE
+
+)
+    RETURNS TABLE (
+        name VARCHAR,
+        owner INT,
+        subject VARCHAR,
+        description VARCHAR,
+        maxMemberCount INT,
+        creationDate DATE,
+        applyByDate DATE
+    )
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
     BEGIN
+        RETURN QUERY
         INSERT INTO groups (
             group_name,
             group_owner,
@@ -165,13 +190,13 @@ $$
             group_creationDate,
             group_applyByDate
         ) VALUES (
-            name,
-            owner,
-            subject,
-            description,
-            maxMemberCount,
-            creationDate,
-            applyByDate
+            group_name,
+            group_owner,
+            group_subject,
+            group_description,
+            group_maxMemberCount,
+            group_creationDate,
+            group_applyByDate
         )
         RETURNING
             groups.group_name,

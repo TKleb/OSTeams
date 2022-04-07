@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS public.groups
     group_closed BOOLEAN NULL,
     CONSTRAINT fk_owner
       FOREIGN KEY(group_owner)
-	  REFERENCES public.user(user_id)
+	  REFERENCES public.users(user_id)
 ) TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.groups OWNER to admin;
