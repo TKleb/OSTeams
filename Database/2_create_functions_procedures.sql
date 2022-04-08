@@ -49,7 +49,7 @@ CREATE OR REPLACE FUNCTION get_users()
 		surname VARCHAR,
 		profilePicturePath VARCHAR,
 		email VARCHAR,
-		password VARCHAR,
+		passwordHash VARCHAR,
 		customInfo VARCHAR,
 		fulltime BOOLEAN,
 		startyear INT
@@ -65,7 +65,7 @@ AS $$
             user_surname,
             user_profilePicturePath,
             user_email,
-            user_password,
+            user_passwordHash,
             user_customInfo,
             user_fulltime,
             user_startyear
@@ -82,7 +82,7 @@ CREATE OR REPLACE FUNCTION get_unverifiedUsers()
 		name VARCHAR,
 		surname VARCHAR,
 		email VARCHAR,
-		password VARCHAR,
+		passwordHash VARCHAR,
 		verificationCode VARCHAR,
 		dateOfRegistration DATE
 	)
@@ -96,7 +96,7 @@ AS $$
             unverifiedUser_name,
             unverifiedUser_surname,
             unverifiedUser_email,
-            unverifiedUser_passwordHashed,
+            unverifiedUser_passwordHash,
             unverifiedUser_verificationCode,
             unverifiedUser_dateOfRegistration
         FROM unverifiedUsers;
@@ -110,7 +110,7 @@ CREATE OR REPLACE FUNCTION add_unverifiedUser(
     unverifiedUser_name VARCHAR(30),
     unverifiedUser_surname VARCHAR(30),
     unverifiedUser_email VARCHAR(40),
-    unverifiedUser_passwordHashed VARCHAR(255),
+    unverifiedUser_passwordHash VARCHAR(255),
     unverifiedUser_verificationCode VARCHAR(50),
     unverifiedUser_dateOfRegistration DATE
 )
@@ -132,14 +132,14 @@ AS $$
             unverifiedUser_name,
             unverifiedUser_surname,
             unverifiedUser_email,
-            unverifiedUser_passwordHashed,
+            unverifiedUser_passwordHash,
             unverifiedUser_verificationCode,
             unverifiedUser_dateOfRegistration
         ) VALUES (
             unverifiedUser_name,
             unverifiedUser_surname,
             unverifiedUser_email,
-            unverifiedUser_passwordHashed,
+            unverifiedUser_passwordHash,
             unverifiedUser_verificationCode,
             unverifiedUser_dateOfRegistration
         )
@@ -148,7 +148,7 @@ AS $$
             unverifiedUsers.unverifiedUser_name,
             unverifiedUsers.unverifiedUser_surname,
             unverifiedUsers.unverifiedUser_email,
-            unverifiedUsers.unverifiedUser_passwordHashed,
+            unverifiedUsers.unverifiedUser_passwordHash,
             unverifiedUsers.unverifiedUser_verificationCode,
             unverifiedUsers.unverifiedUser_dateOfRegistration;
     END

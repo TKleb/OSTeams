@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS unverifiedUsers
     unverifiedUser_name VARCHAR(30) NOT NULL,
     unverifiedUser_surname VARCHAR(30) NOT NULL,
     unverifiedUser_email VARCHAR(40) NOT NULL,
-    unverifiedUser_passwordHashed VARCHAR(255) NOT NULL,
+    unverifiedUser_passwordHash VARCHAR(255) NOT NULL,
     unverifiedUser_verificationCode VARCHAR(50) NOT NULL,
     unverifiedUser_dateOfRegistration DATE NOT NULL
 ) TABLESPACE pg_default;
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS users
     user_surname VARCHAR(30) NOT NULL,
     user_profilePicturePath VARCHAR(30) NULL,
     user_email VARCHAR(40) NOT NULL,
-    user_password VARCHAR(256) NOT NULL,
+    user_passwordHash VARCHAR(256) NOT NULL,
     user_customInfo VARCHAR(512) NOT NULL,
     user_fulltime BOOLEAN NULL,
     user_startyear INT NULL
