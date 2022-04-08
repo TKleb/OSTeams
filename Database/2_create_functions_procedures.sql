@@ -73,7 +73,7 @@ AS $$
     END
 $$;
 
-GRANT ALL ON FUNCTION get_users to backend;
+GRANT ALL ON FUNCTION get_users TO backend;
 
 -- get unverifiedUser Function
 CREATE OR REPLACE FUNCTION get_unverifiedUsers()
@@ -103,7 +103,7 @@ AS $$
     END
 $$;
 
-GRANT ALL ON FUNCTION get_unverifiedUsers to backend;
+GRANT ALL ON FUNCTION get_unverifiedUsers TO backend;
 
 -- add unverifiedUser Function
 CREATE OR REPLACE FUNCTION add_unverifiedUser(
@@ -154,7 +154,7 @@ AS $$
     END
 $$;
 
-GRANT ALL ON FUNCTION add_unverifiedUser to backend;
+GRANT ALL ON FUNCTION add_unverifiedUser TO backend;
 
 -- add Group Function
 CREATE OR REPLACE FUNCTION add_group(
@@ -209,4 +209,4 @@ AS $$
     END
 $$;
 
-GRANT ALL ON FUNCTION add_group to backend;
+GRANT ALL ON FUNCTION add_group TO backend;
