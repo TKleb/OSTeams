@@ -43,22 +43,22 @@ GRANT ALL ON FUNCTION add_subject TO backend;
 
 -- get Users Function
 CREATE OR REPLACE FUNCTION get_users()
-	RETURNS TABLE (
-		id INT,
-		name VARCHAR,
-		surname VARCHAR,
-		profilePicturePath VARCHAR,
-		email VARCHAR,
-		passwordHash VARCHAR,
-		customInfo VARCHAR,
-		fulltime BOOLEAN,
-		startyear INT
-	)
-	LANGUAGE plpgsql
+    RETURNS TABLE (
+        id INT,
+        name VARCHAR,
+        surname VARCHAR,
+        profilePicturePath VARCHAR,
+        email VARCHAR,
+        passwordHash VARCHAR,
+        customInfo VARCHAR,
+        fulltime BOOLEAN,
+        startyear INT
+    )
+    LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
     BEGIN
-	    RETURN QUERY
+        RETURN QUERY
         SELECT
             user_id,
             user_name,
@@ -77,16 +77,16 @@ GRANT ALL ON FUNCTION get_users TO backend;
 
 -- get unverifiedUser Function
 CREATE OR REPLACE FUNCTION get_unverifiedUsers()
-	RETURNS TABLE (
-		id INT,
-		name VARCHAR,
-		surname VARCHAR,
-		email VARCHAR,
-		passwordHash VARCHAR,
-		verificationCode VARCHAR,
-		dateOfRegistration DATE
-	)
-	LANGUAGE plpgsql
+    RETURNS TABLE (
+        id INT,
+        name VARCHAR,
+        surname VARCHAR,
+        email VARCHAR,
+        passwordHash VARCHAR,
+        verificationCode VARCHAR,
+        dateOfRegistration DATE
+    )
+    LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
     BEGIN
@@ -159,7 +159,7 @@ GRANT ALL ON FUNCTION add_unverifiedUser TO backend;
 -- add Group Function
 CREATE OR REPLACE FUNCTION add_group(
     group_name VARCHAR(50),
-	group_owner INT,
+    group_owner INT,
     group_subject VARCHAR(30),
     group_description VARCHAR(512),
     group_maxMemberCount INT,
