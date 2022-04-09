@@ -2,8 +2,8 @@ import { expect } from "chai";
 import { pgConnector } from "../services/pg-connector.js";
 
 describe("Test PG-Connector", () => {
-	describe("Test getting all modules", () => {
-		it("It should return a list of modules", (done) => {
+	describe("Test getting all subjects", () => {
+		it("It should return a list of subjects", (done) => {
 			pgConnector.executeStoredProcedure("get_subjects")
 				.then((subjects) => {
 					expect(subjects).to.be.an("array");

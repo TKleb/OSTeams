@@ -4,6 +4,6 @@ import { subjectsController } from "../controller/subjects-controller.js";
 const router = express.Router();
 
 router.get("/", subjectsController.index);
-router.post("/", subjectsController.module);
-
+router.post("/", subjectsController.subjects);
+router.post("/add", subjectsController.insert);
 export const subjectsRouter = router;

@@ -18,12 +18,27 @@ EXPOSE 3001
 FROM base as production
 ENV NODE_ENV=production
 COPY package.json .
-RUN npm install
+RUN npm install --production
 
 # Copy over app files
 COPY . ./
 
 CMD [ "npm", "run", "start:production"]
+
+
+################################################################################
+# Test build
+################################################################################
+# Install dependencies
+FROM base as test
+ENV NODE_ENV=test
+COPY package.json .
+RUN npm install
+
+# Copy over app files
+COPY . ./
+
+CMD [ "npm", "run", "start:test"]
 
 ################################################################################
 # Development build

@@ -14,8 +14,8 @@ export class PGConnector {
 		this.db = pgp(cn);
 	}
 
-	executeStoredProcedure(name) {
-		return this.db.func(name)
+	executeStoredProcedure(name, args = []) {
+		return this.db.func(name, args)
 			.then((response) => response)
 			.catch(() => {
 				throw new Error("Couldn't invoke Stored Procedure");
