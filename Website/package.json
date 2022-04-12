@@ -7,7 +7,8 @@
         "start": "if-env NODE_ENV=development ?? npm run start:development || if-env NODE_ENV=test ?? npm run start:test || npm run start:production",
         "start:production": "node index.js",
         "start:development": "nodemon -L",
-        "start:test": "mocha tests/*.test.js  --timeout 5000",
+        "start:test": "npm run lint && npm run mocha_tests",
+        "mocha_tests": "mocha tests/*.test.js  --timeout 5000",
         "eslint": "eslint . --ext .js",
         "stylelint": "stylelint \"**/*.css\"",
         "lint": "npm run eslint && npm run stylelint"
