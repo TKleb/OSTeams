@@ -119,7 +119,7 @@ CREATE OR REPLACE FUNCTION add_unverifiedUser(
         name VARCHAR,
         surname VARCHAR,
         email VARCHAR,
-        passwordHashed VARCHAR,
+        passwordHash VARCHAR,
         verificationCode VARCHAR,
         dateOfRegistration DATE
     )
@@ -210,3 +210,152 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION add_group TO backend;
+
+
+---------------------------------------------------------------------
+-- add user function
+CREATE OR REPLACE FUNCTION add_user(
+    user_name VARCHAR,
+    user_surname VARCHAR,
+    user_email VARCHAR,
+    user_passwordHash VARCHAR,
+    user_customInfo VARCHAR,
+    user_fulltime BOOLEAN,
+    user_startyear INT,
+    user_profilePicturePath VARCHAR
+)
+    RETURNS TABLE (
+        id INT,
+        name VARCHAR,
+        surname VARCHAR,
+        email VARCHAR,
+        passwordHash VARCHAR,
+        customInfo VARCHAR,
+        fulltime BOOLEAN,
+        startyear INT,
+        profilePicturePath VARCHAR
+    )
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        INSERT INTO users (
+            user_name,
+            user_surname,
+            user_email,
+            user_passwordHash,
+            user_customInfo,
+            user_fulltime,
+            user_startyear,
+            user_profilePicturePath
+        ) VALUES (
+            user_name,
+            user_surname,
+            user_email,
+            user_passwordHash,
+            user_customInfo,
+            user_fulltime,
+            user_startyear,
+            user_profilePicturePath
+        )
+        RETURNING
+            users.user_id,
+            users.user_name,
+            users.user_surname,
+            users.user_email,
+            users.user_passwordHash,
+            users.user_customInfo,
+            users.user_fulltime,
+            users.user_startyear,
+            users.user_profilePicturePath;
+    END
+$$;
+
+GRANT ALL ON FUNCTION add_user TO backend;
+
+-- GetUserByEmail
+CREATE OR REPLACE FUNCTION get_userByEmail(
+    p_email VARCHAR
+)
+    RETURNS TABLE (
+        id INT,
+        name VARCHAR,
+        surname VARCHAR,
+        profilePicturePath VARCHAR,
+        email VARCHAR,
+        passwordHash VARCHAR,
+        customInfo VARCHAR,
+        fulltime BOOLEAN,
+        startyear INT
+    )
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM users WHERE user_email = p_email;
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_userByEmail TO backend;
+
+-- edit_userByEmail
+CREATE OR REPLACE FUNCTION edit_userByEmail(
+    p_emailToEdit VARCHAR,
+    p_name VARCHAR,
+    p_surname VARCHAR,
+    p_passwordHash VARCHAR,
+    p_customInfo VARCHAR,
+    p_fulltime BOOLEAN,
+    p_startyear INT,
+    p_profilePicturePath VARCHAR
+)
+    RETURNS TABLE (
+        id INT,
+        name VARCHAR,
+        surname VARCHAR,
+        email VARCHAR,
+        passwordHash VARCHAR,
+        customInfo VARCHAR,
+        fulltime BOOLEAN,
+        startyear INT,
+        profilePicturePath VARCHAR
+    )
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        UPDATE users
+        SET user_name = p_name,
+            user_surname = p_surname,
+            user_passwordHash = p_passwordHash,
+            user_customInfo = p_customInfo,
+            user_fulltime = p_fulltime,
+            user_startyear = p_startyear,
+            user_profilePicturePath = p_profilePicturePath
+        WHERE users.user_email = p_emailToEdit
+        RETURNING
+            users.user_id,
+            users.user_name,
+            users.user_surname,
+            users.user_email,
+            users.user_passwordHash,
+            users.user_customInfo,
+            users.user_fulltime,
+            users.user_startyear,
+            users.user_profilePicturePath;
+    END
+$$;
+
+GRANT ALL ON FUNCTION edit_userByEmail TO backend;
+
+----------------
+
+-- Open To Implement:
+-- isUserTeacher
+
+-- (opt)
+-- isEmailAlreadyUsed? (unnötig würi sege? get_userByEmail)
+
