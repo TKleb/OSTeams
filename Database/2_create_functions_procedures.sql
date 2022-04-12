@@ -21,7 +21,10 @@ $$;
 GRANT ALL ON FUNCTION get_subjects TO backend;
 
 -- Add Subject Function
-CREATE OR REPLACE FUNCTION add_subject(subject_abbreviation VARCHAR, subject_name VARCHAR)
+CREATE OR REPLACE FUNCTION add_subject(
+    p_abbreviation VARCHAR,
+    p_name VARCHAR
+)
     RETURNS TABLE (
         id INT,
         abbreviation VARCHAR,
@@ -34,7 +37,7 @@ AS $$
         RETURN QUERY
         INSERT INTO
             subjects(subject_abbreviation, subject_name)
-        VALUES (subject_abbreviation, subject_name)
+        VALUES (p_abbreviation, p_name)
         RETURNING subjects.subject_id, subjects.subject_abbreviation, subjects.subject_name;
     END
 $$;
@@ -107,12 +110,12 @@ GRANT ALL ON FUNCTION get_unverifiedUsers TO backend;
 
 -- add unverifiedUser Function
 CREATE OR REPLACE FUNCTION add_unverifiedUser(
-    unverifiedUser_name VARCHAR(30),
-    unverifiedUser_surname VARCHAR(30),
-    unverifiedUser_email VARCHAR(40),
-    unverifiedUser_passwordHash VARCHAR(255),
-    unverifiedUser_verificationCode VARCHAR(50),
-    unverifiedUser_dateOfRegistration DATE
+    p_name VARCHAR(30),
+    p_surname VARCHAR(30),
+    p_email VARCHAR(40),
+    p_passwordHash VARCHAR(255),
+    p_verificationCode VARCHAR(50),
+    p_dateOfRegistration DATE
 )
     RETURNS TABLE (
         id INT,
@@ -127,7 +130,7 @@ CREATE OR REPLACE FUNCTION add_unverifiedUser(
     SECURITY DEFINER
 AS $$
     BEGIN
-        IF is_emailInUse(unverifiedUser_email) = TRUE THEN
+        IF is_emailInUse(p_email) = TRUE THEN
             RAISE EXCEPTION 'Email already in use.';
         END IF;
 
@@ -140,12 +143,12 @@ AS $$
             unverifiedUser_verificationCode,
             unverifiedUser_dateOfRegistration
         ) VALUES (
-            unverifiedUser_name,
-            unverifiedUser_surname,
-            unverifiedUser_email,
-            unverifiedUser_passwordHash,
-            unverifiedUser_verificationCode,
-            unverifiedUser_dateOfRegistration
+            p_name,
+            p_surname,
+            p_email,
+            p_passwordHash,
+            p_verificationCode,
+            p_dateOfRegistration
         )
         RETURNING
             unverifiedUsers.unverifiedUser_id,
@@ -162,13 +165,13 @@ GRANT ALL ON FUNCTION add_unverifiedUser TO backend;
 
 -- add Group Function
 CREATE OR REPLACE FUNCTION add_group(
-    group_name VARCHAR(50),
-    group_owner INT,
-    group_subject VARCHAR(30),
-    group_description VARCHAR(512),
-    group_maxMemberCount INT,
-    group_creationDate Date,
-    group_applyByDate DATE
+    p_name VARCHAR(50),
+    p_owner INT,
+    p_subject VARCHAR(30),
+    p_description VARCHAR(512),
+    p_maxMemberCount INT,
+    p_creationDate Date,
+    p_applyByDate DATE
 
 )
     RETURNS TABLE (
@@ -194,13 +197,13 @@ AS $$
             group_creationDate,
             group_applyByDate
         ) VALUES (
-            group_name,
-            group_owner,
-            group_subject,
-            group_description,
-            group_maxMemberCount,
-            group_creationDate,
-            group_applyByDate
+            p_name,
+            p_owner,
+            p_subject,
+            p_description,
+            p_maxMemberCount,
+            p_creationDate,
+            p_applyByDate
         )
         RETURNING
             groups.group_name,
@@ -219,14 +222,14 @@ GRANT ALL ON FUNCTION add_group TO backend;
 ---------------------------------------------------------------------
 -- add user function
 CREATE OR REPLACE FUNCTION add_user(
-    user_name VARCHAR,
-    user_surname VARCHAR,
-    user_email VARCHAR,
-    user_passwordHash VARCHAR,
-    user_customInfo VARCHAR,
-    user_fulltime BOOLEAN,
-    user_startyear INT,
-    user_profilePicturePath VARCHAR
+    p_name VARCHAR,
+    p_surname VARCHAR,
+    p_email VARCHAR,
+    p_passwordHash VARCHAR,
+    p_customInfo VARCHAR,
+    p_fulltime BOOLEAN,
+    p_startyear INT,
+    p_profilePicturePath VARCHAR
 )
     RETURNS TABLE (
         id INT,
@@ -254,14 +257,14 @@ AS $$
             user_startyear,
             user_profilePicturePath
         ) VALUES (
-            user_name,
-            user_surname,
-            user_email,
-            user_passwordHash,
-            user_customInfo,
-            user_fulltime,
-            user_startyear,
-            user_profilePicturePath
+            p_name,
+            p_surname,
+            p_email,
+            p_passwordHash,
+            p_customInfo,
+            p_fulltime,
+            p_startyear,
+            p_profilePicturePath
         )
         RETURNING
             users.user_id,
