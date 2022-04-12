@@ -6,6 +6,11 @@
 |get_unverifiedUsers()|-|id, name, surname, email, passwordhash, verificationcode, dateofregistration|returns all unverifiedUsers in DB|
 |get_userByEmail()|email|id, name, surname, profilepicturepath, email, passwordhash, custominfo, fulltime, startyear|returns user matching the email if nothing matches it returns empty results|
 
+# Is Functions
+| Name | Parameter | Returns | Description |
+|---|---|---|---|
+|is_emailInUse()|email|boolean|checks whether email is in use by either an unverified or regular user|
+
 # Add Functions
 | Name | Parameter | Returns | Description |
 |---|---|---|---|

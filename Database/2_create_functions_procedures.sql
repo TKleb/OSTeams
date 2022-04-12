@@ -351,11 +351,30 @@ $$;
 
 GRANT ALL ON FUNCTION edit_userByEmail TO backend;
 
+-- Add function to check if email is in use by a user or an unverified user
+CREATE OR REPLACE FUNCTION is_emailInUse(
+    p_email VARCHAR
+)
+    RETURNS BOOLEAN
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN EXISTS(
+            SELECT 1 FROM users
+            WHERE user_email ILIKE p_email
+        )
+        OR
+        EXISTS(
+            SELECT 1 FROM unverifiedUsers
+            WHERE unverifiedUser_email ILIKE p_email
+        );
+    END
+$$;
+
+GRANT ALL ON FUNCTION is_emailInUse TO backend;
+
 ----------------
 
 -- Open To Implement:
 -- isUserTeacher
-
--- (opt)
--- isEmailAlreadyUsed? (unnötig würi sege? get_userByEmail)
-
