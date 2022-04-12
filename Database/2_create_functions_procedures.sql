@@ -127,6 +127,10 @@ CREATE OR REPLACE FUNCTION add_unverifiedUser(
     SECURITY DEFINER
 AS $$
     BEGIN
+        IF is_emailInUse(unverifiedUser_email) = TRUE THEN
+            RAISE EXCEPTION 'Email already in use.';
+        END IF;
+
         RETURN QUERY
         INSERT INTO unverifiedUsers (
             unverifiedUser_name,
