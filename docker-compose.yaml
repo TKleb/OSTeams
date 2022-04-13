@@ -4,6 +4,7 @@ services:
   web:
     build:
       context: ./Website
+      dockerfile: dockerfile
       target: ${TARGET:-development}
     restart: "no"
     working_dir: /usr/app
@@ -21,6 +22,7 @@ services:
     container_name: database
     build:
       context: ./Database
+      dockerfile: dockerfile
       target: postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-admin}
@@ -40,6 +42,7 @@ services:
     container_name: db-backup
     build:
       context: ./Cron
+      dockerfile: dockerfile
       target: cron
     command: crond -f -l 8
     depends_on:
