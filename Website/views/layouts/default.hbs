@@ -29,7 +29,10 @@
 	<div id="background">
 		<div id="container">
 			{{#if error}}
-			<p>An error occurred!</p>
+			<p>{{error}}</p>
+			{{/if}}
+			{{#if hint}}
+			<p>{{hint}}</p>
 			{{/if}}
 			{{{body}}}
 		</div>
