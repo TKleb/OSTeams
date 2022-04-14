@@ -17,8 +17,8 @@ export class PGConnector {
 	executeStoredProcedure(name, args = []) {
 		return this.db.func(name, args)
 			.then((response) => response)
-			.catch(() => {
-				throw new Error("Couldn't invoke Stored Procedure");
+			.catch((err) => {
+				throw new Error("Couldn't invoke Stored Procedure: ".concat(err));
 			});
 	}
 }
