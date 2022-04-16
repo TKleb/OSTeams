@@ -10,12 +10,12 @@ export class RegisterController {
 		const { email, password } = req.body;
 
 		if (!email || !password) {
-			return res.render("login", { error: "Please provide email and password." });
+			return res.render("register", { error: "Please provide email and password." });
 		}
 
 		const isEmailInUseRow = await pgConnector.executeStoredProcedure("is_emailinuse", [email]);
 		if (isEmailInUseRow[0].is_emailinuse) {
-			return res.render("login", { error: "The provided email is already in use." });
+			return res.render("register", { error: "The provided email is already in use." });
 		}
 
 		const saltLength = 10;
@@ -34,10 +34,10 @@ export class RegisterController {
 		]);
 
 		if (user.length === 0) {
-			return res.render("login", { error: "There was an error creating your account." });
+			return res.render("register", { error: "There was an error creating your account." });
 		}
 
-		return res.render("index", { hint: "Account created successfully."});
+		return res.render("register", { hint: "Account created successfully." });
 	}
 }
 

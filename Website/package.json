@@ -25,7 +25,6 @@
         "express-handlebars": "^5.3.3",
         "express-session": "^1.17.2",
         "jsdom": "^17.0.0",
-        "jsonwebtoken": "^8.5.1",
         "nedb-promises": "^5.0.0",
         "node": "^16.13.2",
         "pg-promise": "^10.11.1",

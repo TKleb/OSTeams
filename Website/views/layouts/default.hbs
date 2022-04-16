@@ -24,7 +24,11 @@
 		<a class="control-button" href="/subjects">Subjects</a>
 		<a class="control-button" href="/teams">Your Teams</a>
 		<a class="control-button" id="account-page-link" href="/account">Account</a>
+		{{#if session.loggedIn}}
+		<a class="control-button" id="logout-page-link" href="/account/logout">Logout</a>
+		{{else}}
 		<a class="control-button" id="login-page-link" href="/account/login">Login</a>
+		{{/if}}
 	</div>
 	<div id="background">
 		<div id="container">
