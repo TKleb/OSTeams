@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS unverified_users
     unverified_user_surname VARCHAR(30) NOT NULL,
     unverified_user_email VARCHAR(40) UNIQUE NOT NULL,
     unverified_user_password_hash VARCHAR(255) NOT NULL,
-    unverified_user_verification_code VARCHAR(50) NOT NULL,
+    unverified_user_verification_code VARCHAR(50) UNIQUE NOT NULL,
     unverified_user_date_of_registration DATE NOT NULL
 ) TABLESPACE pg_default;
 
@@ -37,7 +37,7 @@ ALTER TABLE IF EXISTS users OWNER TO admin;
 
 CREATE TABLE IF NOT EXISTS groups
 (
-    group_id INT GENERATED ALWAYS AS IDENTITY,
+    group_id INT GENERATED ALWAYS AS IDENTITY UNIQUE,
     group_owner INT,
     group_name VARCHAR(50) NOT NULL,
     group_subject VARCHAR(30) NOT NULL,
