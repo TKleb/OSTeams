@@ -6,14 +6,14 @@ import session from "express-session";
 import exphbs from "express-handlebars";
 import cookieParser from "cookie-parser";
 
-import { indexRoutes } from "./routes/index-routes.js";
-import { subjectsRouter } from "./routes/subjects-routes.js";
-import { accountRouter } from "./routes/account-routes.js";
-import { teamsRouter } from "./routes/teams-routes.js";
-import { helpers } from "./utils/handlebar-util.js";
-import { sessionUserSettings } from "./utils/session-middleware.index.js";
-import { saveSessionToLocals } from "./middleware/saveSessionToLocals.js";
-import { auth } from "./middleware/auth.js";
+import indexRoutes from "./routes/index-routes.js";
+import subjectsRouter from "./routes/subjects-routes.js";
+import accountRouter from "./routes/account-routes.js";
+import teamsRouter from "./routes/teams-routes.js";
+import helpers from "./utils/handlebar-util.js";
+import sessionUserSettings from "./utils/session-middleware.index.js";
+import saveSessionToLocals from "./middleware/saveSessionToLocals.js";
+import auth from "./middleware/auth.js";
 
 export const app = express();
 

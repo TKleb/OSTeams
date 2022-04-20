@@ -1,4 +1,4 @@
-export const auth = (req, res, next) => {
+export default (req, res, next) => {
 	const isLoggedIn = req.session?.loggedIn;
 
 	if (!isLoggedIn) {

@@ -1,4 +1,4 @@
-export class ForgotPwController {
+class ForgotPwController {
 	index(req, res) {
 		res.render("forgotPassword", { title: "forgotPassword" });
 	}
@@ -8,4 +8,4 @@ export class ForgotPwController {
 	}
 }
 
-export const forgotPwController = new ForgotPwController();
+export default new ForgotPwController();

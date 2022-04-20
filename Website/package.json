@@ -27,7 +27,9 @@
         "jsdom": "^17.0.0",
         "nedb-promises": "^5.0.0",
         "node": "^16.13.2",
+        "nodemailer": "^6.7.3",
         "pg-promise": "^10.11.1",
+        "rand-token": "^1.0.1",
         "sinon": "^11.1.2"
     },
     "devDependencies": {

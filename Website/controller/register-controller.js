@@ -1,7 +1,10 @@
 import bcrypt from "bcryptjs";
-import { pgConnector } from "../services/pg-connector.js";
+import randToken from "rand-token"
+import mailer from "../services/mailer.js";
+import pgConnector from "../services/pg-connector.js";
+import websiteConfig from "../config/website.config.js";
 
-export class RegisterController {
+class RegisterController {
 	index(req, res) {
 		res.render("register", { title: "register" });
 	}
@@ -37,8 +40,23 @@ export class RegisterController {
 			return res.render("register", { error: "There was an error creating your account." });
 		}
 
-		return res.render("register", { hint: "Account created successfully." });
+		const tokenLength = 50;
+		const htmlBody =
+		'<p>In order to use OSTeams, ' +
+		'click on the following link <a href="' + websiteConfig.hostname + '/account/verifyEmail?token=' + randToken.generate(tokenLength) + '">link</a> ' +
+		'to verify your email address</p>';
+
+		const response = await mailer.SendMail(email, "Email verification - OSTeams", htmlBody);
+		return res.render("register", { hint: response });
+	}
+
+	verifyMail(req, res) {
+		const token = req.query.token;
+		if(!token) {
+			return res.send("Invalid token");
+		}
+		return res.render("index");
 	}
 }
 
-export const registerController = new RegisterController();
+export default new RegisterController();

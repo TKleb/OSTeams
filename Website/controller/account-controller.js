@@ -1,4 +1,4 @@
-export class AccountController {
+class AccountController {
 	index(req, res) {
 		res.render("account", { title: "Account" });
 	}
@@ -9,4 +9,4 @@ export class AccountController {
 	}
 }
 
-export const accountController = new AccountController();
+export default new AccountController();

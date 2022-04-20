@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-import { pgConnector } from "../services/pg-connector.js";
+import pgConnector from "../services/pg-connector.js";
 
-export class LoginController {
+class LoginController {
 	index(req, res) {
 		res.render("login", { title: "login" });
 	}
@@ -27,4 +27,4 @@ export class LoginController {
 	}
 }
 
-export const loginController = new LoginController();
+export default new LoginController();

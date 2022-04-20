@@ -1,7 +1,7 @@
 import pgPromise from "pg-promise";
 import pgConfig from "../config/postgres.config.js";
 
-export class PGConnector {
+class PGConnector {
 	constructor() {
 		const pgp = pgPromise({});
 		this.db = pgp(pgConfig);
@@ -16,4 +16,4 @@ export class PGConnector {
 	}
 }
 
-export const pgConnector = new PGConnector();
+export default new PGConnector();

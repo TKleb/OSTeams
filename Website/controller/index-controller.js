@@ -1,7 +1,7 @@
-export class IndexController {
+class IndexController {
 	index(req, res) {
 		res.render("index", { data: "Hello World", dark: false });
 	}
 }
 
-export const indexController = new IndexController();
+export default new IndexController();
