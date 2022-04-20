@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { pgConnector } from "../services/pg-connector.js";
+import pgConnector from "../services/pg-connector.js";
 
 describe("Test PG-Connector", () => {
 	describe("Test getting all subjects", () => {
