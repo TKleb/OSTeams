@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs";
-import randToken from "rand-token"
+import randToken from "rand-token";
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
@@ -41,20 +41,21 @@ class RegisterController {
 		}
 
 		const tokenLength = 50;
-		const htmlBody =
-		'<p>In order to use OSTeams, ' +
-		'click on the following link <a href="' + websiteConfig.hostname + '/account/verifyEmail?token=' + randToken.generate(tokenLength) + '">link</a> ' +
-		'to verify your email address</p>';
+		const htmlBody =		"<p>In order to use OSTeams, "
+		+ `click on the following link <a href="${websiteConfig.hostname}/account/verifyEmail?token=${randToken.generate(tokenLength)}">link</a> `
+		+ "to verify your email address</p>";
 
 		const response = await mailer.SendMail(email, "Email verification - OSTeams", htmlBody);
 		return res.render("register", { hint: response });
 	}
 
 	verifyMail(req, res) {
-		const token = req.query.token;
-		if(!token) {
+		const { token } = req.query.token;
+		if (!token) {
 			return res.send("Invalid token");
 		}
+
+		// Verify User
 		return res.render("index");
 	}
 }

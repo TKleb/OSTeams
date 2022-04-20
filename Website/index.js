@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import websiteConfig from "./config/website.config.js"
+import websiteConfig from "./config/website.config.js";
 
 // load config-file
 dotenv.config({ path: `.env${process.env.NODE_ENV ? `-${process.env.NODE_ENV}` : ""}` });
