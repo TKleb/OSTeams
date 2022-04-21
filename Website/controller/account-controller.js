@@ -8,7 +8,7 @@ class AccountController {
 		res.redirect("/");
 	}
 
-	editAccount(req, res) {
+	edit(req, res) {
 		res.render("editAccount", { title: "edit" });
 	}
 }
