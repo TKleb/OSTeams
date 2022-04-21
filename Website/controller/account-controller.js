@@ -14,6 +14,10 @@ export class AccountController {
 	forgotPw(req, res) {
 		res.render("forgotPassword", { title: "forgot" });
 	}
+
+	editAccount(req, res) {
+		res.render("editAccount", { title: "edit" });
+	}
 }
 
 export const accountController = new AccountController();

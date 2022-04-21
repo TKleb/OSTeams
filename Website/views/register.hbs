@@ -1,2 +1,18 @@
-<h1>register</h1>
-<a href="/">Home</a>
+<div id="login-form-div">
+	<section>
+		<h1>Sign Up</h1>
+		<p>Registration only works for students with a HSR- or OST-Email-Address (name@ost.ch | name@hsr.ch).</p>
+		<form method="post" action="#" id="login-form">
+			<label for="id-email"></label><input type="text" name="email" id="id-email"
+				placeholder="Enter Email" autocomplete="off">
+			<label for="id-password"></label><input type="password" name="password1" id="id-password1"
+				placeholder="Enter Password">
+			<label for="id-password"></label><input type="password" name="password2" id="id-password2"
+				placeholder="Verify Password">
+		</form>
+		<div id="register-buttons">
+			<button class="button" form="login-form" id="verify-button" type="submit">Send Verification Email</button>
+			<a class="button" href="/account/login" id="cancel-verification">Cancel</a>
+		</div>
+	</section>
+</div>

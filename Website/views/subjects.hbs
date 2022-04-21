@@ -1,6 +1,4 @@
 <h1>Subjects</h1>
-<a href="/">Home</a>
-
 <ul>
 	<form action="/subjects/add" method="post">
 		<label for="abbr">Abbreviation:</label>
@@ -12,7 +10,17 @@
 	<form action="/subjects" method="post">
 		<button type="submit" id="loadSubjects">Load Subjects</button>
 	</form>
-	{{#each subjects}}
-	<li>{{id}} | {{abbreviation}} | {{name}}</li>
-	{{/each}}
 </ul>
+{{#each subjects}}
+		<!-- <li>{{id}} | {{abbreviation}} | {{name}}</li> -->
+		<article class="subject">
+			<div class="subject-description">
+				<a class="link" href="/subjects/{{abbreviation}}">
+					<h3 class="subject-name">
+						<em class="abbreviation">{{abbreviation}}</em>
+            			{{name}}
+					</h3>
+				</a>
+            </div>
+		</article>
+{{/each}}
