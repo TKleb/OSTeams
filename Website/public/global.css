@@ -3,6 +3,10 @@ em {
     font-weight: 700;
 }
 
+.active {
+    background-color: yellow;
+}
+
 /* CONTROL PANEL STYLING */
 #control-panel {
     margin: 0 auto;
@@ -150,13 +154,15 @@ a:visited {
     font-family: Arial, sans-serif;
 }
 
+#register-buttons {
+    display: inline-flex;
+}
+
 #verify-button {
-    width: 20%;
     height: 40px;
-    display: inline-block;
     font-family: Arial, sans-serif;
     font-size: 15px;
-    margin: 10px 0 20px;
+    margin: 10px 10px 0 0;
     background-color: rgb(146 71 146);
 }
 
@@ -166,11 +172,16 @@ a:visited {
 }
 
 #cancel-verification {
-    width: 20%;
-    height: 40px;
+    text-align: center;
+    width: 30%;
+    height: 36px;
     font-size: 15px;
-    margin: 10px 0 20px;
+    margin: 10px;
     background-color: rgb(125 123 123);
+    border-top: 2px solid #767676;
+    border-right: 2px solid #212121;
+    border-bottom: 2px solid #212121;
+    border-left: 2px solid #767676;
 }
 
 #cancel-verification:hover {
