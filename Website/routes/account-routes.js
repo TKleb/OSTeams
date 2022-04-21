@@ -12,6 +12,7 @@ router.get("/login", loginController.index);
 router.get("/forgot", forgotPwController.index);
 router.get("/register", registerController.index);
 router.get("/verifyEmail", registerController.verifyMail);
+router.get("/edit", accountController.editAccount);
 
 router.post("/login", loginController.login);
 router.post("/forgot", forgotPwController.forgotPassword);

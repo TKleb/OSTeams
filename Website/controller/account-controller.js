@@ -7,6 +7,10 @@ class AccountController {
 		req.session.destroy();
 		res.redirect("/");
 	}
+
+	editAccount(req, res) {
+		res.render("editAccount", { title: "edit" });
+	}
 }
 
 export default new AccountController();
