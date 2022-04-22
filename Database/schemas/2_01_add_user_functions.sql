@@ -32,68 +32,7 @@ $$;
 
 GRANT ALL ON FUNCTION get_users TO backend;
 
--- add user function
-CREATE OR REPLACE FUNCTION add_user(
-    p_name VARCHAR,
-    p_surname VARCHAR,
-    p_email VARCHAR,
-    p_password_hash VARCHAR,
-    p_custom_info VARCHAR,
-    p_fulltime BOOLEAN,
-    p_start_year INT,
-    p_profile_picture_path VARCHAR
-)
-    RETURNS TABLE (
-        id INT,
-        name VARCHAR,
-        surname VARCHAR,
-        email VARCHAR,
-        password_hash VARCHAR,
-        custom_info VARCHAR,
-        fulltime BOOLEAN,
-        start_year INT,
-        profile_picture_path VARCHAR
-    )
-    LANGUAGE plpgsql
-    SECURITY DEFINER
-AS $$
-    BEGIN
-        RETURN QUERY
-        INSERT INTO users (
-            user_name,
-            user_surname,
-            user_email,
-            user_password_hash,
-            user_custom_info,
-            user_fulltime,
-            user_start_year,
-            user_profile_picture_path
-        ) VALUES (
-            p_name,
-            p_surname,
-            p_email,
-            p_password_hash,
-            p_custom_info,
-            p_fulltime,
-            p_start_year,
-            p_profile_picture_path
-        )
-        RETURNING
-            user_id,
-            user_name,
-            user_surname,
-            user_email,
-            user_password_hash,
-            user_custom_info,
-            user_fulltime,
-            user_start_year,
-            user_profile_picture_path;
-    END
-$$;
-
-GRANT ALL ON FUNCTION add_user TO backend;
-
--- GetUserByEmail
+-- get_user_by_email
 CREATE OR REPLACE FUNCTION get_user_by_email(
     p_email VARCHAR
 )
