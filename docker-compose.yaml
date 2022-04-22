@@ -23,7 +23,7 @@ services:
     build:
       context: ./Database
       dockerfile: dockerfile
-      target: postgres
+      target: postgres-${TARGET:-development}
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
