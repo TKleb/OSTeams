@@ -2,25 +2,30 @@
 | Name | Parameter | Returns | Description |
 |---|---|---|---|
 |get_subjects()|-|id, abbrevation, name|returns all subjects in DB|
-|get_users()|-|id, name, surname, profilepicturepath, email, passwordhash, custominfo, fulltime, startyear|returns all users in DB|
-|get_unverifiedUsers()|-|id, name, surname, email, passwordhash, verificationcode, dateofregistration|returns all unverifiedUsers in DB|
-|get_userByEmail()|email|id, name, surname, profilepicturepath, email, passwordhash, custominfo, fulltime, startyear|returns user matching the email if nothing matches it returns empty results|
+|get_users()|-|id, name, surname, profile_picture_path, email, password_hash, custom_info, fulltime, start_year|returns all users in DB|
+|get_unverified_users()|-|id, name, surname, email, password_hash, verification_code, date_of_registration|returns all unverified_users in DB|
+|get_user_by_email()|email|id, name, surname, profile_picture_path, email, password_hash, custom_info, fulltime, start_year|returns user matching the email if nothing matches it returns empty results|
 
 # Is Functions
 | Name | Parameter | Returns | Description |
 |---|---|---|---|
-|is_emailInUse()|email|boolean|checks whether email is in use by either an unverified or regular user|
+|is_email_in_use()|email|boolean|checks whether email is in use by either an unverified or regular user|
 
 # Add Functions
 | Name | Parameter | Returns | Description |
 |---|---|---|---|
 |add_subject()|abbrevation, name|id, abbrevation, name|adds subject and returns it|
-|add_unverifiedUser()|name, surname, email, passwordhash, verificationcode, dateofregistration|id, name, surname, email, passwordhash, verificationcode, dateofregistration|adds unverifiedUser and returns it|
-|add_user()|name, surname, email, passwordhash, custominfo, fulltime, startyear, profilepicturepath|id, name, surname, email, passwordhash, custominfo, fulltime, startyear, profilepicturepath|adds user and returns it|
-|add_group()|name, owner, subject, description, maxmembercount, creationdate, applybydate|name, owner (int (key)), subject (varchar (aktuell fucked und nid fk)), description, maxMemberCount, creationdate, applybydate|adds group and returns it|
+|add_unverified_user()|name, surname, email, password_hash, verification_code, date_of_registration|id, name, surname, email, password_hash, verification_code, date_of_registration|adds unverifiedUser and returns it|
+|add_user()|name, surname, email, password_hash, custom_info, fulltime, start_year, profile_picture_path|id, name, surname, email, password_hash, custom_info, fulltime, start_year, profile_picture_path|adds user and returns it|
+|add_group()|name, owner, subject, description, max_member_count, creation_date, apply_by_date|name, owner (int (key)), subject (varchar (aktuell fucked und nid fk)), description, max_member_count, creation_date, apply_by_date|adds group and returns it|
 
 # Edit Functions
 | Name | Parameter | Returns | Description |
 |---|---|---|---|
-|edit_userByEmail()|email, name, surname, passwordHash, customInfo, fulltime, startyear, profilePicturePath|id, name, surname, email, passwordhash, customInfo, fulltime, startyear, profilePicturePath|updates a User where the Email Matches|
+|edit_user_by_email()|email, name, surname, password_hash, custom_info, fulltime, start_year, profile_picture_path|id, name, surname, email, password_hash, custom_info, fulltime, start_year, profile_picture_path|updates a User where the Email Matches|
+
+# Do Functions
+| Name | Parameter | Returns | Description |
+|---|---|---|---|
+|do_verify_user()|verification_token|id, name, surname, email, password_hash, custom_info, fulltime, start_year, profile_picture_path|Verifies the user with the given verification code if it exists, returns the now verified user|
 
