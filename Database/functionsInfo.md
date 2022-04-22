@@ -24,3 +24,8 @@
 |---|---|---|---|
 |edit_user_by_email()|email, name, surname, password_hash, custom_info, fulltime, start_year, profile_picture_path|id, name, surname, email, password_hash, custom_info, fulltime, start_year, profile_picture_path|updates a User where the Email Matches|
 
+# Do Functions
+| Name | Parameter | Returns | Description |
+|---|---|---|---|
+|do_verify_user()|verification_token|id, name, surname, email, password_hash, custom_info, fulltime, start_year, profile_picture_path|Verifies the user with the given verification code if it exists, returns the now verified user|
+
