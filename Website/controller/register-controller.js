@@ -15,34 +15,30 @@ class RegisterController {
 		if (!email || !password) {
 			return res.render("register", { error: "Please provide email and password." });
 		}
+		// TODO: better error handling of executeStoredProcedure (maybe in wrapper class?)
+		const isEmailInUseRow = await pgConnector.executeStoredProcedure("is_email_in_use", [email])
+			.catch(() => res.render("register", { error: "There was an error checking your email" }));
 
-		const isEmailInUseRow = await pgConnector.executeStoredProcedure("is_emailinuse", [email]);
-		if (isEmailInUseRow[0].is_emailinuse) {
+		if (isEmailInUseRow[0].is_email_in_use) {
 			return res.render("register", { error: "The provided email is already in use." });
 		}
 
 		const saltLength = 10;
 		const encryptedPassword = await bcrypt.hash(password, saltLength);
-		/* const user = await pgConnector.executeStoredProcedure("add_unverifieduser",
-		 ["", "", email.toLowerCase(), encryptedPassword, "", new Date()]); */
-		const user = await pgConnector.executeStoredProcedure("add_user", [
+		const tokenLength = 50;
+		const verificationToken = randToken.generate(tokenLength);
+
+		await pgConnector.executeStoredProcedure("add_unverified_user", [
 			"",
 			"",
 			email.toLowerCase(),
 			encryptedPassword,
-			"customInfoText",
-			true,
-			2020,
-			"./default.jpg",
-		]);
+			verificationToken,
+		])
+			.catch(() => res.render("register", { error: "There was an error creating your account." }));
 
-		if (user.length === 0) {
-			return res.render("register", { error: "There was an error creating your account." });
-		}
-
-		const tokenLength = 50;
 		const htmlBody =		"<p>In order to use OSTeams, "
-		+ `click on the following link <a href="${websiteConfig.hostname}/account/verifyEmail?token=${randToken.generate(tokenLength)}">link</a> `
+		+ `click on the following link <a href="${websiteConfig.hostname}:${websiteConfig.port}/account/verifyEmail?token=${verificationToken}">link</a> `
 		+ "to verify your email address</p>";
 
 		const response = await mailer.SendMail(email, "Email verification - OSTeams", htmlBody);
@@ -50,13 +46,15 @@ class RegisterController {
 	}
 
 	verifyMail(req, res) {
-		const { token } = req.query.token;
-		if (!token) {
+		const verificationToken = req.query.token;
+
+		if (!verificationToken) {
 			return res.send("Invalid token");
 		}
 
-		// Verify User
-		return res.render("index");
+		return pgConnector.executeStoredProcedure("do_verify_user", [verificationToken])
+			.then(() => res.render("index", { hint: "Email verified successfully" }))
+			.catch(() => res.send("Invalid token"));
 	}
 }
 
