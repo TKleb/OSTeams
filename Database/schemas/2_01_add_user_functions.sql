@@ -18,16 +18,16 @@ AS $$
     BEGIN
         RETURN QUERY
         SELECT
-            user_id,
-            user_name,
-            user_surname,
-            user_profile_picture_path,
-            user_email,
-            user_password_hash,
-            user_custom_info,
-            user_fulltime,
-            user_start_year,
-            user_date_of_registration
+            user_id AS id,
+            user_name AS name,
+            user_surname AS surname,
+            user_profile_picture_path AS profile_picture_path,
+            user_email AS email,
+            user_password_hash AS password_hash,
+            user_custom_info AS custom_info,
+            user_fulltime AS fulltime,
+            user_start_year AS start_year,
+            user_date_of_registration AS date_of_registration
         FROM users;
     END
 $$;
@@ -209,6 +209,76 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION add_unverified_user TO backend;
+
+-- verify and unverified user, turning them into a regular user
+CREATE OR REPLACE FUNCTION do_verify_user(
+    p_verification_code VARCHAR(50)
+)
+    RETURNS TABLE (
+        id INT,
+        name VARCHAR,
+        surname VARCHAR,
+        profile_picture_path VARCHAR,
+        email VARCHAR,
+        password_hash VARCHAR,
+        custom_info VARCHAR,
+        fulltime BOOLEAN,
+        start_year INT,
+        date_of_registration TIMESTAMP WITH TIME ZONE
+    )
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        -- Ensure unverified user can be found.
+        IF NOT EXISTS(
+            SELECT 1 FROM unverified_users
+            WHERE unverified_user_verification_code = p_verification_code
+        ) THEN
+            RAISE EXCEPTION 'Verification token is not valid.';
+        END IF;
+
+        -- Add user
+        RETURN QUERY
+        WITH unverified_user AS (
+            DELETE FROM unverified_users uu
+            WHERE unverified_user_verification_code = p_verification_code
+            RETURNING uu.*
+        )
+        INSERT INTO users (
+            user_name,
+            user_surname,
+            user_email,
+            user_password_hash,
+            user_fulltime,
+            user_date_of_registration,
+            user_start_year
+        )
+        SELECT
+            unverified_user.unverified_user_name,
+            unverified_user.unverified_user_surname,
+            unverified_user.unverified_user_email,
+            unverified_user.unverified_user_password_hash,
+            NULL,
+            NOW(),
+            NULL
+        FROM unverified_user
+        LIMIT 1
+        RETURNING
+            user_id AS id,
+            user_name AS name,
+            user_surname AS surname,
+            user_profile_picture_path AS profile_picture_path,
+            user_email AS email,
+            user_password_hash AS password_hash,
+            user_custom_info AS custom_info,
+            user_fulltime AS fulltime,
+            user_start_year AS start_year,
+            user_date_of_registration AS date_of_registration;
+    END
+$$;
+
+GRANT ALL ON FUNCTION do_verify_user TO backend;
 
 -- Add function to check if email is in use by a user or an unverified user
 CREATE OR REPLACE FUNCTION is_email_in_use(

@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS users
     user_profile_picture_path VARCHAR(30) NULL,
     user_email VARCHAR(40) UNIQUE NOT NULL,
     user_password_hash VARCHAR(256) NOT NULL,
-    user_custom_info VARCHAR(512) NOT NULL,
+    user_custom_info VARCHAR(512) NOT NULL DEFAULT '',
     user_fulltime BOOLEAN NULL,
     user_start_year INT NULL,
     user_date_of_registration TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
