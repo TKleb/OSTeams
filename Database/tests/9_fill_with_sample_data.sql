@@ -8,7 +8,7 @@
 SELECT * FROM add_subject('DB1', 'Datenbanken 1');
 
 \echo add_unverified_user()
-SELECT * FROM add_unverified_user('Unverified1', 'User', 'user1@unverified.ch', '123', 'verCode', '2012-12-21');
+SELECT * FROM add_unverified_user('Unverified1', 'User', 'user1@unverified.ch', '123', 'verCode');
 
 \echo add_group()
 SELECT * FROM add_group('exampleGroup1', 1, 'fuckedATM', 'veryLongDescription', 5, '2012-12-21', '2069-4-20');

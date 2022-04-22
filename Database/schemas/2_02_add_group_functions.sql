@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION add_group(
     p_description VARCHAR(512),
     p_max_member_count INT,
     p_creation_date Date,
-    p_apply_by_date DATE
+    p_apply_by_date TIMESTAMP WITH TIME ZONE
 
 )
     RETURNS TABLE (
@@ -15,8 +15,8 @@ CREATE OR REPLACE FUNCTION add_group(
         subject VARCHAR,
         description VARCHAR,
         max_member_count INT,
-        creation_date DATE,
-        apply_by_date DATE
+        creation_date TIMESTAMP WITH TIME ZONE,
+        apply_by_date TIMESTAMP WITH TIME ZONE
     )
 LANGUAGE plpgsql
 SECURITY DEFINER

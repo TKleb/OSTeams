@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS unverified_users
     unverified_user_email VARCHAR(40) UNIQUE NOT NULL,
     unverified_user_password_hash VARCHAR(255) NOT NULL,
     unverified_user_verification_code VARCHAR(50) UNIQUE NOT NULL,
-    unverified_user_date_of_registration DATE NOT NULL
+    unverified_user_date_of_registration TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 ) TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS unverified_users OWNER TO admin;
@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS users
     user_password_hash VARCHAR(256) NOT NULL,
     user_custom_info VARCHAR(512) NOT NULL,
     user_fulltime BOOLEAN NULL,
-    user_start_year INT NULL
+    user_start_year INT NULL,
+    user_date_of_registration TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
 ) TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS users OWNER TO admin;
@@ -43,8 +44,8 @@ CREATE TABLE IF NOT EXISTS groups
     group_subject VARCHAR(30) NOT NULL,
     group_description VARCHAR(512) NULL,
     group_max_member_count INT NOT NULL,
-    group_creation_date DATE NOT NULL,
-    group_apply_by_date DATE NOT NULL,
+    group_creation_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    group_apply_by_date TIMESTAMP WITH TIME ZONE NOT NULL,
     group_closed BOOLEAN NULL,
     CONSTRAINT fk_owner
       FOREIGN KEY(group_owner)

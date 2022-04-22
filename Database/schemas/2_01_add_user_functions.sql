@@ -9,7 +9,8 @@ CREATE OR REPLACE FUNCTION get_users()
         password_hash VARCHAR,
         custom_info VARCHAR,
         fulltime BOOLEAN,
-        start_year INT
+        start_year INT,
+        date_of_registration TIMESTAMP WITH TIME ZONE
     )
     LANGUAGE plpgsql
     SECURITY DEFINER
@@ -25,7 +26,8 @@ AS $$
             user_password_hash,
             user_custom_info,
             user_fulltime,
-            user_start_year
+            user_start_year,
+            user_date_of_registration
         FROM users;
     END
 $$;
@@ -45,14 +47,26 @@ CREATE OR REPLACE FUNCTION get_user_by_email(
         password_hash VARCHAR,
         custom_info VARCHAR,
         fulltime BOOLEAN,
-        start_year INT
+        start_year INT,
+        date_of_registration TIMESTAMP WITH TIME ZONE
     )
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT * FROM users WHERE user_email = p_email;
+        SELECT
+            user_id AS id,
+            user_name AS name,
+            user_surname AS surname,
+            user_profile_picture_path AS profile_picture_path,
+            user_email AS email,
+            user_password_hash AS password_hash,
+            user_custom_info AS custom_info,
+            user_fulltime AS fulltime,
+            user_start_year AS start_year,
+            user_date_of_registration AS date_of_registration
+         FROM users WHERE user_email = p_email;
     END
 $$;
 
@@ -78,7 +92,8 @@ CREATE OR REPLACE FUNCTION edit_user_by_email(
         custom_info VARCHAR,
         fulltime BOOLEAN,
         start_year INT,
-        profile_picture_path VARCHAR
+        profile_picture_path VARCHAR,
+        date_of_registration TIMESTAMP WITH TIME ZONE
     )
     LANGUAGE plpgsql
     SECURITY DEFINER
@@ -103,13 +118,14 @@ AS $$
             user_custom_info,
             user_fulltime,
             user_start_year,
-            user_profile_picture_path;
+            user_profile_picture_path,
+            user_date_of_registration;
     END
 $$;
 
 GRANT ALL ON FUNCTION edit_user_by_email TO backend;
 
--- get unverifiedUser Function
+-- get_unverified_users Function
 CREATE OR REPLACE FUNCTION get_unverified_users()
     RETURNS TABLE (
         id INT,
@@ -118,7 +134,7 @@ CREATE OR REPLACE FUNCTION get_unverified_users()
         email VARCHAR,
         password_hash VARCHAR,
         verification_code VARCHAR,
-        date_of_registration DATE
+        date_of_registration TIMESTAMP WITH TIME ZONE
     )
     LANGUAGE plpgsql
     SECURITY DEFINER
@@ -139,14 +155,14 @@ $$;
 
 GRANT ALL ON FUNCTION get_unverified_users TO backend;
 
--- add unverifiedUser Function
+-- add_unverified_user Function
 CREATE OR REPLACE FUNCTION add_unverified_user(
     p_name VARCHAR(30),
     p_surname VARCHAR(30),
     p_email VARCHAR(40),
     p_password_hash VARCHAR(255),
     p_verification_code VARCHAR(50),
-    p_date_of_registration DATE
+    p_date_of_registration TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 )
     RETURNS TABLE (
         id INT,
@@ -155,7 +171,7 @@ CREATE OR REPLACE FUNCTION add_unverified_user(
         email VARCHAR,
         password_hash VARCHAR,
         verification_code VARCHAR,
-        date_of_registration DATE
+        date_of_registration TIMESTAMP WITH TIME ZONE
     )
     LANGUAGE plpgsql
     SECURITY DEFINER
