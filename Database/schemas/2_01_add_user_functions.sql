@@ -66,7 +66,7 @@ AS $$
             user_fulltime AS fulltime,
             user_start_year AS start_year,
             user_date_of_registration AS date_of_registration
-         FROM users WHERE user_email = p_email;
+         FROM users WHERE user_email = LOWER(p_email);
     END
 $$;
 
@@ -192,7 +192,7 @@ AS $$
         ) VALUES (
             p_name,
             p_surname,
-            p_email,
+            LOWER(p_email),
             p_password_hash,
             p_verification_code,
             p_date_of_registration
@@ -291,12 +291,12 @@ AS $$
     BEGIN
         RETURN EXISTS(
             SELECT 1 FROM users
-            WHERE user_email ILIKE p_email
+            WHERE user_email = LOWER(p_email)
         )
         OR
         EXISTS(
             SELECT 1 FROM unverified_users
-            WHERE unverified_user_email ILIKE p_email
+            WHERE unverified_user_email = LOWER(p_email)
         );
     END
 $$;
