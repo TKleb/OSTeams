@@ -1,6 +1,6 @@
-import { pgConnector } from "../services/pg-connector.js";
+import pgConnector from "../services/pg-connector.js";
 
-export class SubjectsController {
+class SubjectsController {
 	index(req, res) {
 		res.render("subjects");
 	}
@@ -24,4 +24,4 @@ export class SubjectsController {
 	}
 }
 
-export const subjectsController = new SubjectsController();
+export default new SubjectsController();

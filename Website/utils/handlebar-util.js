@@ -1,4 +1,4 @@
-export const helpers = {
+const helpers = {
     'if_eq': function (a, b, opts) {
         if (a === b)
             return opts.fn(this);
@@ -6,3 +6,5 @@ export const helpers = {
             return opts.inverse(this);
     }
 }
+
+export default helpers;
