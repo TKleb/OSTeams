@@ -11,6 +11,10 @@ class AccountController {
 	edit(req, res) {
 		res.render("editAccount", { title: "edit" });
 	}
+
+	editAccount(req, res) {
+		res.render("editAccount", { title: "edit" });
+	}
 }
 
 export default new AccountController();
