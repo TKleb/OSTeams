@@ -16,8 +16,8 @@ class SubjectsController {
 
 	insert(req, res) {
 		pgConnector.executeStoredProcedure("add_subject", [req.body.abbr, req.body.subName])
-			.then((pSubjects) => {
-				res.render("subjects", { subjects: pSubjects });
+			.then(() => {
+				res.redirect("/subjects");
 			}).catch((err) => {
 				res.render("subjects", { subjects: [], error: err });
 			});
