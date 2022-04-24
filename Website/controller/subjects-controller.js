@@ -15,10 +15,11 @@ class SubjectsController {
 	}
 
 	insert(req, res) {
-		if(!req.body.abbr || !req.body.subName)
-			return res.render("subjects", { error: "Please provide an Abbreviation and a Subject name."});
+		if (!req.body.abbr || !req.body.subName) {
+			return res.render("subjects", { error: "Please provide an Abbreviation and a Subject name." });
+		}
 
-		pgConnector.executeStoredProcedure("add_subject", [req.body.abbr, req.body.subName])
+		return pgConnector.executeStoredProcedure("add_subject", [req.body.abbr, req.body.subName])
 			.then(() => {
 				res.redirect("/subjects");
 			}).catch((err) => {
