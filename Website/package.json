@@ -8,10 +8,21 @@
         "start:production": "node index.js",
         "start:development": "nodemon -L",
         "start:test": "npm run lint && npm run mocha_tests",
-        "mocha_tests": "mocha tests/*.test.js  --timeout 5000",
+        "mocha_tests": "c8 --check-coverage --lines 90 --functions 90 --branches 90 mocha tests/*.test.js  --timeout 5000",
         "eslint": "eslint . --ext .js",
         "stylelint": "stylelint \"**/*.css\"",
         "lint": "npm run eslint && npm run stylelint"
+    },
+    "c8": {
+        "reporter": [
+            "text",
+            "cobertura"
+        ],
+        "include": [
+            "services/*.js",
+            "controller/*.js"
+        ],
+        "all": true
     },
     "type": "module",
     "author": "OSTeams",
@@ -34,6 +45,8 @@
     },
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.17.0",
+        "babel-plugin-istanbul": "^6.1.1",
+        "c8": "^7.11.2",
         "chai": "^4.3.6",
         "chai-http": "^4.3.0",
         "eslint": "^8.12.0",
@@ -41,6 +54,7 @@
         "eslint-plugin-import": "^2.25.4",
         "mocha": "^9.2.2",
         "nodemon": "^2.0.15",
+        "nyc": "^15.1.0",
         "stylelint": "^14.6.1",
         "stylelint-config-standard": "^25.0.0"
     }
