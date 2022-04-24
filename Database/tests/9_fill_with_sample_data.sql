@@ -1,37 +1,85 @@
 
-/* ------------------------
-    Function Tests
------------------------- */
+--------------------------------------------------------------------------------
+--                                 Unit Tests                                 --
+-- Ref.: https://stackoverflow.com/questions/11299037/postgresql-if-statement --
+--------------------------------------------------------------------------------
 
-/* add */
-\echo add_subject()
-SELECT * FROM add_subject('DB1', 'Datenbanken 1');
+DO
+$subject_tests$ BEGIN
+    IF NOT EXISTS(
+        SELECT * FROM add_subject('DB1', 'Datenbanken 1')
+    ) THEN
+        RAISE EXCEPTION 'add_subject failed';
+    END IF;
 
-\echo add_unverified_user()
-SELECT * FROM add_unverified_user('Unverified1', 'User', 'user1@unverified.ch', '123', 'verCode');
-SELECT * FROM add_unverified_user('Unverified2', 'User2', 'user2@verified.ch', '545', 'verCode2');
+    IF NOT EXISTS(
+        SELECT * FROM get_subjects()
+    ) THEN
+        RAISE EXCEPTION 'get_subjects failed';
+    END IF;
 
-\echo do_verify_user()
-SELECT * FROM do_verify_user('verCode2');
+    IF NOT EXISTS(
+        SELECT * FROM get_subject_by_abbreviation('DB1')
+    ) THEN
+        RAISE EXCEPTION 'get_subject_by_abbreviation failed';
+    END IF;
 
-\echo add_group()
-SELECT * FROM add_group('exampleGroup1', 1, 'fuckedATM', 'veryLongDescription', 5, '2012-12-21', '2069-4-20');
+    /* Fill with sample data */
+    PERFORM add_subject('DB2', 'Datenbanken 2');
+    PERFORM add_subject('CN1', 'Computernetzwerke 1');
 
-/* edit */
-\echo edit_user_by_email()
-SELECT * FROM edit_user_by_email('user2@verified.ch', 'Verified1', 'User', '456', 'newCustomInfoText', TRUE, 2020, './default.jpg');
+END $subject_tests$;
+\echo subject_tests passed
 
-/* get */
-\echo get_subjects()
-SELECT * FROM get_subjects();
-\echo get_users()
-SELECT * FROM get_users();
-\echo get_unverified_users()
-SELECT * FROM get_unverified_users();
-\echo get_user_by_email()
-SELECT * FROM get_user_by_email('user2@verified.ch');
+--------------------------------------------------------------------------------
+DO
+$user_tests$ BEGIN
+    IF NOT EXISTS(
+        SELECT * FROM add_unverified_user('Unverified2', 'User2', 'user1@verified.ch', '545', 'verCode1')
+    ) THEN
+        RAISE EXCEPTION 'add_unverified_user failed';
+    END IF;
 
-/* Fill Up */
-\echo insert into subjects
-INSERT INTO subjects (subject_abbreviation, subject_name)
-VALUES ('DB2', 'Datenbanken 2'), ('CN1', 'Computernetzwerke 1');
+    IF NOT EXISTS(
+        SELECT * FROM get_unverified_users()
+    ) THEN
+        RAISE EXCEPTION 'get_unverified_users failed';
+    END IF;
+
+    IF NOT EXISTS(
+        SELECT * FROM do_verify_user('verCode1')
+    )
+    THEN
+        RAISE EXCEPTION 'do_verify_user failed';
+    END IF;
+
+    IF NOT EXISTS(
+        SELECT * FROM get_users()
+    )
+    THEN
+        RAISE EXCEPTION 'get_users failed';
+    END IF;
+
+    IF NOT EXISTS(
+        SELECT * FROM get_user_by_email('user1@verified.ch')
+    )
+    THEN
+        RAISE EXCEPTION 'get_user_by_email failed';
+    END IF;
+
+    /* Fill with sample data */
+    PERFORM add_unverified_user('Unverified1', 'User2', 'user2@verified.ch', '545', 'verCode2');
+
+END $user_tests$;
+\echo user_tests passed
+
+--------------------------------------------------------------------------------
+DO
+$group_tests$ BEGIN
+    IF NOT EXISTS(
+        SELECT * FROM add_group('exampleGroup1', 1, 'fuckedATM', 'veryLongDescription', 5, '2012-12-21', '2069-4-20')
+    ) THEN
+        RAISE EXCEPTION 'add_group failed';
+    END IF;
+END $group_tests$;
+\echo group_tests passed

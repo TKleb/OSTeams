@@ -8,4 +8,4 @@ echo.
 echo Check the startup log above.
 echo Press any key to exit. Containers will keep running if started correctly.
 pause > nul
-exit
+exit /b
