@@ -46,3 +46,28 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION add_subject TO backend;
+
+-- get_subject_by_abbreviation
+CREATE OR REPLACE FUNCTION get_subject_by_abbreviation(
+    p_abbreviation VARCHAR
+)
+    RETURNS TABLE (
+        id INT,
+        abbreviation VARCHAR,
+        name VARCHAR
+    )
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT
+            subject_id AS id,
+            subject_abbreviation AS abbreviation,
+            subject_name AS name
+        FROM subjects WHERE subject_abbreviation = p_abbreviation
+        LIMIT 1;
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_subject_by_abbreviation TO backend;
