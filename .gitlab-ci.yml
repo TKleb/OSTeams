@@ -1,10 +1,12 @@
 image: tmaier/docker-compose:latest
 
 stages:
-    - tests
+  - tests
 
 variables:
-    TARGET: test
+  TARGET: test
+  COMPOSE_DOCKER_CLI_BUILD: 1
+  DOCKER_BUILDKIT: 1
 
 services:
   - docker:dind
@@ -17,4 +19,8 @@ test-web:
   stage: tests
   script:
     - echo ${TARGET}
-    - docker-compose up --build web
+    - docker-compose up --exit-code-from web --abort-on-container-exit --build web
+  artifacts:
+    reports:
+      cobertura: Website/coverage/cobertura-coverage.xml
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
