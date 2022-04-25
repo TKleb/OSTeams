@@ -4,23 +4,40 @@
 -- Ref.: https://stackoverflow.com/questions/11299037/postgresql-if-statement --
 --------------------------------------------------------------------------------
 
+
+CREATE OR REPLACE FUNCTION assert_count(
+    p_expected_count BIGINT,
+    p_query VARCHAR,
+    p_args VARCHAR
+)
+    RETURNS BOOLEAN
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    DECLARE correct BOOLEAN;
+    BEGIN
+        EXECUTE FORMAT('SELECT COUNT(*) = %1$s FROM %2$s(', p_expected_count, p_query)
+                || REPLACE(p_args, '"', '''')
+                || ')'
+            INTO correct;
+        IF NOT correct THEN
+            RAISE 'Failed: %', p_query;
+        END IF;
+        RETURN correct;
+    END
+$$;
+
 DO
 $subject_tests$ BEGIN
     /* Fill with sample data */
     INSERT INTO subjects(abbreviation, name) VALUES ('DB2', 'Datenbanken 2'), ('CN1', 'Computernetzwerke 1');
 
-    /* Tests */
-    IF 1 <> (SELECT COUNT(*) FROM add_subject('DB1', 'Datenbanken 1')) THEN
-        RAISE EXCEPTION 'add_subject failed';
-    END IF;
+    ASSERT assert_count(1, 'add_subject', '"DB1", "Datenbanken 1"');
 
-    IF (SELECT COUNT(*) FROM subjects) <> (SELECT COUNT(*) FROM get_subjects()) THEN
-        RAISE EXCEPTION 'get_subjects failed';
-    END IF;
+    ASSERT assert_count((SELECT COUNT(*) FROM subjects), 'get_subjects', ' ');
 
-    IF 1 <> (SELECT COUNT(*) FROM get_subject_by_abbreviation('DB1')) THEN
-        RAISE EXCEPTION 'get_subject_by_abbreviation failed';
-    END IF;
+    ASSERT assert_count(1, 'get_subject_by_abbreviation', '"DB1"');
+
 END $subject_tests$;
 \echo subject_tests passed
 
