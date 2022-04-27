@@ -19,7 +19,6 @@ test-web:
   stage: tests
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-    - if: $CI_PIPELINE_SOURCE == 'push'
   script:
     - echo ${TARGET}
     - docker-compose up --exit-code-from web --abort-on-container-exit --build web
