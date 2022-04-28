@@ -1,4 +1,4 @@
-import chai from "chai";
+import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
 import server from "../index.js";
 
@@ -7,24 +7,24 @@ chai.use(chaiHttp);
 
 describe("Test subjects page", () => {
 	describe("GET /subjects", () => {
-		it("It should Load the page.", (done) => {
+		it("It should Load the page.", () => {
 			chai.request(server)
 				.get("/subjects")
 				.end((err, response) => {
+					expect(response).to.not.be.undefined;
 					response.should.have.status(200);
 				});
-			done();
 		});
 	});
 
 	describe("POST /subjects", () => {
-		it("It should get a list of all subjects.", (done) => {
+		it("It should get a list of all subjects.", () => {
 			chai.request(server)
 				.post("/subjects")
 				.end((err, response) => {
+					expect(response).to.not.be.undefined;
 					response.should.have.status(200);
 				});
-			done();
 		});
 	});
 });

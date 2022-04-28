@@ -1,4 +1,4 @@
-import chai from "chai";
+import chai, { expect } from "chai";
 import chaiHttp from "chai-http";
 import server from "../index.js";
 
@@ -7,13 +7,13 @@ chai.use(chaiHttp);
 
 describe("Test register page", () => {
 	describe("GET /account/register", () => {
-		it("It should Load the page.", (done) => {
+		it("It should Load the page.", () => {
 			chai.request(server)
 				.get("/account/register")
 				.end((err, response) => {
+					expect(response).to.not.be.undefined;
 					response.should.have.status(200);
 				});
-			done();
 		});
 	});
 
@@ -27,6 +27,7 @@ describe("Test register page", () => {
 					"password":"Test12345"
 				})
 				.end((err, response) => {
+					expect(response).to.not.be.undefined;
 					response.should.have.status(200);
 				});
 			done();
@@ -38,6 +39,7 @@ describe("Test register page", () => {
 			chai.request(server)
 				.post("/account/register")
 				.end((err, response) => {
+					expect(response).to.not.be.undefined;
 					response.should.have.status(200);
 					response.res.text.should.contain("Please provide email and password.");
 				});

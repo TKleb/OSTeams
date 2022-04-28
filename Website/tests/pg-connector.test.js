@@ -6,6 +6,7 @@ describe("Test PG-Connector", () => {
 		it("It should return a list of subjects", (done) => {
 			pgConnector.executeStoredProcedure("get_subjects")
 				.then((subjects) => {
+					expect(subjects).to.not.be.undefined;
 					expect(subjects).to.be.an("array");
 					expect(subjects).to.not.be.empty;
 					expect(subjects[0]).to.be.an("object");
