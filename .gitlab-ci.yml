@@ -1,12 +1,5 @@
 image: tmaier/docker-compose:latest
 
-workflow:
-  rules:
-    - if: $CI_COMMIT_MESSAGE =~ /See merge request .*!\d+$/
-      # Prevents auto-generated merge request commits from triggering the pipeline a second time
-      when: never
-    - when: always
-
 stages:
   - tests
 
@@ -24,6 +17,11 @@ before_script:
 
 test-web:
   stage: tests
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /See merge request .*!\d+$/
+      # Prevents auto-generated merge request commits from triggering the pipeline a second time
+      when: manual
+    - when: always
   script:
     - echo ${TARGET}
     - docker-compose up --exit-code-from web --abort-on-container-exit --build web
