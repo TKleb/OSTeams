@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 describe("Test teams page", () => {
 	describe("GET /teams", () => {
-		it("It should Load the page.", async function() {
+		it("It should Load the page.", async () => {
 			const res = await chai.request(server)
 				.get("/teams");
 			assert.equal(res.statusCode, 200);

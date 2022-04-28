@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 describe("Test subjects page", () => {
 	describe("GET /subjects", () => {
-		it("It should Load the page.", async function() {
+		it("It should Load the page.", async () => {
 			const res = await chai.request(server)
 				.get("/subjects");
 			assert.equal(res.statusCode, 200);
@@ -16,7 +16,7 @@ describe("Test subjects page", () => {
 	});
 
 	describe("POST /subjects", () => {
-		it("It should get a list of all subjects.", async function() {
+		it("It should get a list of all subjects.", async () => {
 			const res = await chai.request(server)
 				.post("/subjects");
 			assert.equal(res.statusCode, 200);

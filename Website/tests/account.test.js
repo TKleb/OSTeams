@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 describe("Test account page", () => {
 	describe("GET /account/", () => {
-		it("It should Load the page.", async function() {
+		it("It should Load the page.", async () => {
 			const res = await chai.request(server)
 				.get("/account");
 			assert.equal(res.statusCode, 200);
@@ -16,7 +16,7 @@ describe("Test account page", () => {
 	});
 
 	describe("GET /account/logout", () => {
-		it("It should Load the page.", async function() {
+		it("It should Load the page.", async () => {
 			const res = await chai.request(server)
 				.get("/account/logout");
 			assert.equal(res.statusCode, 200);
@@ -24,7 +24,7 @@ describe("Test account page", () => {
 	});
 
 	describe("GET /account/edit", () => {
-		it("It should Load the page.", async function() {
+		it("It should Load the page.", async () => {
 			const res = await chai.request(server)
 				.get("/account/edit");
 			assert.equal(res.statusCode, 200);

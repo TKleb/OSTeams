@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 describe("Test index page", () => {
 	describe("GET /", () => {
-		it("It should Load the page.", async function() {
+		it("It should Load the page.", async () => {
 			const res = await chai.request(server)
 				.get("/");
 			assert.equal(res.statusCode, 200);
