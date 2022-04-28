@@ -4,7 +4,7 @@ import pgConnector from "../services/pg-connector.js";
 describe("Test PG-Connector", () => {
 	describe("Test getting all subjects", () => {
 		it("It should return a list of subjects", async () => {
-			pgConnector.executeStoredProcedure("get_subjects")
+			await pgConnector.executeStoredProcedure("get_subjects")
 				.then((subjects) => {
 					expect(subjects).to.be.an("array");
 					expect(subjects).to.not.be.empty;
