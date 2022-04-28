@@ -17,13 +17,11 @@ describe("Test subjects page", () => {
 	});
 
 	describe("POST /subjects", () => {
-		it("It should get a list of all subjects.", (done) => {
-			chai.request(server)
+		it("It should get a list of all subjects.", async function() {
+			const res = await chai.request(server)
 				.post("/subjects")
-				.end((err, response) => {
-					expect(response).to.have.status(200);
-				});
-			done();
+				.send();
+			assert.equal(res.statusCode, 200);
 		});
 	});
 });

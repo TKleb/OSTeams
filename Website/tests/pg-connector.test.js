@@ -3,7 +3,7 @@ import pgConnector from "../services/pg-connector.js";
 
 describe("Test PG-Connector", () => {
 	describe("Test getting all subjects", () => {
-		it("It should return a list of subjects", (done) => {
+		it("It should return a list of subjects", async () => {
 			pgConnector.executeStoredProcedure("get_subjects")
 				.then((subjects) => {
 					expect(subjects).to.be.an("array");
@@ -12,9 +12,7 @@ describe("Test PG-Connector", () => {
 					expect(subjects[0]).to.have.property("abbreviation");
 					expect(subjects[0]).to.have.property("id");
 					expect(subjects[0]).to.have.property("name");
-					done();
-				})
-				.catch(done);
+				});
 		});
 	});
 

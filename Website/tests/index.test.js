@@ -1,19 +1,18 @@
 import chai, { should, expect } from "chai";
 import chaiHttp from "chai-http";
 import server from "../index.js";
+import assert from "assert";
 
 chai.should();
 chai.use(chaiHttp);
 
 describe("Test index page", () => {
 	describe("GET /", () => {
-		it("It should Load the page.", (done) => {
-			chai.request(server)
+		it("It should Load the page.", async function() {
+			const res = await chai.request(server)
 				.get("/")
-				.end((err, response) => {
-					expect(response).to.have.status(200);
-				});
-			done();
+				.send();
+			assert.equal(res.statusCode, 200);
 		});
 	});
 });
