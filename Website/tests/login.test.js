@@ -1,6 +1,7 @@
-import chai from "chai";
+import chai, { should, expect } from "chai";
 import chaiHttp from "chai-http";
 import server from "../index.js";
+
 
 chai.should();
 chai.use(chaiHttp);
@@ -11,7 +12,7 @@ describe("Test login page", () => {
 			chai.request(server)
 				.get("/account/login")
 				.end((err, response) => {
-					response.should.have.status(200);
+					expect(response).to.have.status(200);
 				});
 			done();
 		});
@@ -22,7 +23,7 @@ describe("Test login page", () => {
 			chai.request(server)
 				.post("/account/login")
 				.end((err, response) => {
-					response.should.have.status(200);
+					expect(response).to.have.status(200);
 				});
 			done();
 		});

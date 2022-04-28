@@ -1,4 +1,4 @@
-import chai from "chai";
+import chai, { should, expect } from "chai";
 import chaiHttp from "chai-http";
 import server from "../index.js";
 
@@ -11,7 +11,7 @@ describe("Test register page", () => {
 			chai.request(server)
 				.get("/account/register")
 				.end((err, response) => {
-					response.should.have.status(200);
+					expect(response).to.have.status(200);
 				});
 			done();
 		});
@@ -27,7 +27,7 @@ describe("Test register page", () => {
 					"password":"Test12345"
 				})
 				.end((err, response) => {
-					response.should.have.status(200);
+					expect(response).to.have.status(200);
 				});
 			done();
 		});
