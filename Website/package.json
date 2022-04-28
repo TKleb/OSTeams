@@ -8,7 +8,7 @@
         "start:production": "node index.js",
         "start:development": "nodemon -L",
         "start:test": "npm run lint && npm run mocha_tests",
-        "mocha_tests": "c8 mocha tests/*.test.js  --timeout 5000",
+        "mocha_tests": "c8 mocha tests/*.test.js --timeout 5000",
         "eslint": "eslint . --ext .js",
         "stylelint": "stylelint \"**/*.css\"",
         "lint": "npm run eslint && npm run stylelint"
