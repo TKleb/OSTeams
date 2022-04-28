@@ -10,8 +10,7 @@ describe("Test index page", () => {
 	describe("GET /", () => {
 		it("It should Load the page.", async function() {
 			const res = await chai.request(server)
-				.get("/")
-				.send();
+				.get("/");
 			assert.equal(res.statusCode, 200);
 		});
 	});

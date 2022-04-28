@@ -10,8 +10,7 @@ describe("Test forgot password page", () => {
 	describe("GET /account/forgot", () => {
 		it("It should Load the page.", async function() {
 			const res = await chai.request(server)
-				.get("/account/forgot")
-				.send();
+				.get("/account/forgot");
 			assert.equal(res.statusCode, 200);
 		});
 	});

@@ -10,8 +10,7 @@ describe("Test teams page", () => {
 	describe("GET /teams", () => {
 		it("It should Load the page.", async function() {
 			const res = await chai.request(server)
-				.get("/teams")
-				.send();
+				.get("/teams");
 			assert.equal(res.statusCode, 200);
 		});
 	});

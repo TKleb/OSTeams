@@ -10,8 +10,7 @@ describe("Test register page", () => {
 	describe("GET /account/register", () => {
 		it("It should Load the page.", async function() {
 			const res = await chai.request(server)
-				.get("/account/register")
-				.send();
+				.get("/account/register");
 			assert.equal(res.statusCode, 200);
 		});
 	});
@@ -33,8 +32,7 @@ describe("Test register page", () => {
 	describe("POST /account/register without body", () => {
 		it("It should throw error: Please provide email and password.", async function() {
 			const res = await chai.request(server)
-				.post("/account/register")
-				.send();
+				.post("/account/register");
 			assert.equal(res.statusCode, 200);
 			assert.match(res.text, /Please provide email and password./);
 		});

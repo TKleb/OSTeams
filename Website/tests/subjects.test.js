@@ -10,8 +10,7 @@ describe("Test subjects page", () => {
 	describe("GET /subjects", () => {
 		it("It should Load the page.", async function() {
 			const res = await chai.request(server)
-				.get("/subjects")
-				.send();
+				.get("/subjects");
 			assert.equal(res.statusCode, 200);
 		});
 	});
@@ -19,8 +18,7 @@ describe("Test subjects page", () => {
 	describe("POST /subjects", () => {
 		it("It should get a list of all subjects.", async function() {
 			const res = await chai.request(server)
-				.post("/subjects")
-				.send();
+				.post("/subjects");
 			assert.equal(res.statusCode, 200);
 		});
 	});

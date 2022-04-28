@@ -10,8 +10,7 @@ describe("Test groups page", () => {
 	describe("GET /subjects/DSy", () => {
 		it("It should Load the page.", async function() {
 			const res = await chai.request(server)
-				.get("/subjects/DSy")
-				.send();
+				.get("/subjects/DSy");
 			assert.equal(res.statusCode, 200);
 		});
 	});

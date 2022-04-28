@@ -10,8 +10,7 @@ describe("Test account page", () => {
 	describe("GET /account/", () => {
 		it("It should Load the page.", async function() {
 			const res = await chai.request(server)
-				.get("/account")
-				.send();
+				.get("/account");
 			assert.equal(res.statusCode, 200);
 		});
 	});
@@ -19,8 +18,7 @@ describe("Test account page", () => {
 	describe("GET /account/logout", () => {
 		it("It should Load the page.", async function() {
 			const res = await chai.request(server)
-				.get("/account/logout")
-				.send();
+				.get("/account/logout");
 			assert.equal(res.statusCode, 200);
 		});
 	});
@@ -28,8 +26,7 @@ describe("Test account page", () => {
 	describe("GET /account/edit", () => {
 		it("It should Load the page.", async function() {
 			const res = await chai.request(server)
-				.get("/account/edit")
-				.send();
+				.get("/account/edit");
 			assert.equal(res.statusCode, 200);
 		});
 	});
