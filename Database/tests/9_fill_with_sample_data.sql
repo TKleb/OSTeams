@@ -52,5 +52,8 @@ DO
 $group_tests$ BEGIN
     ASSERT 1 = COUNT(*) FROM add_group('exampleGroup1', 1, 'fuckedATM', 'veryLongDescription', 5, '2012-12-21', '2069-4-20'),
         'add_group failed';
+
+    ASSERT (SELECT COUNT(*) FROM groups) = COUNT(*) FROM get_groups(),
+        'get_groups failed';
 END $group_tests$;
 \echo group_tests passed

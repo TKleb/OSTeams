@@ -36,3 +36,17 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION add_group TO backend;
+
+-- get Groups Function
+CREATE OR REPLACE FUNCTION get_groups()
+    RETURNS SETOF groups
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM groups;
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_groups TO backend;
