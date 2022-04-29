@@ -3,8 +3,8 @@ import pgConnector from "../services/pg-connector.js";
 
 describe("Test PG-Connector", () => {
 	describe("Test getting all subjects", () => {
-		it("It should return a list of subjects", (done) => {
-			pgConnector.executeStoredProcedure("get_subjects")
+		it("It should return a list of subjects", async () => {
+			await pgConnector.executeStoredProcedure("get_subjects")
 				.then((subjects) => {
 					expect(subjects).to.not.be.undefined;
 					expect(subjects).to.be.an("array");
@@ -13,9 +13,7 @@ describe("Test PG-Connector", () => {
 					expect(subjects[0]).to.have.property("abbreviation");
 					expect(subjects[0]).to.have.property("id");
 					expect(subjects[0]).to.have.property("name");
-					done();
-				})
-				.catch(done);
+				});
 		});
 	});
 
