@@ -74,3 +74,21 @@ CREATE TABLE IF NOT EXISTS group_applications
 ) TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS group_applications OWNER TO admin;
+
+CREATE TABLE IF NOT EXISTS group_memberships
+(
+    id INT GENERATED ALWAYS AS IDENTITY,
+    user_id INT NOT NULL,
+    group_id INT NOT NULL,
+    member_since TIMESTAMP WITH TIME ZONE NOT NULL,
+    CONSTRAINT fk_group
+      FOREIGN KEY(group_id)
+      REFERENCES groups(id),
+    CONSTRAINT fk_user
+      FOREIGN KEY(user_id)
+      REFERENCES users(id),
+    CONSTRAINT fk_unique
+        UNIQUE (user_id, group_id)
+) TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS group_memberships OWNER TO admin;
