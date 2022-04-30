@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS subjects
 (
-    id INT GENERATED ALWAYS AS IDENTITY,
+    id INT GENERATED ALWAYS AS IDENTITY UNIQUE,
     abbreviation VARCHAR(10) UNIQUE NOT NULL,
     name VARCHAR(30) NOT NULL
 ) TABLESPACE pg_default;
@@ -9,7 +9,7 @@ ALTER TABLE IF EXISTS subjects OWNER TO admin;
 
 CREATE TABLE IF NOT EXISTS unverified_users
 (
-    id INT GENERATED ALWAYS AS IDENTITY,
+    id INT GENERATED ALWAYS AS IDENTITY UNIQUE,
     name VARCHAR(30) NOT NULL,
     surname VARCHAR(30) NOT NULL,
     email VARCHAR(40) UNIQUE NOT NULL,
@@ -39,9 +39,9 @@ ALTER TABLE IF EXISTS users OWNER TO admin;
 CREATE TABLE IF NOT EXISTS groups
 (
     id INT GENERATED ALWAYS AS IDENTITY UNIQUE,
-    owner INT,
+    owner INT NOT NULL,
     name VARCHAR(50) NOT NULL,
-    subject VARCHAR(30) NOT NULL,
+    subject INT NOT NULL,
     description VARCHAR(512) NULL,
     max_member_count INT NOT NULL,
     creation_date TIMESTAMP WITH TIME ZONE NOT NULL,
@@ -49,7 +49,10 @@ CREATE TABLE IF NOT EXISTS groups
     closed BOOLEAN NULL,
     CONSTRAINT fk_owner
       FOREIGN KEY(owner)
-      REFERENCES users(id)
+      REFERENCES users(id),
+    CONSTRAINT fk_subject
+      FOREIGN KEY(subject)
+      REFERENCES subjects(id)
 ) TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS groups OWNER TO admin;

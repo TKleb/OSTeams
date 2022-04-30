@@ -50,10 +50,13 @@ END $user_tests$;
 --------------------------------------------------------------------------------
 DO
 $group_tests$ BEGIN
-    ASSERT 1 = COUNT(*) FROM add_group('exampleGroup1', 1, 'fuckedATM', 'veryLongDescription', 5, '2012-12-21', '2069-4-20'),
+    ASSERT 1 = COUNT(*) FROM add_group('exampleGroup1', 1, 1, 'veryLongDescription', 5, '2012-12-21', '2069-4-20'),
         'add_group failed';
 
-    ASSERT (SELECT COUNT(*) FROM groups) = COUNT(*) FROM get_groups(),
-        'get_groups failed';
+    ASSERT 1 = COUNT(*) FROM get_group_by_id(1),
+        'get_group_by_id failed';
+
+    ASSERT 1 = COUNT(*) FROM get_groups_by_subject_id(1),
+        'get_groups_by_subject_id failed';
 END $group_tests$;
 \echo group_tests passed

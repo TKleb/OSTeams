@@ -2,7 +2,7 @@
 CREATE OR REPLACE FUNCTION add_group(
     p_name VARCHAR(50),
     p_owner INT,
-    p_subject VARCHAR(30),
+    p_subject INT,
     p_description VARCHAR(512),
     p_max_member_count INT,
     p_creation_date Date,
@@ -50,3 +50,35 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION get_groups TO backend;
+
+-- Get Group by id Function
+CREATE OR REPLACE FUNCTION get_group_by_id(
+    p_id INT
+)
+    RETURNS SETOF groups
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM groups WHERE id = p_id;
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_group_by_id TO backend;
+
+-- get groups by Subject ID (have to add part of group filtering)
+CREATE OR REPLACE FUNCTION get_groups_by_subject_id(
+    p_subject_id INT
+)
+    RETURNS SETOF groups
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM groups WHERE subject = p_subject_id;
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_groups_by_subject_id TO backend;
