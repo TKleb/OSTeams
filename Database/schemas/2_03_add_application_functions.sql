@@ -19,18 +19,37 @@ AS $$
             user_id,
             group_id,
             text,
-            date
+            date,
+            closed
         ) VALUES (
             p_user_id,
             p_group_id,
             p_text,
-            p_date
+            p_date,
+            FALSE
         )
         RETURNING *;
     END
 $$;
 
 GRANT ALL ON FUNCTION add_application TO backend;
+
+-- Get Group by id Function
+CREATE OR REPLACE FUNCTION get_applications_to_group(
+    p_group_id INT
+)
+    RETURNS SETOF group_applications
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM group_applications
+        WHERE group_id = p_group_id AND closed = FALSE;
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_applications_to_group TO backend;
 
 -- Add function to check if email is in use by a user or an unverified user
 CREATE OR REPLACE FUNCTION is_application_possible(
