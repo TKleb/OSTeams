@@ -60,3 +60,11 @@ $group_tests$ BEGIN
         'get_groups_by_subject_id failed';
 END $group_tests$;
 \echo group_tests passed
+
+--------------------------------------------------------------------------------
+DO
+$group_application_tests$ BEGIN
+    ASSERT 1 = COUNT(*) FROM add_application(1, 1, 'Hi, i want to apply.', '2012-12-21'),
+        'add_group failed';
+END $group_application_tests$;
+\echo group_application_tests passed
