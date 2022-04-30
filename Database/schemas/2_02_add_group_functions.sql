@@ -5,7 +5,7 @@ CREATE OR REPLACE FUNCTION add_group(
     p_subject INT,
     p_description VARCHAR(512),
     p_max_member_count INT,
-    p_creation_date Date,
+    p_creation_date TIMESTAMP WITH TIME ZONE,
     p_apply_by_date TIMESTAMP WITH TIME ZONE
 )
 RETURNS SETOF groups
