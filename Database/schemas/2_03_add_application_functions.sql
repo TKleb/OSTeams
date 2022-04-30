@@ -51,6 +51,47 @@ $$;
 
 GRANT ALL ON FUNCTION get_applications_to_group TO backend;
 
+-- verify and unverified user, turning them into a regular user
+CREATE OR REPLACE FUNCTION do_close_application(
+    p_id INT,
+    p_accepted BOOLEAN
+)
+    RETURNS SETOF group_memberships
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    DECLARE
+        user INTEGER;
+        group INTEGER;
+
+    BEGIN
+        IF p_accepted = TRUE THEN
+            RETURN QUERY
+            WITH a AS (
+                UPDATE group_applications
+                SET closed = TRUE
+                WHERE id = p_id
+                RETURNING user_id, group_id
+            )
+            INSERT INTO group_memberships (
+                user_id,
+                group_id,
+                member_since
+            )
+            SELECT a.user_id, a.group_id, NOW()
+            FROM a
+            RETURNING *;
+        ELSE
+            UPDATE group_applications
+            SET closed = TRUE
+            WHERE id = p_id;
+            RETURN QUERY SELECT * from group_memberships LIMIT 0;
+        END IF;
+    END
+$$;
+
+GRANT ALL ON FUNCTION do_close_application TO backend;
+
 -- Add function to check if email is in use by a user or an unverified user
 CREATE OR REPLACE FUNCTION is_application_possible(
     p_user_id INT,

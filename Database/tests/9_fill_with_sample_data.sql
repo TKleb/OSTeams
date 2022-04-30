@@ -69,5 +69,11 @@ $group_application_tests$ BEGIN
 
     ASSERT 1 = COUNT(*) FROM get_applications_to_group(1),
         'get_applications_to_group failed';
+
+    ASSERT 0 = COUNT(*) FROM do_close_application(1, FALSE),
+        'do_close_application failed';
+
+    ASSERT 0 = COUNT(*) FROM get_applications_to_group(1),
+        'get_applications_to_group failed';
 END $group_application_tests$;
 \echo group_application_tests passed
