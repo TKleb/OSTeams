@@ -7,30 +7,21 @@ CREATE OR REPLACE FUNCTION add_group(
     p_max_member_count INT,
     p_creation_date Date,
     p_apply_by_date TIMESTAMP WITH TIME ZONE
-
 )
-    RETURNS TABLE (
-        name VARCHAR,
-        owner INT,
-        subject VARCHAR,
-        description VARCHAR,
-        max_member_count INT,
-        creation_date TIMESTAMP WITH TIME ZONE,
-        apply_by_date TIMESTAMP WITH TIME ZONE
-    )
+RETURNS SETOF groups
 LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
         INSERT INTO groups (
-            group_name,
-            group_owner,
-            group_subject,
-            group_description,
-            group_max_member_count,
-            group_creation_date,
-            group_apply_by_date
+            name,
+            owner,
+            subject,
+            description,
+            max_member_count,
+            creation_date,
+            apply_by_date
         ) VALUES (
             p_name,
             p_owner,
@@ -40,15 +31,22 @@ AS $$
             p_creation_date,
             p_apply_by_date
         )
-        RETURNING
-            group_name,
-            group_owner,
-            group_subject,
-            group_description,
-            group_max_member_count,
-            group_creation_date,
-            group_apply_by_date;
+        RETURNING *;
     END
 $$;
 
 GRANT ALL ON FUNCTION add_group TO backend;
+
+-- get Groups Function
+CREATE OR REPLACE FUNCTION get_groups()
+    RETURNS SETOF groups
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM groups;
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_groups TO backend;
