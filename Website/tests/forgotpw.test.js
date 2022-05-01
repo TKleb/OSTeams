@@ -1,4 +1,4 @@
-import chai, { expect } from "chai";
+import chai from "chai";
 import chaiHttp from "chai-http";
 import server from "../index.js";
 import assert from "assert";
