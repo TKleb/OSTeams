@@ -6,7 +6,7 @@ import websiteConfig from "../config/website.config.js";
 
 class RegisterController {
 	index(req, res) {
-		res.render("register", { title: "register" });
+		res.render("register", { title: "register" , hint: req.flash("hint"), error: req.flash("error"), success: req.flash("success")});
 	}
 
 	async register(req, res) {
@@ -15,11 +15,10 @@ class RegisterController {
 		if (!email || !password) {
 			return res.render("register", { error: "Please provide email and password." });
 		}
-		// TODO: better error handling of executeStoredProcedure (maybe in wrapper class?)
-		const isEmailInUseRow = await pgConnector.executeStoredProcedure("is_email_in_use", [email])
-			.catch(() => res.render("register", { error: "There was an error checking your email" }));
 
-		if (isEmailInUseRow[0].is_email_in_use) {
+		const isEmailInUseRow = await pgConnector.executeStoredProcedure("is_email_in_use", [email]);
+
+		if ( isEmailInUseRow[0].is_email_in_use) {
 			return res.render("register", { error: "The provided email is already in use." });
 		}
 
@@ -34,8 +33,7 @@ class RegisterController {
 			email.toLowerCase(),
 			encryptedPassword,
 			verificationToken,
-		])
-			.catch(() => res.render("register", { error: "There was an error creating your account." }));
+		]);
 
 		const htmlBody =		"<p>In order to use OSTeams, "
 		+ `click on the following link <a href="${websiteConfig.hostname}:${websiteConfig.port}/account/verifyEmail?token=${verificationToken}">link</a> `
