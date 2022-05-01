@@ -6,7 +6,9 @@ import websiteConfig from "../config/website.config.js";
 
 class RegisterController {
 	index(req, res) {
-		res.render("register", { title: "register" , hint: req.flash("hint"), error: req.flash("error"), success: req.flash("success")});
+		res.render("register", {
+			title: "register", hint: req.flash("hint"), error: req.flash("error"), success: req.flash("success"),
+		});
 	}
 
 	async register(req, res) {
@@ -15,10 +17,9 @@ class RegisterController {
 		if (!email || !password) {
 			return res.render("register", { error: "Please provide email and password." });
 		}
-
 		const isEmailInUseRow = await pgConnector.executeStoredProcedure("is_email_in_use", [email]);
 
-		if ( isEmailInUseRow[0].is_email_in_use) {
+		if (isEmailInUseRow[0].is_email_in_use) {
 			return res.render("register", { error: "The provided email is already in use." });
 		}
 

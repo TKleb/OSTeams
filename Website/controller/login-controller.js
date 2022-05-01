@@ -3,7 +3,9 @@ import pgConnector from "../services/pg-connector.js";
 
 class LoginController {
 	index(req, res) {
-		res.render("login", { title: "login",  hint: req.flash("hint"), error: req.flash("error"), success: req.flash("success") });
+		res.render("login", {
+			title: "login", hint: req.flash("hint"), error: req.flash("error"), success: req.flash("success"),
+		});
 	}
 
 	async login(req, res) {
