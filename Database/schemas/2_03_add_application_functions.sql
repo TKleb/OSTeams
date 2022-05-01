@@ -60,18 +60,11 @@ CREATE OR REPLACE FUNCTION do_close_application(
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
-    DECLARE
-        user INTEGER;
-        group INTEGER;
-
     BEGIN
         IF p_accepted = TRUE THEN
             RETURN QUERY
             WITH a AS (
-                UPDATE group_applications
-                SET closed = TRUE
-                WHERE id = p_id
-                RETURNING user_id, group_id
+                SELECT user_id, group_id FROM helper_close_application(p_id)
             )
             INSERT INTO group_memberships (
                 user_id,
@@ -82,17 +75,34 @@ AS $$
             FROM a
             RETURNING *;
         ELSE
-            UPDATE group_applications
-            SET closed = TRUE
-            WHERE id = p_id;
-            RETURN QUERY SELECT * from group_memberships LIMIT 0;
+            PERFORM helper_close_application(p_id);
+            -- Return an empty row, with the columns organised like a regular membership.
+            RETURN QUERY SELECT * FROM group_memberships LIMIT 0;
         END IF;
     END
 $$;
 
 GRANT ALL ON FUNCTION do_close_application TO backend;
 
--- Add function to check if email is in use by a user or an unverified user
+-- Helper-function to close an application
+-- For internal use only
+CREATE OR REPLACE FUNCTION helper_close_application(
+    p_id int
+)
+    RETURNS SETOF group_applications
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        UPDATE group_applications
+        SET closed = TRUE
+        WHERE id = p_id
+        RETURNING *;
+    END
+$$;
+
+-- Add function to check if application is possible.
 CREATE OR REPLACE FUNCTION is_application_possible(
     p_user_id INT,
     p_group_id INT
@@ -114,4 +124,4 @@ AS $$
     END
 $$;
 
-GRANT ALL ON FUNCTION is_email_in_use TO backend;
+GRANT ALL ON FUNCTION is_application_possible TO backend;
