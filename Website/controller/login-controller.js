@@ -3,7 +3,9 @@ import pgConnector from "../services/pg-connector.js";
 
 class LoginController {
 	index(req, res) {
-		res.render("login", { title: "login" });
+		res.render("login", {
+			title: "login", hint: req.flash("hint"), error: req.flash("error"), success: req.flash("success"),
+		});
 	}
 
 	async login(req, res) {
@@ -21,6 +23,8 @@ class LoginController {
 		if (await bcrypt.compare(password, user.password_hash)) {
 			req.session.loggedIn = true;
 			req.session.email = email;
+			req.session.userId = user.id;
+			req.flash("success", "Logged in successfully.");
 			return res.redirect("/");
 		}
 		return res.render("login", { error: "Invalid credentials" });
