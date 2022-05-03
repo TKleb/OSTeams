@@ -1,4 +1,4 @@
-class ForgotPwController {
+class ForgotPasswordController {
 	index(req, res) {
 		res.render("forgotPassword", { title: "forgotPassword" });
 	}
@@ -8,4 +8,4 @@ class ForgotPwController {
 	}
 }
 
-export default new ForgotPwController();
+export default new ForgotPasswordController();
