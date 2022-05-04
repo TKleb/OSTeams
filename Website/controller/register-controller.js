@@ -24,10 +24,12 @@ class RegisterController {
 				const encryptedPassword = await this.hashPassword(password);
 				const verificationToken = this.generateToken();
 
-				await this.addUnverifiedUserToDB(email, encryptedPassword, verificationToken, res);
-
-				const response = await this.sendVerificationEmail(verificationToken, email);
-				return res.render("register", { hint: response });
+				return this.addUnverifiedUserToDB(email, encryptedPassword, verificationToken)
+					.catch(() => res.render("register", { error: "There was an error creating your account." }))
+					.then(() => {
+						this.sendVerificationEmail(verificationToken, email)
+							.then((response) => res.render("register", { hint: response }));
+					});
 			})
 			.catch(() => res.render("register", { error: "There was an error checking your email" }));
 	}
@@ -46,15 +48,14 @@ class RegisterController {
 		return response;
 	}
 
-	async addUnverifiedUserToDB(email, encryptedPassword, verificationToken, res) {
+	async addUnverifiedUserToDB(email, encryptedPassword, verificationToken) {
 		await pgConnector.executeStoredProcedure("add_unverified_user", [
 			"",
 			"",
 			email.toLowerCase(),
 			encryptedPassword,
 			verificationToken,
-		])
-			.catch(() => res.render("register", { error: "There was an error creating your account." }));
+		]);
 	}
 
 	generateToken() {
