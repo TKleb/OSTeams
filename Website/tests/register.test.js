@@ -43,4 +43,14 @@ describe("Test register page", () => {
 			assert.equal(registerController.generateToken().length, 50);
 		});
 	});
+
+	describe("Create and verify new user", () => {
+		it("It should create and verify a new user.", async () => {
+			const token = registerController.generateToken();
+			registerController.addUnverifiedUserToDB((Math.random() + 1).toString(36).substring(20), registerController.hashPassword('123'), token);
+			const res = await chai.request(server)
+				.get(`/account/verifyEmail?token=${token}`);
+			assert.match(res.text, /Email verified successfully/);
+		});
+	});
 });
