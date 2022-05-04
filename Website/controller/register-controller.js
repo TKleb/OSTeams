@@ -16,18 +16,37 @@ class RegisterController {
 			return res.render("register", { error: "Please provide email and password." });
 		}
 		// TODO: better error handling of executeStoredProcedure (maybe in wrapper class?)
-		const isEmailInUseRow = await pgConnector.executeStoredProcedure("is_email_in_use", [email])
+		return this.checkEmailUsed(email)
+			.then(async (isEmailUsed) => {
+				if (isEmailUsed) {
+					return res.render("register", { error: "The provided email is already in use." });
+				}
+				const encryptedPassword = await this.hashPassword(password);
+				const verificationToken = this.generateToken();
+
+				await this.addUnverifiedUserToDB(email, encryptedPassword, verificationToken, res);
+
+				const response = await this.sendVerificationEmail(verificationToken, email);
+				return res.render("register", { hint: response });
+			})
 			.catch(() => res.render("register", { error: "There was an error checking your email" }));
+	}
 
-		if (isEmailInUseRow[0].is_email_in_use) {
-			return res.render("register", { error: "The provided email is already in use." });
-		}
+	async checkEmailUsed(email) {
+		const response = await pgConnector.executeStoredProcedure("is_email_in_use", [email]);
+		return response[0].is_email_in_use;
+	}
 
-		const saltLength = 10;
-		const encryptedPassword = await bcrypt.hash(password, saltLength);
-		const tokenLength = 50;
-		const verificationToken = randToken.generate(tokenLength);
+	async sendVerificationEmail(verificationToken, email) {
+		const htmlBody = "<p>In order to use OSTeams, "
+			+ `click on the following link <a href="${websiteConfig.hostname}:${websiteConfig.port}/account/verifyEmail?token=${verificationToken}">link</a> `
+			+ "to verify your email address</p>";
 
+		const response = await mailer.SendMail(email, "Email verification - OSTeams", htmlBody);
+		return response;
+	}
+
+	async addUnverifiedUserToDB(email, encryptedPassword, verificationToken, res) {
 		await pgConnector.executeStoredProcedure("add_unverified_user", [
 			"",
 			"",
@@ -36,13 +55,18 @@ class RegisterController {
 			verificationToken,
 		])
 			.catch(() => res.render("register", { error: "There was an error creating your account." }));
+	}
 
-		const htmlBody =		"<p>In order to use OSTeams, "
-		+ `click on the following link <a href="${websiteConfig.hostname}:${websiteConfig.port}/account/verifyEmail?token=${verificationToken}">link</a> `
-		+ "to verify your email address</p>";
+	generateToken() {
+		const tokenLength = 50;
+		const verificationToken = randToken.generate(tokenLength);
+		return verificationToken;
+	}
 
-		const response = await mailer.SendMail(email, "Email verification - OSTeams", htmlBody);
-		return res.render("register", { hint: response });
+	async hashPassword(password) {
+		const saltLength = 10;
+		const encryptedPassword = await bcrypt.hash(password, saltLength);
+		return encryptedPassword;
 	}
 
 	verifyMail(req, res) {
