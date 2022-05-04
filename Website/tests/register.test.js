@@ -16,18 +16,6 @@ describe("Test register page", () => {
 		});
 	});
 
-	describe("POST /account/register with email and password", () => {
-		it("It should Register the user", async () => {
-			const res = await chai.request(server)
-				.post("/account/register")
-				.type("form")
-				.send({
-					"email":"gianlcua.nenz@ost.ch",
-					"password":"Test12345"
-				})
-			assert.equal(res.statusCode, 200);
-		});
-	});
 
 	describe("POST /account/register without body", () => {
 		it("It should throw error: Please provide email and password.", async () => {
