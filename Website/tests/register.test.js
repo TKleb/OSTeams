@@ -25,7 +25,6 @@ describe("Test register page", () => {
 					"password":"Test12345"
 				})
 			assert.equal(res.statusCode, 200);
-
 		});
 	});
 
