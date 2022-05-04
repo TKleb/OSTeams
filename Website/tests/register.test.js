@@ -2,6 +2,7 @@ import chai from "chai";
 import chaiHttp from "chai-http";
 import assert from "assert";
 import server from "../index.js";
+import registerController from "../controller/register-controller.js";
 
 chai.should();
 chai.use(chaiHttp);
@@ -34,6 +35,12 @@ describe("Test register page", () => {
 				.post("/account/register");
 			assert.equal(res.statusCode, 200);
 			assert.match(res.text, /Please provide email and password./);
+		});
+	});
+
+	describe("Generate verification token", () => {
+		it("It should generate a verification token.", async () => {
+			assert.equal(registerController.generateToken().length, 50);
 		});
 	});
 });
