@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import chai from "chai";
 import mailer from "../services/mailer.js";
 
 describe("Test Mailer", () => {

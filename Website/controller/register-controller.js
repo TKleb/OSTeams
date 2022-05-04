@@ -6,7 +6,9 @@ import websiteConfig from "../config/website.config.js";
 
 class RegisterController {
 	index(req, res) {
-		res.render("register", { title: "register" });
+		res.render("register", {
+			title: "register", hint: req.flash("hint"), error: req.flash("error"), success: req.flash("success"),
+		});
 	}
 
 	async register(req, res) {
