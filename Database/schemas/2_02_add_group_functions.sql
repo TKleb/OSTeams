@@ -83,18 +83,18 @@ $$;
 
 GRANT ALL ON FUNCTION get_groups_by_subject_id TO backend;
 
--- get_groups_of_user_by_id
-CREATE OR REPLACE FUNCTION get_groups_of_user_by_id(
-    p_user_id INT
+-- get_members_by_group_id
+CREATE OR REPLACE FUNCTION get_members_by_group_id(
+    p_group_id INT
 )
-    RETURNS SETOF groups
+    RETURNS SETOF users
 LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT * FROM groups WHERE id = ( SELECT group_id FROM group_memberships WHERE user_id = p_user_id );
+        SELECT * FROM users WHERE id = ( SELECT user_id FROM group_memberships WHERE group_id = p_group_id );
     END
 $$;
 
-GRANT ALL ON FUNCTION get_groups_of_user_by_id TO backend;
+GRANT ALL ON FUNCTION get_members_by_group_id TO backend;
