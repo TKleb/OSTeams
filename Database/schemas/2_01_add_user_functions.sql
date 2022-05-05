@@ -195,12 +195,11 @@ CREATE OR REPLACE FUNCTION do_remove_user_from_group(
     p_userid INT,
     p_groupid INT
 )
-RETURNS BOOLEAN
+RETURNS VOID
 LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
     BEGIN
-        RETURN 0
         DELETE FROM group_memberships WHERE user_id = p_userid AND group_id = p_groupid;
     END
 $$;

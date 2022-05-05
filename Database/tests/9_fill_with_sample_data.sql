@@ -91,8 +91,7 @@ $group_memberships_tests$ BEGIN
     ASSERT 1 = COUNT(*) FROM get_members_by_group_id(1),
         'get_members_by_group_id failed';
 
-    ASSERT 1 = COUNT(*) FROM do_remove_user_from_group(1, 1),
-        'do_remove_user_from_group failed';
+    PERFORM do_remove_user_from_group(1, 1);
         
 END $group_memberships_tests$;
 \echo group_memberships_tests passed
