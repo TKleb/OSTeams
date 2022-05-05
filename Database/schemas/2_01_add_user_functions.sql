@@ -200,6 +200,7 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
     BEGIN
+        RETURN 0
         DELETE FROM group_memberships WHERE user_id = p_userid AND group_id = p_groupid;
     END
 $$;
@@ -216,7 +217,7 @@ SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT * FROM groups WHERE id = ( SELECT group_id FROM group_memberships WHERE user_id = p_user_id );
+        SELECT * FROM groups WHERE id IN ( SELECT group_id FROM group_memberships WHERE user_id = p_user_id );
     END
 $$;
 

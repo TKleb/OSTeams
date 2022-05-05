@@ -93,7 +93,7 @@ SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT * FROM users WHERE id = ( SELECT user_id FROM group_memberships WHERE group_id = p_group_id );
+        SELECT * FROM users WHERE id IN ( SELECT user_id FROM group_memberships WHERE group_id = p_group_id );
     END
 $$;
 
