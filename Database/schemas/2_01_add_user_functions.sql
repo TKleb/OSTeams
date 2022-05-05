@@ -203,3 +203,5 @@ AS $$
         DELETE FROM group_memberships WHERE user_id = p_userid AND group_id = p_groupid
     END
 $$;
+
+GRANT ALL ON FUNCTION do_remove_user_from_group TO backend;
