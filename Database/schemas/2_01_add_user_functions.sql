@@ -189,3 +189,17 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION is_email_in_use TO backend;
+
+-- do_remove_user_from_group
+CREATE OR REPLACE FUNCTION do_remove_user_from_group(
+    p_userid INT,
+    p_groupid INT
+)
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+    BEGIN
+        DELETE FROM group_memberships WHERE user_id = p_userid AND group_id = p_groupid
+    END
+$$;
