@@ -200,7 +200,7 @@ LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
     BEGIN
-        DELETE FROM group_memberships WHERE user_id = p_userid AND group_id = p_groupid
+        DELETE FROM group_memberships WHERE user_id = p_userid AND group_id = p_groupid;
     END
 $$;
 
