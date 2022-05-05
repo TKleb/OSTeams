@@ -41,6 +41,11 @@ $user_tests$ BEGIN
     ASSERT 1 = COUNT(*) FROM get_user_by_email('user1@verified.ch'),
         'get_user_by_email failed';
 
+    -- ASSERT NOT THROW do_remove_user_from_group()
+
+    -- ASSERT 1 = COUNT(*) FROM get_groups_of_user_by_id(1),
+        -- 'get_groups_by_user_id failed'
+
     /* Fill with sample data */
     PERFORM add_unverified_user('Unverified1', 'User2', 'user2@verified.ch', '545', 'verCode2');
 
@@ -58,6 +63,9 @@ $group_tests$ BEGIN
 
     ASSERT 1 = COUNT(*) FROM get_groups_by_subject_id(1),
         'get_groups_by_subject_id failed';
+    
+    --ASSERT 1 = COUNT(*) FROM get_members_by_group_id(1),
+    --    'get_members_by_group_id failed'
 END $group_tests$;
 \echo group_tests passed
 
