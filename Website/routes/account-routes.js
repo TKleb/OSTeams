@@ -2,7 +2,7 @@ import express from "express";
 import accountController from "../controller/account-controller.js";
 import registerController from "../controller/register-controller.js";
 import loginController from "../controller/login-controller.js";
-import forgotPwController from "../controller/forgotpw-controller.js";
+import forgotPwController from "../controller/forgotPassword-controller.js";
 import auth from "../middleware/auth.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 
