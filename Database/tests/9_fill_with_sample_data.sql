@@ -58,7 +58,7 @@ $group_tests$ BEGIN
 
     ASSERT 1 = COUNT(*) FROM get_groups_by_subject_id(1),
         'get_groups_by_subject_id failed';
-    
+
 END $group_tests$;
 \echo group_tests passed
 
@@ -84,7 +84,7 @@ DO
 $group_memberships_tests$ BEGIN
     /* Fill with sample data */
     INSERT INTO group_memberships(user_id, group_id , member_since) VALUES (1, 1, NOW());
-    
+
     ASSERT 1 = COUNT(*) FROM get_groups_of_user_by_id(1),
         'get_groups_by_user_id failed';
 
@@ -92,6 +92,6 @@ $group_memberships_tests$ BEGIN
         'get_members_by_group_id failed';
 
     PERFORM do_remove_user_from_group(1, 1);
-        
+
 END $group_memberships_tests$;
 \echo group_memberships_tests passed
