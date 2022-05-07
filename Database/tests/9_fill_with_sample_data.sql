@@ -35,7 +35,7 @@ END $subject_tests$;
 DO
 $user_tests$ BEGIN
     IF NOT EXISTS(
-        SELECT * FROM add_unverified_user('Unverified2', 'User2', 'user1@verified.ch', '545', 'verCode1')
+        SELECT * FROM add_unverified_user('Unverified2', 'User2', 'user1@verified.ch', '$2a$10$mddMFOXxmJcPHEO27OlcEefFjzIg3Gr3nHkj6eKljllJim3l.EPJ.', 'verCode1')
     ) THEN
         RAISE EXCEPTION 'add_unverified_user failed';
     END IF;

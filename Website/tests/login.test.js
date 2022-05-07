@@ -24,21 +24,6 @@ describe("Test login page", () => {
 		});
 	});
 
-	// works, but commented out since there is no such user, in register.test.js this user needs to be created, which can't be tested right now
-	// since we can't test the generation of the token. see jira issue 321
-/*	describe("POST /login", () => {
-		it("It should log in a user", async() => {
-			const res = await chai.request(server)
-				.post("/account/login")
-				.type("form")
-				.send({
-					"email":"test@123.ch",
-					"password":"Test12345"
-				})
-			assert.equal(res.statusCode, 200);
-		});
-	});
-*/
 	describe("POST /login with invalid credentials", () => {
 		it("It should throw error: Invalid credentials.", async () => {
 			const res = await chai.request(server)
@@ -53,5 +38,16 @@ describe("Test login page", () => {
 		});
 	});
 
-
+	describe("POST /login", () => {
+		it("It should log in a user", async() => {
+			const res = await chai.request(server)
+				.post("/account/login")
+				.type("form")
+				.send({
+					"email":"user1@verified.ch",
+					"password":"Test12345"
+				})
+			assert.equal(res.statusCode, 200);
+		});
+	});
 });

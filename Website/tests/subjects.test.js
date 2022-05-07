@@ -8,7 +8,7 @@ chai.should();
 chai.use(chaiHttp);
 
 const userCredentials = {
-	"email":"test@123.ch",
+	"email":"user1@verified.ch",
 	"password":"Test12345"
 }
 
