@@ -113,11 +113,15 @@ CREATE OR REPLACE FUNCTION is_application_possible(
 AS $$
     BEGIN
         RETURN NOT EXISTS(
+            -- Existing open application by the user to the group
             SELECT 1 FROM group_applications
-            WHERE closed = FALSE AND user_id = p_user_id AND group_id = p_group_id
+            WHERE closed = FALSE
+                AND user_id = p_user_id
+                AND group_id = p_group_id
         )
         AND
         NOT EXISTS(
+            -- Existing membership by the user to the group
             SELECT 1 FROM group_memberships
             WHERE user_id = p_user_id AND group_id = p_group_id
         );
