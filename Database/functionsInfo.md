@@ -14,10 +14,10 @@
 # Add Functions
 | Name | Parameter | Returns | Description |
 |---|---|---|---|
-|add_subject()|abbrevation, name|id, abbrevation, name|adds subject and returns it|
+|add_subject()|abbreviation, name|id, abbreviation, name|adds subject and returns it|
 |add_unverified_user()|name, surname, email, password_hash, verification_code, date_of_registration|id, name, surname, email, password_hash, verification_code, date_of_registration|adds unverifiedUser and returns it|
 |add_user()|name, surname, email, password_hash, custom_info, fulltime, start_year, profile_picture_path|id, name, surname, email, password_hash, custom_info, fulltime, start_year, profile_picture_path|adds user and returns it|
-|add_group()|name, owner, subject, description, max_member_count, creation_date, apply_by_date|name, owner (int (key)), subject (varchar (aktuell fucked und nid fk)), description, max_member_count, creation_date, apply_by_date|adds group and returns it|
+|add_group()|name, owner_id, subject_id, description, max_member_count, creation_date, apply_by_date|name, owner_id, subject_id, description, max_member_count, creation_date, apply_by_date|adds group and returns it|
 
 # Edit Functions
 | Name | Parameter | Returns | Description |

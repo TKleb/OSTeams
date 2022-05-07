@@ -39,19 +39,19 @@ ALTER TABLE IF EXISTS users OWNER TO admin;
 CREATE TABLE IF NOT EXISTS groups
 (
     id INT GENERATED ALWAYS AS IDENTITY UNIQUE,
-    owner INT NOT NULL,
+    owner_id INT NOT NULL,
     name VARCHAR(50) NOT NULL,
-    subject INT NOT NULL,
+    subject_id INT NOT NULL,
     description VARCHAR(512) NULL,
     max_member_count INT NOT NULL,
     creation_date TIMESTAMP WITH TIME ZONE NOT NULL,
     apply_by_date TIMESTAMP WITH TIME ZONE NOT NULL,
     closed BOOLEAN NULL,
     CONSTRAINT fk_owner
-      FOREIGN KEY(owner)
+      FOREIGN KEY(owner_id)
       REFERENCES users(id),
     CONSTRAINT fk_subject
-      FOREIGN KEY(subject)
+      FOREIGN KEY(subject_id)
       REFERENCES subjects(id)
 ) TABLESPACE pg_default;
 

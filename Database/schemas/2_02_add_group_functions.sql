@@ -1,8 +1,8 @@
 -- add Group Function
 CREATE OR REPLACE FUNCTION add_group(
     p_name VARCHAR(50),
-    p_owner INT,
-    p_subject INT,
+    p_owner_id INT,
+    p_subject_id INT,
     p_description VARCHAR(512),
     p_max_member_count INT,
     p_creation_date TIMESTAMP WITH TIME ZONE,
@@ -16,16 +16,16 @@ AS $$
         RETURN QUERY
         INSERT INTO groups (
             name,
-            owner,
-            subject,
+            owner_id,
+            subject_id,
             description,
             max_member_count,
             creation_date,
             apply_by_date
         ) VALUES (
             p_name,
-            p_owner,
-            p_subject,
+            p_owner_id,
+            p_subject_id,
             p_description,
             p_max_member_count,
             p_creation_date,
@@ -53,7 +53,7 @@ GRANT ALL ON FUNCTION get_groups TO backend;
 
 -- Get Group by id Function
 CREATE OR REPLACE FUNCTION get_group_by_id(
-    p_id INT
+    p_group_id INT
 )
     RETURNS SETOF groups
 LANGUAGE plpgsql
@@ -61,7 +61,7 @@ SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT * FROM groups WHERE id = p_id;
+        SELECT * FROM groups WHERE id = p_group_id;
     END
 $$;
 
@@ -77,7 +77,7 @@ SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT * FROM groups WHERE subject = p_subject_id;
+        SELECT * FROM groups WHERE subject_id = p_subject_id;
     END
 $$;
 
