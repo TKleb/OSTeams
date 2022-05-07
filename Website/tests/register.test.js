@@ -37,7 +37,7 @@ describe("Test register page", () => {
 		it("It should create and verify a new user.", async () => {
 			const token = generateToken();
 			const email = Chance().email({ domain: "ost.ch", length: 20 });
-			await addUnverifiedUserToDB(email, hashPassword('123'), token);
+			addUnverifiedUserToDB(email, hashPassword("Test12345"), token);
 			const res = await chai.request(server)
 				.get(`/account/verifyEmail?token=${token}`);
 			assert.match(res.text, /Email verified successfully/);

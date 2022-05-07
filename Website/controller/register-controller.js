@@ -34,7 +34,7 @@ function generateToken() {
 
 function hashPassword(password) {
 	const saltLength = 10;
-	return bcrypt.hash(password, saltLength);
+	return bcrypt.hashSync(password, saltLength);
 }
 
 class RegisterController {
@@ -56,7 +56,7 @@ class RegisterController {
 				return res.render("register", { error: "The provided email is already in use." });
 			}
 
-			const encryptedPassword = await hashPassword(password);
+			const encryptedPassword = hashPassword(password);
 			const verificationToken = generateToken();
 
 			await addUnverifiedUserToDB(email, encryptedPassword, verificationToken);
