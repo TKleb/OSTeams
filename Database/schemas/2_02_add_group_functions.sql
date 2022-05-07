@@ -8,9 +8,9 @@ CREATE OR REPLACE FUNCTION add_group(
     p_creation_date TIMESTAMP WITH TIME ZONE,
     p_apply_by_date TIMESTAMP WITH TIME ZONE
 )
-RETURNS SETOF groups
-LANGUAGE plpgsql
-SECURITY DEFINER
+    RETURNS SETOF groups
+    LANGUAGE plpgsql
+    SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
@@ -56,12 +56,14 @@ CREATE OR REPLACE FUNCTION get_group_by_id(
     p_group_id INT
 )
     RETURNS SETOF groups
-LANGUAGE plpgsql
-SECURITY DEFINER
+    LANGUAGE plpgsql
+    SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT * FROM groups WHERE id = p_group_id;
+        SELECT * FROM groups
+        WHERE id = p_group_id
+        LIMIT 1;
     END
 $$;
 
@@ -72,12 +74,13 @@ CREATE OR REPLACE FUNCTION get_groups_by_subject_id(
     p_subject_id INT
 )
     RETURNS SETOF groups
-LANGUAGE plpgsql
-SECURITY DEFINER
+    LANGUAGE plpgsql
+    SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT * FROM groups WHERE subject_id = p_subject_id;
+        SELECT * FROM groups
+        WHERE subject_id = p_subject_id;
     END
 $$;
 
@@ -88,12 +91,17 @@ CREATE OR REPLACE FUNCTION get_members_by_group_id(
     p_group_id INT
 )
     RETURNS SETOF users
-LANGUAGE plpgsql
-SECURITY DEFINER
+    LANGUAGE plpgsql
+    SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT * FROM users WHERE id IN ( SELECT user_id FROM group_memberships WHERE group_id = p_group_id );
+        SELECT * FROM users
+        WHERE id IN (
+            SELECT user_id
+            FROM group_memberships
+            WHERE group_id = p_group_id
+        );
     END
 $$;
 
