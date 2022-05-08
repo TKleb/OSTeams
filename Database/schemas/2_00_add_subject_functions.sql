@@ -1,20 +1,12 @@
 -- Fetch Subject Function
 CREATE OR REPLACE FUNCTION get_subjects()
-    RETURNS TABLE (
-        id INT,
-        abbreviation VARCHAR,
-        name VARCHAR
-    )
+    RETURNS SETOF subjects
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT
-            subject_id,
-            subject_abbreviation,
-            subject_name
-        FROM subjects;
+        SELECT * FROM subjects;
     END
 $$;
 
@@ -25,23 +17,15 @@ CREATE OR REPLACE FUNCTION add_subject(
     p_abbreviation VARCHAR,
     p_name VARCHAR
 )
-    RETURNS TABLE (
-        id INT,
-        abbreviation VARCHAR,
-        name VARCHAR
-    )
+    RETURNS SETOF subjects
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        INSERT INTO
-            subjects(subject_abbreviation, subject_name)
+        INSERT INTO subjects(abbreviation, name)
         VALUES (p_abbreviation, p_name)
-        RETURNING
-            subject_id,
-            subject_abbreviation,
-            subject_name;
+        RETURNING *;
     END
 $$;
 
@@ -51,21 +35,14 @@ GRANT ALL ON FUNCTION add_subject TO backend;
 CREATE OR REPLACE FUNCTION get_subject_by_abbreviation(
     p_abbreviation VARCHAR
 )
-    RETURNS TABLE (
-        id INT,
-        abbreviation VARCHAR,
-        name VARCHAR
-    )
+    RETURNS SETOF subjects
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT
-            subject_id AS id,
-            subject_abbreviation AS abbreviation,
-            subject_name AS name
-        FROM subjects WHERE subject_abbreviation = p_abbreviation
+        SELECT *
+        FROM subjects WHERE abbreviation = p_abbreviation
         LIMIT 1;
     END
 $$;
