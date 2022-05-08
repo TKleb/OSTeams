@@ -106,3 +106,36 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION get_members_by_group_id TO backend;
+
+
+-- edit_group_by_id
+CREATE OR REPLACE FUNCTION edit_group_by_id(
+    p_id INT,
+    p_name VARCHAR(50),
+    p_owner_id INT,
+    p_subject_id INT,
+    p_description VARCHAR(512),
+    p_max_member_count INT,
+    p_apply_by_date TIMESTAMP WITH TIME ZONE,
+    p_closed BOOLEAN
+)
+    RETURNS SETOF groups
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        UPDATE groups
+        SET name = p_name,
+            owner_id = p_owner_id,
+            subject_id = p_subject_id,
+            description = p_description,
+            max_member_count = p_max_member_count,
+            apply_by_date = p_apply_by_date,
+            closed = p_closed
+        WHERE groups.id = p_id
+        RETURNING *;
+    END
+$$;
+
+GRANT ALL ON FUNCTION edit_group_by_id TO backend;
