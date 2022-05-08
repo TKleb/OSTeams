@@ -24,7 +24,7 @@ END $subject_tests$;
 --------------------------------------------------------------------------------
 DO
 $user_tests$ BEGIN
-    ASSERT 1 = COUNT(*) FROM add_unverified_user('Unverified2', 'User2', 'user1@verified.ch', '545', 'verCode1'),
+    ASSERT 1 = COUNT(*) FROM add_unverified_user('Unverified2', 'User2', 'user1@verified.ch', '$2a$10$mddMFOXxmJcPHEO27OlcEefFjzIg3Gr3nHkj6eKljllJim3l.EPJ.', 'verCode1'),
         'add_unverified_user failed';
 
     ASSERT is_email_in_use('user1@verified.ch');
