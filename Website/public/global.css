@@ -372,7 +372,8 @@ ul.member-list {
     pointer-events: all;
 }
 
-.modal-body #application-text, #create-group-description {
+.modal-body #application-text,
+#create-group-description {
     resize: none;
     margin-top: 10px;
     font-size: 15px;
@@ -382,7 +383,8 @@ ul.member-list {
     border: 1px solid black;
 }
 
-#create-group-form label, input {
+#create-group-form label,
+input {
     display: block;
     width: 50%;
 }
@@ -445,17 +447,20 @@ ul.member-list {
     font-family: Arial, sans-serif;
 }
 
-#groupmember-list ul, #applications ul {
+#groupmember-list ul,
+#applications ul {
     list-style-type: none;
     padding-inline-start: 10px;
 }
 
-#groupmember-list li, #applications li {
+#groupmember-list li,
+#applications li {
     margin-bottom: 5px;
     margin-right: 20px;
 }
 
-#groupmember-list li button, #applications li button {
+#groupmember-list li button,
+#applications li button {
     float: right;
     width: 40px;
     height: 20px;
