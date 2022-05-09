@@ -1,7 +1,7 @@
 class GroupController {
 	index(req, res) {
 		const { abbreviation } = req.params;
-		res.render("groups", { title: "Groups", abbr: abbreviation });
+		res.render("group", { title: "Groups", abbr: abbreviation });
 	}
 }
 

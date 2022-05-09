@@ -1,1 +1,33 @@
 <h1>Teams</h1>
+<!-- TODO Group Name -->
+<article class="group">
+	<div class="group-description">
+		<div class="group-info">
+			This is going to be the group description
+		</div>
+		<div class="group-members">
+			<ul class="member-list">
+				<li>Hans</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+			</ul>
+		</div>
+	</div>
+	<div class="group-interaction">
+		<button onclick="location.href='/teams/group'" class="grp-btn">View Group</button>
+		<button class="grp-btn leave">Leave</button>
+		<button class="grp-btn" disabled>Delete Group</button>
+	</div>
+</article>
+<div id="overlay"></div>
+
+{{#each groups}}
+
+{{/each}}

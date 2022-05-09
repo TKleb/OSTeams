@@ -1,6 +1,7 @@
 const applyToGroupButtons = document.querySelectorAll(".apply");
-const closeModalButtons = document.querySelectorAll("[data-close-button]");
+const closeModalButtons = document.querySelectorAll(".close-button");
 const overlay = document.getElementById("overlay");
+const createGroupButton = document.querySelectorAll(".create-group");
 
 // eslint-disable-next-line consistent-return
 function openModal(modal) {
@@ -27,9 +28,16 @@ applyToGroupButtons.forEach((button) => {
 	});
 });
 
+createGroupButton.forEach((button) => {
+	button.addEventListener("click", () => {
+		const modal = document.querySelector(button.dataset.modalTarget);
+		openModal(modal);
+	});
+});
+
 closeModalButtons.forEach((button) => {
 	button.addEventListener("click", () => {
-		const modal = button.closest(".application-modal");
+		const modal = button.closest(".modal");
 		closeModal(modal);
 	});
 });

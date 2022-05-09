@@ -221,12 +221,16 @@ a:visited {
     box-shadow: 0 0 3px 2px #ccc;
 }
 
-/* Group Page */
+/* GroupList Page */
 .group {
     display: flex;
     width: 95%;
     height: 7em;
     margin-bottom: 10px;
+}
+
+.group:hover {
+    cursor: pointer;
 }
 
 .group-info {
@@ -276,11 +280,17 @@ ul.member-list {
     height: 2em;
     cursor: pointer;
     background-color: rgb(146 71 146);
+    margin-bottom: 5px;
 }
 
 .group-interaction .grp-btn:hover {
     cursor: pointer;
     background-color: rgb(176 86 176);
+}
+
+.group-interaction .grp-btn:disabled {
+    background-color: #767676;
+    cursor: default;
 }
 
 #create-group-div {
@@ -294,13 +304,13 @@ ul.member-list {
     background-color: rgb(146 71 146);
 }
 
-#create-group-div .grp-btn:hover {
+#create-group-div .grp-btn {
     cursor: pointer;
     background-color: rgb(176 86 176);
 }
 
 /* Group Page Modal */
-.application-modal {
+.modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -315,11 +325,11 @@ ul.member-list {
     background-color: white;
 }
 
-.application-modal.active {
+.modal.active {
     transform: translate(-50%, -50%) scale(1);
 }
 
-.application-modal-header {
+.modal-header {
     padding: 10px 15px;
     display: flex;
     justify-content: space-between;
@@ -327,12 +337,12 @@ ul.member-list {
     border-bottom: 1px solid black;
 }
 
-.application-modal-header .title {
+.modal-header .title {
     font-size: 1.25rem;
     font-weight: bold;
 }
 
-.application-modal-header .close-button {
+.modal-header .close-button {
     cursor: pointer;
     border: none;
     outline: none;
@@ -341,7 +351,7 @@ ul.member-list {
     font-weight: bold;
 }
 
-.application-modal-body {
+.modal-body {
     padding: 10px 15px;
 }
 
@@ -362,7 +372,7 @@ ul.member-list {
     pointer-events: all;
 }
 
-.application-modal-body #application-text {
+.modal-body #application-text, #create-group-description {
     resize: none;
     margin-top: 10px;
     font-size: 15px;
@@ -370,6 +380,94 @@ ul.member-list {
     width: 100%;
     height: 5em;
     border: 1px solid black;
+}
+
+#create-group-form label, input {
+    display: block;
+    width: 50%;
+}
+
+#create-group-form input {
+    margin-bottom: 5px;
+}
+
+/* Group Information */
+#group-interaction-div {
+    display: flex;
+    justify-content: space-between;
+}
+
+#group-interaction-btns {
+    margin-left: 100px;
+    display: flex;
+    align-items: center;
+}
+
+#group-interaction-btns #leave-group-btn {
+    margin-right: 60px;
+    height: 50%;
+    width: 80px;
+    cursor: pointer;
+}
+
+#group-interaction-btns #delete-group-btn {
+    margin-right: 30px;
+    height: 50%;
+    width: 80px;
+}
+
+#group-div {
+    display: flex;
+    height: 75%;
+}
+
+#group-description {
+    flex: 2;
+    float: left;
+    height: 100%;
+    width: 200px;
+    border: 2px solid green;
+    margin-right: 20px;
+}
+
+#group-information {
+    flex: 1;
+    float: right;
+    height: 100%;
+    width: 200px;
+    border: 2px solid red;
+}
+
+#groupmember-list {
+    display: block;
+    border: 2px solid magenta;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+#groupmember-list ul, #applications ul {
+    list-style-type: none;
+    padding-inline-start: 10px;
+}
+
+#groupmember-list li, #applications li {
+    margin-bottom: 5px;
+    margin-right: 20px;
+}
+
+#groupmember-list li button, #applications li button {
+    float: right;
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#applications {
+    display: block;
+    border: 2px solid purple;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
 }
 
 /* Account Page */
