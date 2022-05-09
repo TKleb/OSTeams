@@ -1,34 +1,12 @@
 -- get Users Function
 CREATE OR REPLACE FUNCTION get_users()
-    RETURNS TABLE (
-        id INT,
-        name VARCHAR,
-        surname VARCHAR,
-        profile_picture_path VARCHAR,
-        email VARCHAR,
-        password_hash VARCHAR,
-        custom_info VARCHAR,
-        fulltime BOOLEAN,
-        start_year INT,
-        date_of_registration TIMESTAMP WITH TIME ZONE
-    )
+    RETURNS SETOF users
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT
-            user_id AS id,
-            user_name AS name,
-            user_surname AS surname,
-            user_profile_picture_path AS profile_picture_path,
-            user_email AS email,
-            user_password_hash AS password_hash,
-            user_custom_info AS custom_info,
-            user_fulltime AS fulltime,
-            user_start_year AS start_year,
-            user_date_of_registration AS date_of_registration
-        FROM users;
+        SELECT * FROM users;
     END
 $$;
 
@@ -38,118 +16,63 @@ GRANT ALL ON FUNCTION get_users TO backend;
 CREATE OR REPLACE FUNCTION get_user_by_email(
     p_email VARCHAR
 )
-    RETURNS TABLE (
-        id INT,
-        name VARCHAR,
-        surname VARCHAR,
-        profile_picture_path VARCHAR,
-        email VARCHAR,
-        password_hash VARCHAR,
-        custom_info VARCHAR,
-        fulltime BOOLEAN,
-        start_year INT,
-        date_of_registration TIMESTAMP WITH TIME ZONE
-    )
+    RETURNS SETOF users
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT
-            user_id AS id,
-            user_name AS name,
-            user_surname AS surname,
-            user_profile_picture_path AS profile_picture_path,
-            user_email AS email,
-            user_password_hash AS password_hash,
-            user_custom_info AS custom_info,
-            user_fulltime AS fulltime,
-            user_start_year AS start_year,
-            user_date_of_registration AS date_of_registration
-         FROM users WHERE user_email = LOWER(p_email);
+        SELECT * FROM users
+        WHERE email = LOWER(p_email)
+        LIMIT 1;
     END
 $$;
 
 GRANT ALL ON FUNCTION get_user_by_email TO backend;
 
 -- edit_user_by_email
-CREATE OR REPLACE FUNCTION edit_user_by_email(
-    p_email_to_edit VARCHAR,
+CREATE OR REPLACE FUNCTION edit_user_by_id(
+    p_id INT,
     p_name VARCHAR,
     p_surname VARCHAR,
+    p_email VARCHAR,
     p_password_hash VARCHAR,
     p_custom_info VARCHAR,
     p_fulltime BOOLEAN,
     p_start_year INT,
     p_profile_picture_path VARCHAR
 )
-    RETURNS TABLE (
-        id INT,
-        name VARCHAR,
-        surname VARCHAR,
-        email VARCHAR,
-        password_hash VARCHAR,
-        custom_info VARCHAR,
-        fulltime BOOLEAN,
-        start_year INT,
-        profile_picture_path VARCHAR,
-        date_of_registration TIMESTAMP WITH TIME ZONE
-    )
+    RETURNS SETOF users
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
         UPDATE users
-        SET user_name = p_name,
-            user_surname = p_surname,
-            user_password_hash = p_password_hash,
-            user_custom_info = p_custom_info,
-            user_fulltime = p_fulltime,
-            user_start_year = p_start_year,
-            user_profile_picture_path = p_profile_picture_path
-        WHERE users.user_email = p_email_to_edit
-        RETURNING
-            user_id,
-            user_name,
-            user_surname,
-            user_email,
-            user_password_hash,
-            user_custom_info,
-            user_fulltime,
-            user_start_year,
-            user_profile_picture_path,
-            user_date_of_registration;
+        SET name = p_name,
+            surname = p_surname,
+            email = p_email,
+            password_hash = p_password_hash,
+            custom_info = p_custom_info,
+            fulltime = p_fulltime,
+            start_year = p_start_year,
+            profile_picture_path = p_profile_picture_path
+        WHERE users.id = p_id
+        RETURNING *;
     END
 $$;
 
-GRANT ALL ON FUNCTION edit_user_by_email TO backend;
+GRANT ALL ON FUNCTION edit_user_by_id TO backend;
 
 -- get_unverified_users Function
 CREATE OR REPLACE FUNCTION get_unverified_users()
-    RETURNS TABLE (
-        id INT,
-        name VARCHAR,
-        surname VARCHAR,
-        email VARCHAR,
-        password_hash VARCHAR,
-        verification_code VARCHAR,
-        date_of_registration TIMESTAMP WITH TIME ZONE
-    )
+    RETURNS SETOF unverified_users
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT
-            unverified_user_id,
-            unverified_user_name,
-            unverified_user_surname,
-            unverified_user_email,
-            unverified_user_password_hash,
-            unverified_user_verification_code,
-            unverified_user_date_of_registration
-        FROM unverified_users;
+        SELECT * FROM unverified_users;
     END
 $$;
 
@@ -164,15 +87,7 @@ CREATE OR REPLACE FUNCTION add_unverified_user(
     p_verification_code VARCHAR(50),
     p_date_of_registration TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 )
-    RETURNS TABLE (
-        id INT,
-        name VARCHAR,
-        surname VARCHAR,
-        email VARCHAR,
-        password_hash VARCHAR,
-        verification_code VARCHAR,
-        date_of_registration TIMESTAMP WITH TIME ZONE
-    )
+    RETURNS SETOF unverified_users
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
@@ -183,12 +98,12 @@ AS $$
 
         RETURN QUERY
         INSERT INTO unverified_users (
-            unverified_user_name,
-            unverified_user_surname,
-            unverified_user_email,
-            unverified_user_password_hash,
-            unverified_user_verification_code,
-            unverified_user_date_of_registration
+            name,
+            surname,
+            email,
+            password_hash,
+            verification_code,
+            date_of_registration
         ) VALUES (
             p_name,
             p_surname,
@@ -197,14 +112,7 @@ AS $$
             p_verification_code,
             p_date_of_registration
         )
-        RETURNING
-            unverified_user_id,
-            unverified_user_name,
-            unverified_user_surname,
-            unverified_user_email,
-            unverified_user_password_hash,
-            unverified_user_verification_code,
-            unverified_user_date_of_registration;
+        RETURNING *;
     END
 $$;
 
@@ -214,18 +122,7 @@ GRANT ALL ON FUNCTION add_unverified_user TO backend;
 CREATE OR REPLACE FUNCTION do_verify_user(
     p_verification_code VARCHAR(50)
 )
-    RETURNS TABLE (
-        id INT,
-        name VARCHAR,
-        surname VARCHAR,
-        profile_picture_path VARCHAR,
-        email VARCHAR,
-        password_hash VARCHAR,
-        custom_info VARCHAR,
-        fulltime BOOLEAN,
-        start_year INT,
-        date_of_registration TIMESTAMP WITH TIME ZONE
-    )
+    RETURNS SETOF users
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
@@ -233,7 +130,7 @@ AS $$
         -- Ensure unverified user can be found.
         IF NOT EXISTS(
             SELECT 1 FROM unverified_users
-            WHERE unverified_user_verification_code = p_verification_code
+            WHERE verification_code = p_verification_code
         ) THEN
             RAISE EXCEPTION 'Verification token is not valid.';
         END IF;
@@ -242,39 +139,29 @@ AS $$
         RETURN QUERY
         WITH unverified_user AS (
             DELETE FROM unverified_users uu
-            WHERE unverified_user_verification_code = p_verification_code
+            WHERE verification_code = p_verification_code
             RETURNING uu.*
         )
         INSERT INTO users (
-            user_name,
-            user_surname,
-            user_email,
-            user_password_hash,
-            user_fulltime,
-            user_date_of_registration,
-            user_start_year
+            name,
+            surname,
+            email,
+            password_hash,
+            fulltime,
+            date_of_registration,
+            start_year
         )
         SELECT
-            unverified_user.unverified_user_name,
-            unverified_user.unverified_user_surname,
-            unverified_user.unverified_user_email,
-            unverified_user.unverified_user_password_hash,
+            unverified_user.name,
+            unverified_user.surname,
+            unverified_user.email,
+            unverified_user.password_hash,
             NULL,
             NOW(),
             NULL
         FROM unverified_user
         LIMIT 1
-        RETURNING
-            user_id AS id,
-            user_name AS name,
-            user_surname AS surname,
-            user_profile_picture_path AS profile_picture_path,
-            user_email AS email,
-            user_password_hash AS password_hash,
-            user_custom_info AS custom_info,
-            user_fulltime AS fulltime,
-            user_start_year AS start_year,
-            user_date_of_registration AS date_of_registration;
+        RETURNING *;
     END
 $$;
 
@@ -291,14 +178,47 @@ AS $$
     BEGIN
         RETURN EXISTS(
             SELECT 1 FROM users
-            WHERE user_email = LOWER(p_email)
+            WHERE email = LOWER(p_email)
         )
         OR
         EXISTS(
             SELECT 1 FROM unverified_users
-            WHERE unverified_user_email = LOWER(p_email)
+            WHERE email = LOWER(p_email)
         );
     END
 $$;
 
 GRANT ALL ON FUNCTION is_email_in_use TO backend;
+
+-- do_remove_user_from_group
+CREATE OR REPLACE FUNCTION do_remove_user_from_group(
+    p_user_id INT,
+    p_group_id INT
+)
+RETURNS VOID
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+    BEGIN
+        DELETE FROM group_memberships
+        WHERE user_id = p_user_id AND group_id = p_group_id;
+    END
+$$;
+
+GRANT ALL ON FUNCTION do_remove_user_from_group TO backend;
+
+-- get_groups_of_user_by_id
+CREATE OR REPLACE FUNCTION get_groups_of_user_by_id(
+    p_user_id INT
+)
+    RETURNS SETOF groups
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM groups WHERE id IN ( SELECT group_id FROM group_memberships WHERE user_id = p_user_id );
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_groups_of_user_by_id TO backend;

@@ -1,19 +1,17 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
 import server from "../index.js";
+import assert from "assert";
 
 chai.should();
 chai.use(chaiHttp);
 
 describe("Test groups page", () => {
 	describe("GET /subjects/DSy", () => {
-		it("It should Load the page.", (done) => {
-			chai.request(server)
-				.get("/subjects/DSy")
-				.end((err, response) => {
-					response.should.have.status(200);
-				});
-			done();
+		it("It should Load the page.", async () => {
+			const res = await chai.request(server)
+				.get("/subjects/DSy");
+			assert.equal(res.statusCode, 200);
 		});
 	});
 });

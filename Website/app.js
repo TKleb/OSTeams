@@ -5,6 +5,7 @@ import path from "path";
 import session from "express-session";
 import exphbs from "express-handlebars";
 import cookieParser from "cookie-parser";
+import flash from "connect-flash";
 
 import indexRoutes from "./routes/index-routes.js";
 import subjectsRouter from "./routes/subjects-routes.js";
@@ -14,6 +15,7 @@ import helpers from "./utils/handlebar-util.js";
 import sessionUserSettings from "./utils/session-middleware.index.js";
 import saveSessionToLocals from "./middleware/saveSessionToLocals.js";
 import auth from "./middleware/auth.js";
+import errorHandling from "./middleware/errorHandling.js";
 
 export const app = express();
 
@@ -31,6 +33,8 @@ app.set("views", path.resolve("views"));
 
 app.use(express.static(path.resolve("public")));
 app.use(session({ secret: "casduichasidbnuwezrfinasdcvjkadfhsuilfuzihfioda", resave: false, saveUninitialized: true }));
+app.use(flash());
+
 app.use(sessionUserSettings);
 app.use(saveSessionToLocals);
 app.use(cookieParser());
@@ -41,3 +45,4 @@ app.use("/", indexRoutes);
 app.use("/account", accountRouter);
 app.use("/subjects", auth, subjectsRouter);
 app.use("/teams", auth, teamsRouter);
+app.use(errorHandling);
