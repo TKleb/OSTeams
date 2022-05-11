@@ -10,7 +10,7 @@
 	<div class="modal-body">
 		<form id="create-group-form" method="post">
 			<label for="create-group-name">Group name:</label>
-			<input name="groupName" id="create-group-size" type="number" min="2" max="5" required>
+			<input name="groupName" id="create-group-size" type="text" required>
 
 			<label for="create-group-size">Group Size:</label>
 			<input name="maxMemberCount" id="create-group-size" type="number" min="2" max="5" required>
@@ -65,5 +65,5 @@
 <div id="overlay"></div>
 
 {{#each groups}}
-
+	{{name}}
 {{/each}}
