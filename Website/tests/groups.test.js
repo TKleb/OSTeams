@@ -6,11 +6,11 @@ import assert from "assert";
 chai.should();
 chai.use(chaiHttp);
 
-describe("Test teams page", () => {
-	describe("GET /teams", () => {
+describe("Test groups page", () => {
+	describe("GET /groups", () => {
 		it("It should Load the page.", async () => {
 			const res = await chai.request(server)
-				.get("/teams");
+				.get("/groups");
 			assert.equal(res.statusCode, 200);
 		});
 	});
