@@ -32,10 +32,27 @@ AS $$
             p_apply_by_date
         )
         RETURNING *;
+        PERFORM add_user_to_group(p_owner_id, p_creation_date);
     END
 $$;
 
 GRANT ALL ON FUNCTION add_group TO backend;
+
+-- Helper-function to add a user to the membership table
+-- For internal use only
+CREATE OR REPLACE FUNCTION add_user_to_group(
+    p_id int,
+    p_timestamp TIMESTAMP WITH TIME ZONE
+)
+    RETURNS VOID
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        INSERT INTO group_memberships (user_id, group_id, member_since) VALUES (p_id, (SELECT id FROM groups WHERE owner_id = p_id AND creation_date = p_timestamp), p_timestamp);
+    END
+$$;
+
 
 -- get Groups Function
 CREATE OR REPLACE FUNCTION get_groups()
