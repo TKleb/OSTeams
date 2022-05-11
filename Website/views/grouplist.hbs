@@ -9,14 +9,17 @@
 	</div>
 	<div class="modal-body">
 		<form id="create-group-form" method="post">
-			<label for="create-group-size">Group Size</label>
-			<input id="create-group-size" type="number" min="2" max="5" required>
+			<label for="create-group-name">Group name:</label>
+			<input name="groupName" id="create-group-size" type="number" min="2" max="5" required>
 
-			<label for="create-group-applydate">"Apply-By"-Date</label>
-			<input id="create-group-applydate" type="date" required>
+			<label for="create-group-size">Group Size:</label>
+			<input name="maxMemberCount" id="create-group-size" type="number" min="2" max="5" required>
 
-			<label for="create-group-description">Description</label>
-			<textarea id="create-group-description" required></textarea>
+			<label for="create-group-applydate">"Apply-By"-Date:</label>
+			<input name="applyByDate" id="create-group-applydate" type="date" required>
+
+			<label for="create-group-description">Description:</label>
+			<textarea name="description" id="create-group-description" required></textarea>
 
 			<button type="submit" class="submit-btn">Submit</button>
 		</form>
