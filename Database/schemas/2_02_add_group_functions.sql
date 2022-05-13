@@ -21,7 +21,8 @@ AS $$
             description,
             max_member_count,
             creation_date,
-            apply_by_date
+            apply_by_date,
+            closed
         ) VALUES (
             p_name,
             p_owner_id,
@@ -29,7 +30,8 @@ AS $$
             p_description,
             p_max_member_count,
             p_creation_date,
-            p_apply_by_date
+            p_apply_by_date,
+            FALSE
         )
         RETURNING *;
     END

@@ -1,0 +1,69 @@
+<h1>{{abbr}}</h1>
+<div id="create-group-div">
+	<button data-modal-target="#create-group-modal" class="grp-btn create-group">Create Group</button>
+</div>
+<div class="modal" id="create-group-modal">
+	<div class="modal-header">
+		<div class="title">Create A Group</div>
+		<button data-close-button class="close-button">&times;</button>
+	</div>
+	<div class="modal-body">
+		<form id="create-group-form" method="post">
+			<label for="create-group-name">Group name:</label>
+			<input name="groupName" id="create-group-size" type="text" required>
+
+			<label for="create-group-size">Group Size:</label>
+			<input name="maxMemberCount" id="create-group-size" type="number" min="2" max="5" required>
+
+			<label for="create-group-applydate">"Apply-By"-Date:</label>
+			<input name="applyByDate" id="create-group-applydate" type="date" required>
+
+			<label for="create-group-description">Description:</label>
+			<textarea name="description" id="create-group-description" required></textarea>
+
+			<button type="submit" class="submit-btn">Submit</button>
+		</form>
+	</div>
+</div>
+<!-- TODO Group Name -->
+<article class="group">
+	<div class="group-description">
+		<div class="group-info">
+			This is going to be the group description
+		</div>
+		<div class="group-members">
+			<ul class="member-list">
+				<li>Hans</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+				<li>Thomas</li>
+			</ul>
+		</div>
+	</div>
+	<div class="group-interaction">
+		<button data-modal-target="#application-modal" class="grp-btn apply">Apply</button>
+	</div>
+	<div class="modal" id="application-modal">
+		<div class="modal-header">
+			<div class="title">Group Application</div>
+			<button data-close-button class="close-button">&times;</button>
+		</div>
+		<div class="modal-body">
+			<form id="application-form" method="post">
+				<textarea id="application-text" maxlength="200" required placeholder="add a brief summary"></textarea>
+				<button type="submit" class="submit-btn">Submit</button>
+			</form>
+		</div>
+	</div>
+</article>
+<div id="overlay"></div>
+
+{{#each groups}}
+	{{name}}
+{{/each}}
