@@ -13,43 +13,29 @@ CREATE OR REPLACE FUNCTION add_group(
     SECURITY DEFINER
 AS $$
     BEGIN
-        RETURN QUERY
-        INSERT INTO groups (
-            name,
-            owner_id,
-            subject_id,
-            description,
-            max_member_count,
-            creation_date,
-            apply_by_date
-        ) VALUES (
-            p_name,
-            p_owner_id,
-            p_subject_id,
-            p_description,
-            p_max_member_count,
-            p_creation_date,
-            p_apply_by_date
-        )
-        RETURNING *;
-        PERFORM add_user_to_group(p_owner_id, p_creation_date);
-    END
-$$;
-
-GRANT ALL ON FUNCTION add_group TO backend;
-
--- Helper-function to add a user to the membership table
--- For internal use only
-CREATE OR REPLACE FUNCTION add_user_to_group(
-    p_id int,
-    p_timestamp TIMESTAMP WITH TIME ZONE
-)
-    RETURNS VOID
-    LANGUAGE plpgsql
-    SECURITY DEFINER
-AS $$
-    BEGIN
-        INSERT INTO group_memberships (user_id, group_id, member_since) VALUES (p_id, (SELECT id FROM groups WHERE owner_id = p_id AND creation_date = p_timestamp), p_timestamp);
+		RETURN QUERY
+        WITH added_group AS (
+            INSERT INTO groups (
+                name,
+                owner_id,
+                subject_id,
+                description,
+                max_member_count,
+                creation_date,
+                apply_by_date
+            ) VALUES (
+                p_name,
+                p_owner_id,
+                p_subject_id,
+                p_description,
+                p_max_member_count,
+                p_creation_date,
+                p_apply_by_date
+            ) RETURNING *
+        ), t2_insert as (
+			INSERT INTO group_memberships (user_id, group_id, member_since) VALUES (p_owner_id, (SELECT id from added_group LIMIT 1), p_creation_date)
+		)
+		TABLE added_group;
     END
 $$;
 
