@@ -17,7 +17,13 @@ class GroupsController {
 		}
 
 		const groupRows = await pgConnector.executeStoredProcedure("get_groups_by_subject_id", [subjectRow[0].id]);
-		return res.render("grouplist", { title: "Groups", groups: groupRows, hint: req.flash("hint"), error: req.flash("error"), success: req.flash("success")});
+		return res.render("grouplist", {
+			title: "Groups",
+			groups: groupRows,
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
+		});
 	}
 
 	async showGroupById(req, res) {
@@ -79,7 +85,7 @@ class GroupsController {
 		}
 
 		const groupMembers = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
-		if (!groupMembers || groupMembers.length == groupRow[0].maxMemberCount) {
+		if (!groupMembers || groupMembers.length === groupRow[0].maxMemberCount) {
 			req.flash("error", "Group member limit reached");
 			return res.redirect("/");
 		}
@@ -90,16 +96,16 @@ class GroupsController {
 			id,
 			description,
 			new Date().toISOString(),
-		]
+		];
 		const applyResponseRow = await pgConnector.executeStoredProcedure("add_application", options);
-		if(!applyResponseRow || applyResponseRow.length === 0) {
+		if (!applyResponseRow || applyResponseRow.length === 0) {
 			req.flash("error", "An error occurred with your application");
 			return res.redirect("/");
 		}
 
 		const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
-		+ `<p> Click on the following list to view all applicants: `
-		+ `<a href="${websiteConfig.hostname}:${websiteConfig.port}/groups/${id}">link</a></p>` ;
+		+ "<p> Click on the following list to view all applicants: "
+		+ `<a href="${websiteConfig.hostname}:${websiteConfig.port}/groups/${id}">link</a></p>`;
 
 		// Stored procedure doesn't exist yet
 		const groupOwnerRow = await pgConnector.executeStoredProcedure("get_owner_by_group_Id", [id]);

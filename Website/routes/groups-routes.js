@@ -1,7 +1,7 @@
 import express from "express";
 import groupsController from "../controller/groups-controller.js";
-import asyncHandler
- from "../middleware/asyncHandler.js";
+import asyncHandler from "../middleware/asyncHandler.js";
+
 const router = express.Router();
 router.get("/", groupsController.showByUserId);
 router.get("/:id", groupsController.showGroupById);
