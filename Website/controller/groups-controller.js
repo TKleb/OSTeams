@@ -117,8 +117,7 @@ class GroupsController {
 		+ "<p> Click on the following list to view all applicants: "
 		+ `<a href="${websiteConfig.hostname}:${websiteConfig.port}/groups/${id}">link</a></p>`;
 
-		// Stored procedure doesn't exist yet
-		const groupOwnerRow = await pgConnector.executeStoredProcedure("get_owner_by_group_Id", [id]);
+		const groupOwnerRow = await pgConnector.executeStoredProcedure("get_owner_by_group_id", [id]);
 		const response = await mailer.SendMail(groupOwnerRow[0].email, "New Application - OSTeams", htmlBody);
 		req.flash("hint", response);
 		return res.redirect("/");
