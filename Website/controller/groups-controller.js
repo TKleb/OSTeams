@@ -25,7 +25,28 @@ class GroupsController {
 		if (!groupRow || groupRow.length === 0) {
 			return res.send("Invalid GroupId");
 		}
-		return res.render("group", { title: groupRow[0].name, group: groupRow[0] });
+
+		const isOwner = req.session.userId == groupRow[0].owner_id;
+		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
+		const applicants = await pgConnector.executeStoredProcedure("get_applications_to_group", [id]);
+		return res.render("group", {
+			title: groupRow[0].name,
+			group: groupRow[0],
+			isOwner: isOwner,
+			applicants: applicants,
+			members: members,
+		});
+	}
+
+	async closeApplication(req, res) {
+		const { id } = req.params;
+		const { isAccepted, groupId } = req.body;
+		//Todo: Check if loggedInUser is owner of group this application belongs to
+
+		const applicationResponse = await pgConnector.executeStoredProcedure("do_close_application", [id, isAccepted]);
+		const successMsg = isAccepted ? "Application approved" : "Application denied";
+		req.flash("success", successMsg);
+		res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/", groupId));
 	}
 
 	async insert(req, res) {

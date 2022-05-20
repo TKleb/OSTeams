@@ -12,20 +12,16 @@
 	<div id="group-information">
 		<div id="groupmember-list">
 			<ul>
-				<li>Thomas <button>X</button></li>
-				<li>Thomas <button>X</button></li>
-				<li>Thomas <button>X</button></li>
-				<li>Thomas <button>X</button></li>
-				<li>Thomas <button>X</button></li>
+				{{#each members}}
+				<li>{{email}} <button>X</button></li>
+				{{/each}}
 			</ul>
 		</div>
 		<div id="applications">
 			<ul>
-				<li>Thomas <button>View</button></li>
-				<li>Thomas <button>View</button></li>
-				<li>Thomas <button>View</button></li>
-				<li>Thomas <button>View</button></li>
-				<li>Thomas <button>View</button></li>
+				{{#each applicants}}
+				<li>{{text}} <button>View</button></li>
+				{{/each}}
 			</ul>
 		</div>
 	</div>
