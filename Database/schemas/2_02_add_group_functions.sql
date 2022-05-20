@@ -108,3 +108,25 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION get_members_by_group_id TO backend;
+
+
+-- get_members_by_group_id
+CREATE OR REPLACE FUNCTION get_owner_by_group_id(
+    p_group_id INT
+)
+    RETURNS SETOF users
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM users
+        WHERE id IN (
+            SELECT owner_id
+            FROM groups
+            WHERE group_id = p_group_id
+        );
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_owner_by_group_id TO backend;
