@@ -2,6 +2,11 @@ import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
 
+const asyncFilter = async (arr, predicate) => {
+	const results = await Promise.all(arr.map(predicate));
+	return arr.filter((_v, index) => results[index]);
+}
+
 class GroupsController {
 	async showByUserId(req, res) {
 		const groupRows = await pgConnector.executeStoredProcedure("get_groups_of_user_by_id", [req.session.userId]);
@@ -16,7 +21,12 @@ class GroupsController {
 			return res.send("Invalid subject");
 		}
 
-		const groupRows = await pgConnector.executeStoredProcedure("get_groups_by_subject_id", [subjectRow[0].id]);
+		let groupRows = await pgConnector.executeStoredProcedure("get_groups_by_subject_id", [subjectRow[0].id]);
+		groupRows = await asyncFilter(groupRows, async (group) => {
+			const isApplicationPossible = await pgConnector.executeStoredProcedure("is_application_possible", [req.session.userId, group.id]);
+			return isApplicationPossible[0].is_application_possible;
+		});
+
 		return res.render("grouplist", {
 			title: "Groups",
 			groups: groupRows,
