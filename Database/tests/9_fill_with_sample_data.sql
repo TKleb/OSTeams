@@ -41,9 +41,6 @@ $user_tests$ BEGIN
     ASSERT 1 = COUNT(*) FROM get_user_by_email('user1@verified.ch'),
         'get_user_by_email failed';
 
-    /* Fill with sample data */
-    PERFORM add_unverified_user('Unverified1', 'User2', 'user2@verified.ch', '545', 'verCode2');
-
 END $user_tests$;
 \echo user_tests passed
 
@@ -65,7 +62,11 @@ END $group_tests$;
 --------------------------------------------------------------------------------
 DO
 $group_application_tests$ BEGIN
-    ASSERT 1 = COUNT(*) FROM add_application(1, 1, 'Hi, i want to apply.', '2012-12-21'),
+
+    PERFORM add_unverified_user('Unverified1', 'User2', 'user2@verified.ch', 'pwHash', 'verCode2');
+    PERFORM do_verify_user('verCode2');
+
+    ASSERT 1 = COUNT(*) FROM add_application(2, 1, 'Hi, i want to apply.', '2012-12-21'),
         'add_group failed';
 
     ASSERT 1 = COUNT(*) FROM get_applications_to_group(1),
@@ -83,15 +84,18 @@ END $group_application_tests$;
 DO
 $group_memberships_tests$ BEGIN
     /* Fill with sample data */
-    INSERT INTO group_memberships(user_id, group_id , member_since) VALUES (1, 1, NOW());
-
     ASSERT 1 = COUNT(*) FROM get_groups_of_user_by_id(1),
         'get_groups_by_user_id failed';
 
     ASSERT 1 = COUNT(*) FROM get_members_by_group_id(1),
         'get_members_by_group_id failed';
 
-    PERFORM do_remove_user_from_group(1, 1);
+    /*PERFORM do_remove_user_from_group(1, 1);*/
+
+    PERFORM add_unverified_user('Peter', 'Lustig', 'peter@lustig.ch', 'pwHash', 'verCode3');
+    PERFORM do_verify_user('verCode3');
+    PERFORM add_application(3, 1, 'Hi, i want to apply.', '2012-12-21');
+    PERFORM do_close_application(2, TRUE);
 
 END $group_memberships_tests$;
 \echo group_memberships_tests passed
