@@ -39,6 +39,8 @@ AS $$
     END
 $$;
 
+GRANT ALL ON FUNCTION add_group TO backend;
+
 
 -- get Groups Function
 CREATE OR REPLACE FUNCTION get_groups()
@@ -142,3 +144,25 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION edit_group_by_id TO backend;
+
+-- get_owner_by_group_id
+CREATE OR REPLACE FUNCTION get_owner_by_group_id(
+    p_group_id INT
+)
+    RETURNS SETOF users
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM users
+        WHERE id IN (
+            SELECT owner_id
+            FROM groups
+            WHERE id = p_group_id
+        );
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_owner_by_group_id TO backend;
+
