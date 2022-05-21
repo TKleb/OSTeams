@@ -72,14 +72,23 @@ class GroupsController {
 	}
 
 	async closeApplication(req, res) {
-		const { id } = req.params;
-		const { isAccepted, groupId } = req.body;
-		// Todo: Check if loggedInUser is owner of group this application belongs to
+		const { applicationId, groupId } = req.params;
+		let { isAccepted } = req.body;
 
-		await pgConnector.executeStoredProcedure("do_close_application", [id, isAccepted]);
+		const groupRow = await pgConnector.executeStoredProcedure("get_group_by_id", [groupId]);
+		if (!groupRow || groupRow.length === 0) {
+			return res.send("Invalid GroupId");
+		}
+
+		if (groupRow[0].owner_id !== req.session.userId || !applicationId) {
+			return res.send("Invalid parameters");
+		}
+		isAccepted = isAccepted !== undefined;
+
+		await pgConnector.executeStoredProcedure("do_close_application", [applicationId, isAccepted]);
 		const successMsg = isAccepted ? "Application approved" : "Application denied";
 		req.flash("success", successMsg);
-		res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/", groupId));
+		return res.redirect("/groups/".concat(groupId));
 	}
 
 	async leaveGroup(req, res) {
@@ -91,7 +100,7 @@ class GroupsController {
 		}
 
 		if (members.find((member) => member.id !== req.session.userId)
-		|| (groupRow[0].owner_id === req.session.userId && members.length > 1)) {
+		|| (groupRow[0].owner_id === req.session.userId)) {
 			return res.send("Cannot leave group");
 		}
 
@@ -169,7 +178,7 @@ class GroupsController {
 		}
 
 		const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
-		+ "<p> Click on the following list to view all applicants: "
+		+ "<p> Click on the following link to view all applicants: "
 		+ `<a href="${websiteConfig.hostname}:${websiteConfig.port}/groups/${id}">link</a></p>`;
 
 		const groupOwnerRow = await pgConnector.executeStoredProcedure("get_owner_by_group_id", [id]);

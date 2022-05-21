@@ -2,7 +2,7 @@
 	<div id="group-interaction-div">
 		<h1>{{title}}</h1>
 		<div id="group-interaction-btns">
-			<button id="leave-group-btn">Leave</button>
+			<button id="leave-group-btn" {{#if isOwner}} disabled {{/if}}>Leave</button>
 			<button id="delete-group-btn" disabled>Delete</button>
 		</div>
 	</div>
@@ -14,20 +14,18 @@
 			{{group.owner}}
 			<ul>
 				{{#each members}}
-					<li>{{email}} <button>X</button></li>
+					<li>{{email}}</li>
 				{{/each}}
 			</ul>
 		</div>
 		<div id="group-applications">
 			<ul>
 				{{#each applicants}}
-					<li>{{name}} <button data-modal-target="#application-{{id}}-modal" class="view-application">View</button></li>
+					<li>{{id}} {{#if ../isOwner}} <button data-modal-target="#application-{{id}}-modal" class="view-application">View </button> {{/if}}</li>
 				{{/each}}
 			</ul>
 		</div>
-		<div id="additional-group-settings">
 
-		</div>
 		{{#each applicants}}
 			<div class="modal" id="application-{{id}}-modal">
 				<div class="modal-header">
@@ -35,8 +33,8 @@
 					<button data-close-button class="close-button">&times;</button>
 				</div>
 				<div class="modal-body">
-					<form id="application-form" method="post">
-						<input type="checkbox" class="checkbox" id="checkbox-{{id}}">
+					<form id="application-form" method="post" action="/groups/closeApplication/{{id}}/{{../group.id}}" >
+						<input name="isAccepted" type="checkbox" class="checkbox" id="checkbox-{{id}}">
 						<label for="checkbox-{{id}}">Accept</label>
 						<textarea name="description" id="group-application-description" disabled>{{text}}</textarea>
 						<button type="submit" class="submit-btn">Submit</button>
