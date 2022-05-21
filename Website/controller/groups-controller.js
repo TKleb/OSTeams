@@ -1,5 +1,11 @@
+import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
+
+const asyncFilter = async (arr, predicate) => {
+	const results = await Promise.all(arr.map(predicate));
+	return arr.filter((_v, index) => results[index]);
+};
 
 class GroupsController {
 	async showByUserId(req, res) {
@@ -21,8 +27,19 @@ class GroupsController {
 			return res.send("Invalid subject");
 		}
 
-		const groupRows = await pgConnector.executeStoredProcedure("get_groups_by_subject_id", [subjectRow[0].id]);
-		return res.render("grouplist", { title: "Groups", groups: groupRows });
+		let groupRows = await pgConnector.executeStoredProcedure("get_groups_by_subject_id", [subjectRow[0].id]);
+		groupRows = await asyncFilter(groupRows, async (group) => {
+			const isApplicationPossible = await pgConnector.executeStoredProcedure("is_application_possible", [req.session.userId, group.id]);
+			return isApplicationPossible[0].is_application_possible;
+		});
+
+		return res.render("grouplist", {
+			title: "Groups",
+			groups: groupRows,
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
+		});
 	}
 
 	async showGroupById(req, res) {
@@ -105,6 +122,50 @@ class GroupsController {
 		const groupRow = await pgConnector.executeStoredProcedure("add_group", options);
 
 		return res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/", groupRow[0].id));
+	}
+
+	async applyToGroup(req, res) {
+		const { id } = req.params;
+		const { description } = req.body;
+
+		if (!id || !description) {
+			req.flash("error", "Missing fields");
+			return res.redirect("/");
+		}
+
+		const groupRow = await pgConnector.executeStoredProcedure("get_group_by_id", [id]);
+		if (!groupRow || groupRow.length === 0) {
+			req.flash("error", "Couldn't find group");
+			return res.redirect("/");
+		}
+
+		const groupMembers = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
+		if (!groupMembers || groupMembers.length === groupRow[0].maxMemberCount) {
+			req.flash("error", "Group member limit reached");
+			return res.redirect("/");
+		}
+
+		// 	user_id, group_id, text, timestamp
+		const options = [
+			req.session.userId,
+			id,
+			description,
+			new Date().toISOString(),
+		];
+		const applyResponseRow = await pgConnector.executeStoredProcedure("add_application", options);
+		if (!applyResponseRow || applyResponseRow.length === 0) {
+			req.flash("error", "An error occurred with your application");
+			return res.redirect("/");
+		}
+
+		const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
+		+ "<p> Click on the following list to view all applicants: "
+		+ `<a href="${websiteConfig.hostname}:${websiteConfig.port}/groups/${id}">link</a></p>`;
+
+		const groupOwnerRow = await pgConnector.executeStoredProcedure("get_owner_by_group_id", [id]);
+		const response = await mailer.SendMail(groupOwnerRow[0].email, "New Application - OSTeams", htmlBody);
+		req.flash("hint", response);
+		return res.redirect("/");
 	}
 }
 
