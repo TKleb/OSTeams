@@ -7,6 +7,7 @@
 		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<link rel="stylesheet" type="text/css" href="/global.css">
+	<link rel="stylesheet" type="text/css" href="/groupelements.css">
 	<script type="text/javascript" src="/js/script.js" defer></script>
 	<title>OSTeams</title>
 	{{#if dark}}
@@ -20,16 +21,19 @@
 </head>
 
 <body>
-	<div id="control-panel">
-		<a class="control-button" href="/">Home</a>
-		<a class="control-button" href="/subjects">Subjects</a>
-		<a class="control-button" href="/groups">Your Groups</a>
-		<a class="control-button" id="account-page-link" href="/account">Account</a>
-		{{#if session.loggedIn}}
-		<a class="control-button" id="logout-page-link" href="/account/logout">Logout</a>
-		{{else}}
-		<a class="control-button" id="login-page-link" href="/account/login">Login</a>
-		{{/if}}
+	<div class="top">
+		<div id="control-panel">
+			<img src="/images/osteams.jpg" alt="osteams logo" id="logo">
+			<a class="control-button" href="/">Home</a>
+			<a class="control-button" href="/subjects">Subjects</a>
+			<a class="control-button" href="/groups">Your Groups</a>
+			<a class="control-button" id="account-page-link" href="/account">Account</a>
+			{{#if session.loggedIn}}
+				<a class="control-button" id="logout-page-link" href="/account/logout">Logout</a>
+			{{else}}
+				<a class="control-button" id="login-page-link" href="/account/login">Login</a>
+			{{/if}}
+		</div>
 	</div>
 	<div id="background">
 		<div id="container">

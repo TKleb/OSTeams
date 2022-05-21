@@ -3,7 +3,23 @@ em {
     font-weight: 700;
 }
 
-/* CONTROL PANEL STYLING */
+* {
+    font-family: Arial, sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+.center {
+    margin: auto;
+}
+
+/* ========================= CONTROL PANEL STYLING ========================= */
 #control-panel {
     margin: 0 auto;
     border: 2px solid darkmagenta;
@@ -12,6 +28,14 @@ em {
     height: 3em;
     font-family: Arial, serif;
     text-align: center;
+}
+
+#logo {
+    float: left;
+    object-fit: cover;
+    width: 100px;
+    height: 50px;
+    margin-left: 30px;
 }
 
 .control-button {
@@ -33,32 +57,61 @@ em {
 
 .control-button:hover {
     text-decoration: none;
-    background-color: green;
+    background-color: rgb(184 102 184);
 }
 
 @media (max-width: 735px) {
     .control-button { display: none; }
 }
 
-/* BSIC PAGE LAYOUT */
+/* ========================= BASIC PAGE LAYOUT ========================= */
 #background {
     position: absolute;
     width: 100%;
     height: 100%;
 }
 
-#container {
-    position: relative;
-    border: 2px solid black;
-    width: 85%;
-    height: 100%;
-    padding: 10px;
-    margin: 5em auto auto;
+.top {
+    width: 100%;
+    z-index: 0;
+    height: 250px;
+    background-image: url("images/background.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-/* HOMEPAGE */
+#container {
+    position: relative;
+    width: 60%;
+    height: 100%;
+    padding: 10px;
+    margin: 0 auto auto;
+}
 
-/* LOGIN PAGE */
+/* ========================= SUBJECTS ========================= */
+.search {
+    width: 100%;
+    position: relative;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+#searchbar {
+    width: 50%;
+    border: 2px solid black;
+    padding: 5px;
+    height: 20px;
+    outline: none;
+}
+
+/* ========================= HOMEPAGE ========================= */
+
+/* ========================= LOGIN PAGE ========================= */
+.display-info p {
+    margin-bottom: 2px;
+}
+
 #login-form-div {
     width: 80%;
     margin: 0 auto;
@@ -144,7 +197,7 @@ a:visited {
     padding: 0 10px;
 }
 
-/* Registration Page */
+/* ========================= Registration Page ========================= */
 #login-form-div p {
     font-family: Arial, sans-serif;
 }
@@ -184,7 +237,7 @@ a:visited {
     background-color: rgb(156 154 154);
 }
 
-/* Reset Password Page */
+/* ========================= Reset Password Page ========================= */
 #reset-password {
     width: 40%;
     height: 40px;
@@ -200,7 +253,7 @@ a:visited {
     background-color: rgb(176 86 176);
 }
 
-/* Subjects Page */
+/* ========================= Subjects Page ========================= */
 .subject {
     display: flex;
     width: 95%;
@@ -221,258 +274,65 @@ a:visited {
     box-shadow: 0 0 3px 2px #ccc;
 }
 
-/* GroupList Page */
-.group {
-    display: flex;
-    width: 95%;
-    height: 7em;
-    margin-bottom: 10px;
-}
-
-.group:hover {
-    cursor: pointer;
-}
-
-.group-info {
-    margin: 5px;
-    float: left;
-    flex: 2;
-    border-right: 2px solid #ccc;
-    font-family: Arial, sans-serif;
-}
-
-.group-members {
-    margin: 5px;
-    float: right;
-    flex: 1;
-    font-family: Arial, sans-serif;
-    overflow-y: scroll;
-}
-
-.member-list li {
-    zoom: 1;
-    display: block;
-    text-align: left;
-    margin: 0 10px 3px;
-    background-color: grey;
-}
-
-ul.member-list {
-    padding-left: 0;
-}
-
-.group-members::-webkit-scrollbar {
-    display: none;
-}
-
-.group-interaction {
-    width: 15%;
+/* ========================= Account Page ========================= */
+.account-container {
+    display: grid;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 30% 70%;
+
+    /* Strange interaction with linter and grid template */
+    /* stylelint-disable */
+    grid-template-areas:
+            "info propic"
+            "info acc-interaction";
+    /* stylelint-enable */
 }
 
-.group-interaction .grp-btn {
-    font-size: 15px;
-    width: 80%;
-    height: 2em;
-    cursor: pointer;
-    background-color: rgb(146 71 146);
-    margin-bottom: 5px;
+.display-info {
+    grid-area: info;
 }
 
-.group-interaction .grp-btn:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
-}
-
-.group-interaction .grp-btn:disabled {
-    background-color: #767676;
-    cursor: default;
-}
-
-#create-group-div {
-    margin-bottom: 20px;
-}
-
-#create-group-div .grp-btn {
-    font-size: 15px;
-    height: 2em;
-    cursor: pointer;
-    background-color: rgb(146 71 146);
-}
-
-#create-group-div .grp-btn:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
-}
-
-/* Group Page Modal */
-.modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: 200ms ease-in-out;
-    border: 1px solid black;
-    border-radius: 10px;
-    width: 500px;
-    max-width: 50%;
-    word-wrap: break-word;
-    z-index: 10;
-    background-color: white;
-}
-
-.modal.active {
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.modal-header {
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid black;
-}
-
-.modal-header .title {
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-.modal-header .close-button {
-    cursor: pointer;
-    border: none;
-    outline: none;
-    background: none;
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-.modal-body {
-    padding: 10px 15px;
-}
-
-#overlay {
-    position: fixed;
-    transition: 200ms ease-in-out;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgb(0 0 0);
-    opacity: 0;
-    pointer-events: none;
-}
-
-#overlay.active {
-    opacity: 0.5;
-    pointer-events: all;
-}
-
-.modal-body #application-text,
-#create-group-description {
-    resize: none;
-    margin-top: 10px;
-    font-size: 15px;
-    font-family: Arial, sans-serif;
-    width: 100%;
-    height: 5em;
-    border: 1px solid black;
-}
-
-#create-group-form label,
-input {
-    display: block;
-    width: 50%;
-}
-
-#create-group-form input {
-    margin-bottom: 5px;
-}
-
-/* Group Information */
-#group-interaction-div {
-    display: flex;
-    justify-content: space-between;
-}
-
-#group-interaction-btns {
-    margin-left: 100px;
-    display: flex;
-    align-items: center;
-}
-
-#group-interaction-btns #leave-group-btn {
-    margin-right: 60px;
-    height: 50%;
-    width: 80px;
-    cursor: pointer;
-}
-
-#group-interaction-btns #delete-group-btn {
-    margin-right: 30px;
-    height: 50%;
-    width: 80px;
-}
-
-#group-div {
-    display: flex;
-    height: 75%;
-}
-
-#group-description {
-    flex: 2;
-    float: left;
-    height: 100%;
-    width: 200px;
-    border: 2px solid green;
-    margin-right: 20px;
-}
-
-#group-information {
-    flex: 1;
-    float: right;
-    height: 100%;
-    width: 200px;
-    border: 2px solid red;
-}
-
-#groupmember-list {
-    display: block;
-    border: 2px solid magenta;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-}
-
-#groupmember-list ul,
-#applications ul {
-    list-style-type: none;
-    padding-inline-start: 10px;
-}
-
-#groupmember-list li,
-#applications li {
-    margin-bottom: 5px;
-    margin-right: 20px;
-}
-
-#groupmember-list li button,
-#applications li button {
-    float: right;
-    width: 40px;
-    height: 20px;
-    cursor: pointer;
+.profile-picture {
+    grid-area: propic;
     text-align: center;
 }
 
-#applications {
-    display: block;
-    border: 2px solid purple;
-    font-size: 16px;
-    font-family: Arial, sans-serif;
+.account-interaction {
+    grid-area: acc-interaction;
+    text-align: center;
 }
 
-/* Account Page */
+.profile-picture img {
+    aspect-ratio: 1 / 1;
+    width: 60%;
+}
+
+.display-info textarea {
+    width: 70%;
+    min-height: 150px;
+    resize: none;
+}
+
+#start-account-edit {
+    width: 30%;
+    aspect-ratio: 2/1;
+    cursor: pointer;
+    background-color: rgb(146 71 146);
+    margin-bottom: 5px;
+}
+
+.acc-edit-btn {
+    display: none;
+    width: 30%;
+    aspect-ratio: 2/1;
+    cursor: pointer;
+    background-color: rgb(146 71 146);
+    margin-bottom: 5px;
+}
+
+#start-account-edit:hover,
+.acc-edit-btn:hover {
+    cursor: pointer;
+    background-color: rgb(176 86 176);
+}
