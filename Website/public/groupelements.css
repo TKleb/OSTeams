@@ -15,6 +15,26 @@
     box-shadow: 0 0 3px 2px #ccc;
 }
 
+.own-group {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 50px;
+
+    /* Strange interaction with linter and grid template */
+    /* stylelint-disable */
+    grid-template-areas:
+            "info members"
+            "info full";
+    /* stylelint-enable */
+    height: 7em;
+    margin-bottom: 10px;
+    box-shadow: 0 0 3px 2px #ccc;
+}
+
+.own-group:hover {
+    cursor: pointer;
+}
+
 .group-info {
     grid-area: info;
     border-right: 2px solid rgb(217 217 217);

@@ -1,8 +1,8 @@
 <h1>Groups</h1>
 {{#each groups}}
-	<article class="group">
+	<article onclick="location.href='/groups/{{id}}'" class="own-group">
 		<div class="group-info">
-			{{name}}
+			<p>{{name}}</p>
 			{{description}}
 		</div>
 		<div class="group-members">
@@ -10,14 +10,6 @@
 		</div>
 		<div class="group-full">
 			<p>{{current_member_count}}/{{max_member_count}} Open</p>
-		</div>
-		<div class="group-interaction">
-			<form action="/groups/{{id}}" method="get">
-				<button type="submit" class="grp-btn">View</button>
-			</form>
-
-			<button class="grp-btn leave">Leave</button>
-			<button class="grp-btn" disabled>Delete</button>
 		</div>
 	</article>
 {{/each}}
