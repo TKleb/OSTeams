@@ -1,4 +1,4 @@
-{{#if}}
+{{#if group}}
 	<div id="group-interaction-div">
 		<h1>{{title}}</h1>
 		<div id="group-interaction-btns">
@@ -11,6 +11,7 @@
 			{{group.description}}
 		</div>
 		<div id="groupmember-list">
+			{{group.owner}}
 			<ul>
 				{{#each members}}
 					<li>{{email}} <button>X</button></li>
