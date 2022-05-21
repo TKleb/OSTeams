@@ -99,7 +99,7 @@ class GroupsController {
 			return res.send("Invalid GroupId");
 		}
 
-		if (members.find((member) => member.id !== req.session.userId)
+		if ((members.find((member) => member.id === req.session.userId) === undefined)
 		|| (groupRow[0].owner_id === req.session.userId)) {
 			return res.send("Cannot leave group");
 		}

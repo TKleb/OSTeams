@@ -2,7 +2,9 @@
 	<div id="group-interaction-div">
 		<h1>{{title}}</h1>
 		<div id="group-interaction-btns">
-			<button id="leave-group-btn" {{#if isOwner}} disabled {{/if}}>Leave</button>
+			<form id="application-form" method="post" action="/groups/leave/{{group.id}}">
+				<button id="leave-group-btn" {{#if isOwner}} disabled {{/if}}>Leave</button>
+			</form>
 			<button id="delete-group-btn" disabled>Delete</button>
 		</div>
 	</div>
