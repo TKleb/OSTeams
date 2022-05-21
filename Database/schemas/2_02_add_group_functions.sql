@@ -13,7 +13,7 @@ CREATE OR REPLACE FUNCTION add_group(
     SECURITY DEFINER
 AS $$
     BEGIN
-		RETURN QUERY
+        RETURN QUERY
         WITH added_group AS (
             INSERT INTO groups (
                 name,
@@ -33,9 +33,17 @@ AS $$
                 p_apply_by_date
             ) RETURNING *
         ), t2_insert as (
-			INSERT INTO group_memberships (user_id, group_id, member_since) VALUES (p_owner_id, (SELECT id from added_group LIMIT 1), p_creation_date)
-		)
-		TABLE added_group;
+            INSERT INTO group_memberships (
+                user_id,
+                group_id,
+                member_since
+            ) VALUES (
+                p_owner_id,
+                (SELECT id from added_group LIMIT 1),
+                p_creation_date
+            )
+        )
+        TABLE added_group;
     END
 $$;
 
