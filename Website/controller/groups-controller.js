@@ -4,7 +4,13 @@ import websiteConfig from "../config/website.config.js";
 class GroupsController {
 	async showByUserId(req, res) {
 		const groupRows = await pgConnector.executeStoredProcedure("get_groups_of_user_by_id", [req.session.userId]);
-		res.render("groups", { title: "Groups", groups: groupRows });
+		res.render("groups", {
+			title: "Groups",
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
+			groups: groupRows,
+		});
 	}
 
 	async showBySubjectAbbr(req, res) {
@@ -49,6 +55,24 @@ class GroupsController {
 		res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/", groupId));
 	}
 
+	async leaveGroup(req, res) {
+		const { id } = req.params;
+		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
+		const groupRow = await pgConnector.executeStoredProcedure("get_group_by_id", [id]);
+		if (!groupRow || groupRow.length === 0) {
+			return res.send("Invalid GroupId");
+		}
+
+		if (members.find((member) => member.id !== req.session.userId)
+		|| (groupRow[0].owner_id === req.session.userId && members.length > 1)) {
+			return res.send("Cannot leave group");
+		}
+
+		await pgConnector.executeStoredProcedure("do_remove_user_from_group", [req.session.userId, id]);
+		req.flash("success", "Successfully left group");
+		return res.redirect("/groups");
+	}
+
 	async insert(req, res) {
 		const { abbreviation } = req.params;
 		const {
@@ -60,7 +84,7 @@ class GroupsController {
 
 		if (!abbreviation || !description || !maxMemberCount || !applyByDate || !groupName) {
 			req.flash("error", "Missing fields");
-			res.redirect("/");
+			return res.redirect("/");
 		}
 
 		const subjectRow = await pgConnector.executeStoredProcedure("get_subject_by_abbreviation", [abbreviation]);
