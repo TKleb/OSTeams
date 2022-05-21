@@ -10,6 +10,11 @@ const asyncFilter = async (arr, predicate) => {
 class GroupsController {
 	async showByUserId(req, res) {
 		const groupRows = await pgConnector.executeStoredProcedure("get_groups_of_user_by_id", [req.session.userId]);
+		for (const group of groupRows) {
+			const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [group.id]);
+			group.current_member_count = members.length;
+		}
+
 		res.render("groups", {
 			title: "Groups",
 			hint: req.flash("hint"),
@@ -28,6 +33,11 @@ class GroupsController {
 		}
 
 		let groupRows = await pgConnector.executeStoredProcedure("get_groups_by_subject_id", [subjectRow[0].id]);
+		for (const group of groupRows) {
+			const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [group.id]);
+			group.current_member_count = members.length;
+		}
+
 		groupRows = await asyncFilter(groupRows, async (group) => {
 			const isApplicationPossible = await pgConnector.executeStoredProcedure("is_application_possible", [req.session.userId, group.id]);
 			return isApplicationPossible[0].is_application_possible;
