@@ -28,32 +28,32 @@
 <div class="overlay"></div>
 {{#each groups}}
 	<article class="group">
-	<div class="group-info">
-		<p>{{name}}</p>
-		{{description}}
-	</div>
-	<div class="group-members">
-		<p>{{owner}}</p>
-	</div>
-	<div class="group-full">
-		<p>{{current_member_count}}/{{max_member_count}} Open</p>
-	</div>
-	<div class="group-interaction">
-		<button data-modal-target="#application-modal" class="grp-btn apply">Apply</button>
-	</div>
-
-	<div class="modal" id="application-modal">
-		<div class="modal-header">
-			<div class="title">Group Application</div>
-			<button data-close-button class="close-button">&times;</button>
+		<div class="group-info">
+			<p>{{name}}</p>
+			{{description}}
 		</div>
-			<div class="modal-body">
-				<form id="application-form" method="post" action="/groups/applyTo/{{id}}">
-					<textarea id="application-text" name="description" maxlength="200" required placeholder="add a brief summary"></textarea>
-					<button type="submit" class="submit-btn">Submit</button>
-				</form>
+		<div class="group-members">
+			<p>{{owner}}</p>
+		</div>
+		<div class="group-full">
+			<p>{{current_member_count}}/{{max_member_count}} Open</p>
+		</div>
+		<div class="group-interaction">
+			<button data-modal-target="#application-modal" class="grp-btn apply">Apply</button>
+		</div>
+
+		<div class="modal" id="application-modal">
+			<div class="modal-header">
+				<div class="title">Group Application</div>
+				<button data-close-button class="close-button">&times;</button>
+			</div>
+				<div class="modal-body">
+					<form id="application-form" method="post" action="/groups/applyTo/{{id}}">
+						<textarea id="application-text" name="description" maxlength="200" required placeholder="add a brief summary"></textarea>
+						<button type="submit" class="submit-btn">Submit</button>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
-</article>
+	</article>
 {{/each}}

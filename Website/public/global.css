@@ -19,6 +19,10 @@ body {
     margin: auto;
 }
 
+#background {
+    background-color: #f0eeee;
+}
+
 /* ========================= CONTROL PANEL STYLING ========================= */
 #control-panel {
     margin: 0 auto;
@@ -99,7 +103,8 @@ body {
 
 #searchbar {
     width: 50%;
-    border: 2px solid black;
+    border: 3px solid rgb(63 63 63);
+    border-radius: 5px;
     padding: 5px;
     height: 20px;
     outline: none;
@@ -260,18 +265,25 @@ a:visited {
     height: 4em;
     padding: 5px;
     margin-bottom: 15px;
+
 }
 
 .subject h3 {
     margin: 10px 0 5px 5px;
 }
 
-.subject-description,
-.group-description {
+.subject-description {
     flex: 1;
     display: flex;
     height: 100%;
+    border: 2px solid rgb(170, 170, 170);
+    background-color:#fefefe;
+    border-radius: 5px;
     box-shadow: 0 0 3px 2px #ccc;
+}
+
+.subject-description:hover {
+    transform: scale(1.05);
 }
 
 /* ========================= Account Page ========================= */

@@ -10,8 +10,13 @@
             "info members interaction"
             "info full interaction";
     /* stylelint-enable */
+
     height: 7em;
     margin-bottom: 10px;
+
+    border: 2px solid rgb(170, 170, 170);
+    background-color:#fefefe;
+    border-radius: 5px;
     box-shadow: 0 0 3px 2px #ccc;
 }
 
@@ -28,16 +33,24 @@
     /* stylelint-enable */
     height: 7em;
     margin-bottom: 10px;
+
+    border: 2px solid rgb(170, 170, 170);
+    background-color:#fefefe;
+    border-radius: 5px;
     box-shadow: 0 0 3px 2px #ccc;
 }
 
 .own-group:hover {
     cursor: pointer;
+    transform: scale(1.05);
+}
+
+.group:hover {
+    transform: scale(1.05);
 }
 
 .group-info {
     grid-area: info;
-    border-right: 2px solid rgb(217 217 217);
     padding: 5px;
 }
 
@@ -61,7 +74,6 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    border-left: 2px solid rgb(217 217 217);
 }
 
 .group-interaction form {
