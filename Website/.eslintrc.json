@@ -38,6 +38,13 @@
         "brace-style": [
             "error",
             "1tbs"
-        ]
+        ],
+		"no-restricted-syntax": [
+			"error",
+			"ForInStatement"
+		],
+		"no-await-in-loop": [
+			"off"
+		]
     }
 }

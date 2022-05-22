@@ -1,31 +1,15 @@
 <h1>Groups</h1>
-<!-- TODO Group Name -->
 {{#each groups}}
-	<article class="group">
-		<div class="group-description">
-			<div class="group-info">
-				This is going to be the group description
-			</div>
-			<div class="group-members">
-				<ul class="member-list">
-					<li>Hans</li>
-					<li>Thomas</li>
-					<li>Thomas</li>
-					<li>Thomas</li>
-					<li>Thomas</li>
-					<li>Thomas</li>
-					<li>Thomas</li>
-					<li>Thomas</li>
-					<li>Thomas</li>
-					<li>Thomas</li>
-				</ul>
-			</div>
+	<article onclick="location.href='/groups/{{id}}'" class="own-group">
+		<div class="group-info">
+			<p>{{name}}</p>
+			{{description}}
 		</div>
-		<div class="group-interaction">
-			<button onclick="location.href='/group/{{id}}'" class="grp-btn">View Group</button>
-			<button class="grp-btn leave">Leave</button>
-			<button class="grp-btn" disabled>Delete Group</button>
+		<div class="group-members">
+			<p>{{owner}}</p>
+		</div>
+		<div class="group-full">
+			<p>{{current_member_count}}/{{max_member_count}} Open</p>
 		</div>
 	</article>
-	<div id="overlay"></div>
 {{/each}}
