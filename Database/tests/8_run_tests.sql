@@ -17,13 +17,7 @@ AS $$
         -- Add users
         INSERT INTO users(name, surname, password_hash, email) VALUES
             ('In', 'Group', '123', 'in.group@ost.ch'),
-            ('NotIn', 'Group', '123', 'notin.group@ost.ch'),
-            ('John', 'Doe', '123', 'john.doe@ost.ch'),
-            ('Jane', 'Mow', '123', 'jane.mow@ost.ch');
-        -- Add unverified users
-        INSERT INTO unverified_users(name, surname, email, password_hash, verification_code) VALUES
-            ('Jaden', 'Doe', 'jaden.doe@ost.ch', '123', 'verifyme1'),
-            ('Jargon', 'Mow', 'jargon.mow@ost.ch', '123', 'verifyme2');
+            ('NotIn', 'Group', '123', 'notin.group@ost.ch');
         -- Add group
         INSERT INTO groups(owner_id, name, subject_id, max_member_count,creation_date, apply_by_date) VALUES
             (
