@@ -69,6 +69,7 @@ services:
 
 volumes:
   postgres-db:
+    external: false
   pgadmin:
   db-backup:
 
