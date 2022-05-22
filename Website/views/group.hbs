@@ -36,8 +36,10 @@
 				</div>
 				<div class="modal-body">
 					<form id="application-form" method="post" action="/groups/closeApplication/{{id}}/{{../group.id}}" >
-						<input name="isAccepted" type="checkbox" class="checkbox" id="checkbox-{{id}}">
-						<label for="checkbox-{{id}}">Accept</label>
+						<input name="accept" type="radio" class="radio" id="accept-{{id}}" value="true" checked>
+						<label for="radio-{{id}}">Accept</label>
+						<input name="accept" type="radio" class="radio" id="deny-{{id}}" value="false">
+						<label for="radio-{{id}}">Deny</label>
 						<textarea name="description" id="group-application-description" disabled>{{text}}</textarea>
 						<button type="submit" class="submit-btn">Submit</button>
 					</form>

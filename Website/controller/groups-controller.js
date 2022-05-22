@@ -73,18 +73,22 @@ class GroupsController {
 
 	async closeApplication(req, res) {
 		const { applicationId, groupId } = req.params;
-		let { isAccepted } = req.body;
+		const { accept } = req.body;
+
+		if (!applicationId || !groupId || accept === undefined) {
+			return res.send("Invalid parameters");
+		}
 
 		const groupRow = await pgConnector.executeStoredProcedure("get_group_by_id", [groupId]);
 		if (!groupRow || groupRow.length === 0) {
 			return res.send("Invalid GroupId");
 		}
 
-		if (groupRow[0].owner_id !== req.session.userId || !applicationId) {
-			return res.send("Invalid parameters");
+		if (groupRow[0].owner_id !== req.session.userId) {
+			return res.send("Insufficient permissions");
 		}
-		isAccepted = isAccepted !== undefined;
 
+		const isAccepted = accept === "true";
 		await pgConnector.executeStoredProcedure("do_close_application", [applicationId, isAccepted]);
 		const successMsg = isAccepted ? "Application approved" : "Application denied";
 		req.flash("success", successMsg);
