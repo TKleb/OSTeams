@@ -36,17 +36,12 @@
         "express": "^4.18.1",
         "express-handlebars": "^6.0.6",
         "express-session": "^1.17.3",
-        "jsdom": "^19.0.0",
-        "nedb-promises": "^6.0.3",
         "node": "^17.7.2",
         "nodemailer": "^6.7.5",
         "pg-promise": "^10.11.1",
-        "rand-token": "^1.0.1",
-        "sinon": "^14.0.0"
+        "rand-token": "^1.0.1"
     },
     "devDependencies": {
-        "@typescript-eslint/eslint-plugin": "^5.17.0",
-        "babel-plugin-istanbul": "^6.1.1",
         "c8": "^7.11.2",
         "chai": "^4.3.6",
         "chai-http": "^4.3.0",
