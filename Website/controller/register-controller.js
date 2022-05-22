@@ -41,7 +41,7 @@ class RegisterController {
 		+ "to verify your email address</p>";
 
 		const response = await mailer.SendMail(email, "Email verification - OSTeams", htmlBody);
-		return res.render("register", { hint: response });
+		return res.render("login", { hint: response });
 	}
 
 	verifyMail(req, res) {
