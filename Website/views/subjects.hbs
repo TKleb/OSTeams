@@ -4,9 +4,9 @@
 </div>
 
 {{#each subjects}}
-		<article class="subject">
+		<article class="subject" onclick="location.href='/subjects/{{abbreviation}}'">
 			<div class="subject-description">
-				<a class="link" href="/subjects/{{abbreviation}}">
+				<a class="link">
 					<h3 class="subject-name">
 						<em class="abbreviation">{{abbreviation}}</em>
             			{{name}}

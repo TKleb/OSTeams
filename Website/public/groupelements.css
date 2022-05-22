@@ -42,11 +42,11 @@
 
 .own-group:hover {
     cursor: pointer;
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .group:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .group-info {
@@ -237,14 +237,14 @@
 
 #group-interaction-btns #leave-group-btn {
     margin-right: 60px;
-    height: 50%;
+    height: 35px;
     width: 80px;
     cursor: pointer;
 }
 
 #group-interaction-btns #delete-group-btn {
     margin-right: 30px;
-    height: 50%;
+    height: 35px;
     width: 80px;
 }
 
@@ -252,7 +252,7 @@
     display: grid;
     height: 100%;
     grid-template-columns: 60% 35%;
-    grid-template-rows: 20% 20% 60%;
+    grid-template-rows: 25% 25% 50%;
 
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
@@ -261,24 +261,36 @@
             "group-desc group-appli"
             "group-settings group-settings";
     /* stylelint-enable */
-    column-gap: 5%;
-    row-gap: 30px;
+    column-gap: 2%;
+    row-gap: 10px;
 }
 
 #group-description {
     grid-area: group-desc;
-    box-shadow: 0 0 3px 2px #ccc;
     text-align: justify;
     padding: 10px;
+
+    border: 2px solid rgb(170, 170, 170);
+    background-color:#fefefe;
+    border-radius: 5px;
+    box-shadow: 0 0 3px 2px #ccc;
 }
 
 #groupmember-list {
     grid-area: group-members;
+
+    border: 2px solid rgb(170, 170, 170);
+    background-color:#fefefe;
+    border-radius: 5px;
     box-shadow: 0 0 3px 2px #ccc;
 }
 
 #group-applications {
     grid-area: group-appli;
+
+    border: 2px solid rgb(170, 170, 170);
+    background-color:#fefefe;
+    border-radius: 5px;
     box-shadow: 0 0 3px 2px #ccc;
 }
 
