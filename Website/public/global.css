@@ -261,7 +261,6 @@ a:visited {
     height: 4em;
     padding: 5px;
     margin-bottom: 15px;
-
 }
 
 .subject h3 {
@@ -272,8 +271,8 @@ a:visited {
     flex: 1;
     display: flex;
     height: 100%;
-    border: 2px solid rgb(170, 170, 170);
-    background-color:#fefefe;
+    border: 2px solid rgb(170 170 170);
+    background-color: #fefefe;
     border-radius: 5px;
     box-shadow: 0 0 3px 2px #ccc;
 }
