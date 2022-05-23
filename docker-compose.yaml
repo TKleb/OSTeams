@@ -22,6 +22,9 @@ services:
       dockerfile: dockerfile
       target: ${TARGET:-development}
     restart: "no"
+    extends:
+      file: ./Website/docker-compose.web.yaml
+      service: "web-${TARGET:-development}"
     working_dir: /usr/app
     labels:
       - "traefik.enable=true"
@@ -30,7 +33,6 @@ services:
       - "traefik.docker.network=traefik_net"
       - "traefik.http.services.web.loadBalancer.sticky.cookie=true"
     volumes:
-      - ./Website/:/usr/app/
       - /usr/app/node_modules
     ports:
       - "3001:3001"

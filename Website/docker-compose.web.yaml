@@ -1,0 +1,12 @@
+# HACK!
+# Until portainer supports relative paths for volumes or docker has an alternative for "extends", we're using a deprecated feature.
+
+version: '3.8'
+services:
+  web-development:
+    volumes:
+      - .:/usr/app/
+
+  web-test: {}
+
+  web-production: {}
