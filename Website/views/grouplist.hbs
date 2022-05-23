@@ -41,8 +41,10 @@
 		<div class="group-interaction">
 			<button data-modal-target="#application-modal" class="grp-btn apply">Apply</button>
 		</div>
-
-		<div class="modal" id="application-modal">
+	</article>
+{{/each}}
+{{#each groups}}
+	<div class="modal" id="application-modal">
 			<div class="modal-header">
 				<div class="title">Group Application</div>
 				<button data-close-button class="close-button">&times;</button>
@@ -55,5 +57,4 @@
 				</div>
 			</div>
 		</div>
-	</article>
 {{/each}}
