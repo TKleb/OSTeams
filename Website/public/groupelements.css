@@ -43,7 +43,7 @@
     transform: scale(1.02);
 }
 
-.group:hover {
+.group:not(.no-hover):hover {
     transform: scale(1.02);
 }
 
