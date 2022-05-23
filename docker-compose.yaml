@@ -30,9 +30,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-osteams}
     ports:
       - '${POSTGRES_PORT:-5432}:5432'
-    # TODO: Volume currently disabled to make it volatile. Uncomment to make it persistent.
-    #volumes:
-    #  - postgres-db:/var/lib/postgresql/data
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
     networks:
       - backend-db
       - db-pgadmin4
@@ -70,8 +69,10 @@ services:
 
 volumes:
   postgres-db:
+    external: false
   pgadmin:
   db-backup:
+
 
 networks:
   backend-db:

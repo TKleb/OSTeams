@@ -49,10 +49,12 @@ CREATE TABLE IF NOT EXISTS groups
     closed BOOLEAN NULL,
     CONSTRAINT fk_owner
       FOREIGN KEY(owner_id)
-      REFERENCES users(id),
+      REFERENCES users(id)
+      ON DELETE CASCADE,
     CONSTRAINT fk_subject
       FOREIGN KEY(subject_id)
       REFERENCES subjects(id)
+      ON DELETE CASCADE
 ) TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS groups OWNER TO admin;
@@ -67,10 +69,12 @@ CREATE TABLE IF NOT EXISTS group_applications
     closed BOOLEAN NOT NULL,
     CONSTRAINT fk_group
       FOREIGN KEY(group_id)
-      REFERENCES groups(id),
+      REFERENCES groups(id)
+      ON DELETE CASCADE,
     CONSTRAINT fk_user
       FOREIGN KEY(user_id)
       REFERENCES users(id)
+      ON DELETE CASCADE
 ) TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS group_applications OWNER TO admin;
@@ -83,10 +87,12 @@ CREATE TABLE IF NOT EXISTS group_memberships
     member_since TIMESTAMP WITH TIME ZONE NOT NULL,
     CONSTRAINT fk_group
       FOREIGN KEY(group_id)
-      REFERENCES groups(id),
+      REFERENCES groups(id)
+      ON DELETE CASCADE,
     CONSTRAINT fk_user
       FOREIGN KEY(user_id)
-      REFERENCES users(id),
+      REFERENCES users(id)
+      ON DELETE CASCADE,
     CONSTRAINT fk_unique
         UNIQUE (user_id, group_id)
 ) TABLESPACE pg_default;
