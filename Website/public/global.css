@@ -61,10 +61,6 @@ body {
     background-color: rgb(184 102 184);
 }
 
-@media (max-width: 735px) {
-    .control-button { display: none; }
-}
-
 /* ========================= BASIC PAGE LAYOUT ========================= */
 #background {
     position: absolute;
