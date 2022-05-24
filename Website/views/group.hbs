@@ -5,7 +5,11 @@
 			<form id="application-form" method="post" action="/groups/leave/{{group.id}}">
 				<button id="leave-group-btn" {{#if isOwner}} disabled {{/if}}>Leave</button>
 			</form>
-			<button id="delete-group-btn" disabled>Delete</button>
+			{{#if isOwner}}
+			<form id="deleteGroup-form" method="post" action="/groups/delete/{{group.id}}">
+				<button id="delete-group-btn">Delete</button>
+			</form>
+			{{/if}}
 		</div>
 	</div>
 	<div id="group-div">

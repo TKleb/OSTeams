@@ -147,6 +147,34 @@ class GroupsController {
 		return res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/", groupRow[0].id));
 	}
 
+	async delete(req, res) {
+		const { id } = req.params;
+
+		if (!id) {
+			req.flash("error", "Missing fields");
+			return res.redirect("/");
+		}
+
+		const groupRow = await pgConnector.executeStoredProcedure("get_group_by_id", [id]);
+		if (!groupRow || groupRow.length === 0) {
+			req.flash("error", "Couldn't find group");
+			return res.redirect("/");
+		}
+
+		if (groupRow[0].owner_id !== req.session.userId) {
+			req.flash("error", "You're not allowed to perform this action");
+			return res.redirect("/groups");
+		}
+
+		const groupRemoved = await pgConnector.executeStoredProcedure("do_remove_group", [id]);
+		if (!groupRemoved) {
+			req.flash("error", "Couldn't delete group");
+			return res.redirect("/groups");
+		}
+		req.flash("success", "Group successfully deleted");
+		return res.redirect("/groups");
+	}
+
 	async applyToGroup(req, res) {
 		const { id } = req.params;
 		const { description } = req.body;
