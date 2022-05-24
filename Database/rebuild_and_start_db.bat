@@ -3,6 +3,7 @@ setlocal
 set COMPOSE_DOCKER_CLI_BUILD=1
 set DOCKER_BUILDKIT=1
 docker-compose rm -sf db
+call powershell -command "docker volume rm $(docker volume ls -f name=.*postgres-db -q) --force"
 docker-compose up --build -d pgadmin db
 echo Starting database and admin panel...
 timeout 3 /nobreak > nul

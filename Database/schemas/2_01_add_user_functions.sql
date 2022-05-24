@@ -217,7 +217,9 @@ SECURITY DEFINER
 AS $$
     BEGIN
         RETURN QUERY
-        SELECT * FROM groups WHERE id IN ( SELECT group_id FROM group_memberships WHERE user_id = p_user_id );
+        SELECT * FROM groups WHERE id IN (
+            SELECT group_id FROM group_memberships WHERE user_id = p_user_id
+        );
     END
 $$;
 
