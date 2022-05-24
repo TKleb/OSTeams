@@ -15,11 +15,12 @@ class GroupsController {
 			group.current_member_count = members.length;
 		}
 
-		res.render("groups", {
+		res.render("grouplist", {
 			title: "Groups",
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
+			showAllGroups: false,
 			groups: groupRows,
 		});
 	}
@@ -36,6 +37,8 @@ class GroupsController {
 		for (const group of groupRows) {
 			const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [group.id]);
 			group.current_member_count = members.length;
+			// const groupOwnerRow = await pgConnector.executeStoredProcedure("get_user_by_id", [group.owner_id]);
+			// group.owner = groupOwnerRow[0].email;
 		}
 
 		groupRows = await asyncFilter(groupRows, async (group) => {
@@ -45,10 +48,11 @@ class GroupsController {
 
 		return res.render("grouplist", {
 			title: "Groups",
-			groups: groupRows,
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
+			showAllGroups: true,
+			groups: groupRows,
 		});
 	}
 
@@ -61,11 +65,14 @@ class GroupsController {
 
 		const isOwner = req.session.userId === groupRow[0].owner_id;
 		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
+		const isVisitor = members.find((member) => member.id === req.session.userId) === undefined;
 		const applicants = await pgConnector.executeStoredProcedure("get_applications_to_group", [id]);
+
 		return res.render("group", {
 			title: groupRow[0].name,
 			group: groupRow[0],
 			isOwner,
+			isVisitor,
 			applicants,
 			members,
 		});
