@@ -37,7 +37,8 @@ class GroupsController {
 		for (const group of groupRows) {
 			const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [group.id]);
 			group.current_member_count = members.length;
-			// const groupOwnerRow = await pgConnector.executeStoredProcedure("get_user_by_id", [group.owner_id]);
+			// const groupOwnerRow = await pgConnector.executeStoredProcedure("get_user_by_id",
+			// [group.owner_id]);
 			// group.owner = groupOwnerRow[0].email;
 		}
 
