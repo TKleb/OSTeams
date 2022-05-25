@@ -48,3 +48,19 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION get_subject_by_abbreviation TO backend;
+
+-- get_subject_by_id
+CREATE OR REPLACE FUNCTION get_subject_by_id(
+    p_subject_id INT
+)
+RETURNS SETOF subjects
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM subjects WHERE id = p_subject_id;
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_subject_by_id TO backend;

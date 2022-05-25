@@ -50,6 +50,10 @@ $subject_tests$ BEGIN
 
     ASSERT 1 = COUNT(*) FROM get_subject_by_abbreviation('NEWSUBJECT'),
         'get_subject_by_abbreviation failed';
+
+    ASSERT 1 = COUNT(*) FROM get_subject_by_id((SELECT id FROM subjects ORDER BY id DESC LIMIT 1)),
+        'get_subject_by_id failed';
+
     ROLLBACK;
 END $subject_tests$;
 \echo subject_tests passed
