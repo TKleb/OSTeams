@@ -2,7 +2,7 @@
 function searchElements(textField, searchBar, elements) {
 	return () => {
 		let input = searchBar.value.toLowerCase();
-		for (let i = 0; i < text.length; i += 1) {
+		for (let i = 0; i < textField.length; i += 1) {
 			if (!textField[i].innerHTML.toLowerCase().includes(input)) {
 				elements[i].style.display = "none";
 			} else {
