@@ -60,7 +60,7 @@ class PGConnector {
 	}
 
 	isApplicationPossible(sessionId, groupId) {
-		return this.executeStoredProcedure("is_application_possible", [req.session.userId, group.id]);
+		return this.executeStoredProcedure("is_application_possible", [sessionId, groupId]);
 	}
 }
 
