@@ -21,6 +21,12 @@
             "error",
             "always"
         ],
+        "no-param-reassign": [
+            "error",
+            {
+                "props": false // Allows re-assignment of properties in dom if given as arguments
+            }
+        ],
         "import/prefer-default-export": "off",
         "class-methods-use-this": "off",
         "linebreak-style": [
@@ -39,12 +45,12 @@
             "error",
             "1tbs"
         ],
-		"no-restricted-syntax": [
-			"error",
-			"ForInStatement"
-		],
-		"no-await-in-loop": [
-			"off"
-		]
+        "no-restricted-syntax": [
+            "error",
+            "ForInStatement"
+        ],
+        "no-await-in-loop": [
+            "off"
+        ]
     }
 }
