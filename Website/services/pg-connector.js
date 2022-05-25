@@ -4,9 +4,8 @@ import pgConfig from "../config/postgres.config.js";
 function getFirst(reply) {
 	if (!reply || reply.length < 1) {
 		return undefined;
-	} else {
-		return reply[0];
 	}
+	return reply[0];
 }
 
 class PGConnector {

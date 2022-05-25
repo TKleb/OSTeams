@@ -60,8 +60,22 @@ class GroupsController {
 		}
 
 		const isOwner = req.session.userId === groupRow[0].owner_id;
+		var applications = await pgConnector.executeStoredProcedure("get_applications_to_group", [id]);
+		var applicants = [];
+		const promises = applications.map((app) => pgConnector.getUserById(app.user_id));
+		if (promises.length > 0) {
+			await Promise.all(promises).then(
+				(arr) => {
+					applicants = arr.map((user, i) => {
+						var application = applications[i];
+						application.user_email = user.email;
+						return application;
+					});
+				}
+			);
+		}
+
 		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
-		const applicants = await pgConnector.executeStoredProcedure("get_applications_to_group", [id]);
 		return res.render("group", {
 			title: groupRow[0].name,
 			group: groupRow[0],

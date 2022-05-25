@@ -23,7 +23,7 @@
 		<div id="group-applications">
 			<ul>
 				{{#each applicants}}
-					<li>{{id}} {{#if ../isOwner}} <button data-modal-target="#application-{{id}}-modal" class="view-application">View </button> {{/if}}</li>
+					<li>{{user_email}} {{#if ../isOwner}} <button data-modal-target="#application-{{id}}-modal" class="view-application">View </button> {{/if}}</li>
 				{{/each}}
 			</ul>
 		</div>
@@ -51,4 +51,3 @@
 {{else}}
 	<h1>NO GROUP</h1>
 {{/if}}
-
