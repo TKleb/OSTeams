@@ -15,6 +15,7 @@
 |get_subject_by_abbreviation()|abbreviation|Subject[0..1] |Returns subject|
 |get_users()|-| User[0..n] |Returns all users in DB|
 |get_unverified_users()|-| UnverifiedUser[0..n] |Returns all unverified_users in DB|
+|get_user_by_id()|id| User[0..1] |Returns user matching the id if nothing matches it returns empty results|
 |get_user_by_email()|email| User[0..1] |Returns user matching the email if nothing matches it returns empty results|
 |get_groups()| - | Group[0..n] |Returns all groups|
 |get_group_by_id()| group_id | Group[0..1] |Returns group|
