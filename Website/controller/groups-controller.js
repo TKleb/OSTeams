@@ -163,15 +163,15 @@ class GroupsController {
 
 		if (groupRow[0].owner_id !== req.session.userId) {
 			req.flash("error", "You're not allowed to perform this action");
-			return res.redirect("/groups");
+			return res.redirect("/");
 		}
 
 		const groupRemovedRow = await pgConnector.executeStoredProcedure("do_remove_group_by_id", [id]);
 		if (!groupRemovedRow[0].do_remove_group_by_id) {
 			req.flash("error", "Couldn't delete group");
-			return res.redirect("/groups");
+			return res.redirect("/");
 		}
-		req.flash("success", "Group successfully deleted");
+		req.flash("success", "Group deleted successfully");
 		return res.redirect("/groups");
 	}
 
