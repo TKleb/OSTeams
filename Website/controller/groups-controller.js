@@ -9,19 +9,8 @@ const asyncFilter = async (arr, predicate) => {
 
 class GroupsController {
 	async showByUserId(req, res) {
-		const groupRows = await pgConnector.executeStoredProcedure("get_groups_of_user_by_id", [req.session.userId]);
-		for (const group of groupRows) {
-			const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [group.id]);
-			group.current_member_count = members.length;
-		}
-
-		res.render("groups", {
-			title: "Groups",
-			hint: req.flash("hint"),
-			error: req.flash("error"),
-			success: req.flash("success"),
-			groups: groupRows,
-		});
+		const groupRows = await getMembersPerGroup(req);
+		renderGroups(res, req, groupRows);
 	}
 
 	async showBySubjectAbbr(req, res) {
@@ -193,3 +182,22 @@ class GroupsController {
 }
 
 export default new GroupsController();
+async function getMembersPerGroup(req) {
+	const groupRows = await pgConnector.executeStoredProcedure("get_groups_of_user_by_id", [req.session.userId]);
+	for (const group of groupRows) {
+		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [group.id]);
+		group.current_member_count = members.length;
+	}
+	return groupRows;
+}
+
+function renderGroups(res, req, groupRows) {
+	res.render("groups", {
+		title: "Groups",
+		hint: req.flash("hint"),
+		error: req.flash("error"),
+		success: req.flash("success"),
+		groups: groupRows,
+	});
+}
+
