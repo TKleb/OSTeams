@@ -85,6 +85,10 @@ $user_tests$ BEGIN
         (SELECT id FROM users ORDER BY id DESC LIMIT 1)
     ), 'get_user_by_id failed';
 
+    ASSERT do_remove_user_by_id(
+        (SELECT id FROM users ORDER BY id DESC LIMIT 1)
+    ), 'do_remove_user_by_id failed';
+
     ROLLBACK;
 END $user_tests$;
 \echo user_tests passed
