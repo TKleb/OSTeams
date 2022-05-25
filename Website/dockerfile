@@ -4,7 +4,7 @@
 # Shared base image
 ################################################################################
 # Get latest node-alpine
-FROM node:17.7.1-alpine3.15 as base
+FROM node:18.2-alpine as base
 RUN apk update && apk upgrade
 WORKDIR /usr/app
 
@@ -18,7 +18,7 @@ EXPOSE 3001
 FROM base as production
 ENV NODE_ENV=production
 COPY package.json .
-RUN npm install --production
+RUN npm install --omit=dev
 
 # Copy over app files
 COPY . ./
