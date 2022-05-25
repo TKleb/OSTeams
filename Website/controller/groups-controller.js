@@ -9,28 +9,21 @@ const asyncFilter = async (arr, predicate) => {
 
 class GroupsController {
 	async showByUserId(req, res) {
-		const groupRows = await getMembersPerGroup(req);
+		const groupRows = await getMembersPerOwnGroup(req);
 		renderGroups(res, req, groupRows);
 	}
 
 	async showBySubjectAbbr(req, res) {
 		const { abbreviation } = req.params;
 
-		const subjectRow = await pgConnector.executeStoredProcedure("get_subject_by_abbreviation", [abbreviation]);
+		const subjectRow = await getSubjectByAbbreviation(abbreviation);
 		if (!subjectRow || subjectRow.length === 0) {
 			return res.send("Invalid subject");
 		}
 
-		let groupRows = await pgConnector.executeStoredProcedure("get_groups_by_subject_id", [subjectRow[0].id]);
-		for (const group of groupRows) {
-			const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [group.id]);
-			group.current_member_count = members.length;
-		}
+		let groupRows = await getMembersPerSubjectGroup(subjectRow);
 
-		groupRows = await asyncFilter(groupRows, async (group) => {
-			const isApplicationPossible = await pgConnector.executeStoredProcedure("is_application_possible", [req.session.userId, group.id]);
-			return isApplicationPossible[0].is_application_possible;
-		});
+		groupRows = await getIsApplicationPossiblePerGroup(groupRows, req);
 
 		return res.render("grouplist", {
 			title: "Groups",
@@ -182,7 +175,28 @@ class GroupsController {
 }
 
 export default new GroupsController();
-async function getMembersPerGroup(req) {
+async function getIsApplicationPossiblePerGroup(groupRows, req) {
+	groupRows = await asyncFilter(groupRows, async (group) => {
+		const isApplicationPossible = await pgConnector.executeStoredProcedure("is_application_possible", [req.session.userId, group.id]);
+		return isApplicationPossible[0].is_application_possible;
+	});
+	return groupRows;
+}
+
+async function getMembersPerSubjectGroup(subjectRow) {
+	let groupRows = await pgConnector.executeStoredProcedure("get_groups_by_subject_id", [subjectRow[0].id]);
+	for (const group of groupRows) {
+		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [group.id]);
+		group.current_member_count = members.length;
+	}
+	return groupRows;
+}
+
+async function getSubjectByAbbreviation(abbreviation) {
+	return await pgConnector.executeStoredProcedure("get_subject_by_abbreviation", [abbreviation]);
+}
+
+async function getMembersPerOwnGroup(req) {
 	const groupRows = await pgConnector.executeStoredProcedure("get_groups_of_user_by_id", [req.session.userId]);
 	for (const group of groupRows) {
 		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [group.id]);
