@@ -1,17 +1,7 @@
-const groupText = document.getElementsByClassName("group-name");
-const searchInput = document.getElementById("searchbar");
-const groupBox = document.getElementsByClassName("group");
+import { searchElements } from "./search-script.js";
 
-function searchGroup() {
-	let input = searchInput.value;
-	input = input.toLowerCase();
-	for (let i = 0; i < groupText.length; i += 1) {
-		if (!groupText[i].innerHTML.toLowerCase().includes(input)) {
-			groupBox[i].style.display = "none";
-		} else {
-			groupBox[i].style.display = "grid";
-		}
-	}
-}
+const nameField = document.getElementsByClassName("group-name");
+const searchBar = document.getElementById("searchbar");
+const elements = document.getElementsByClassName("group");
 
-searchInput.addEventListener("keyup", searchGroup);
+searchBar.addEventListener("keyup", searchElements(nameField, searchBar, elements));
