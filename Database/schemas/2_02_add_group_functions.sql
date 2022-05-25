@@ -174,3 +174,17 @@ $$;
 
 GRANT ALL ON FUNCTION get_owner_by_group_id TO backend;
 
+-- do_remove_group_by_id
+CREATE OR REPLACE FUNCTION do_remove_group_by_id(
+    p_group_id INT
+)
+    RETURNS VOID
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+    BEGIN
+        DELETE FROM groups WHERE id = p_group_id;
+    END
+$$;
+
+GRANT ALL ON FUNCTION do_remove_group_by_id TO backend;
