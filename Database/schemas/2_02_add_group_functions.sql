@@ -178,12 +178,18 @@ GRANT ALL ON FUNCTION get_owner_by_group_id TO backend;
 CREATE OR REPLACE FUNCTION do_remove_group_by_id(
     p_group_id INT
 )
-    RETURNS VOID
+    RETURNS BOOLEAN
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
+	DECLARE
+		count INT;
     BEGIN
-        DELETE FROM groups WHERE id = p_group_id;
+		WITH fu AS (
+			DELETE FROM groups WHERE id = p_group_id RETURNING *
+		)
+		SELECT COUNT(*) FROM fu;
+		RETURN 0 < count;
     END
 $$;
 

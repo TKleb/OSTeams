@@ -105,7 +105,8 @@ $group_tests$ BEGIN
     ASSERT 1 = COUNT(*) FROM get_groups_by_subject_id((SELECT id FROM subjects ORDER BY id DESC LIMIT 1)),
         'get_groups_by_subject_id failed';
 
-    PERFORM do_remove_group_by_id(1);
+    ASSERT do_remove_group_by_id(1),
+        'do_remove_group_by_id failed';
 
     ROLLBACK;
 END $group_tests$;
