@@ -20,7 +20,7 @@ const getApplicationsToTeamForDisplay = async (id) => {
 			}));
 	}
 	return applicants;
-}
+};
 
 class GroupsController {
 	async showByUserId(req, res) {
