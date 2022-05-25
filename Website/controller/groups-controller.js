@@ -9,20 +9,20 @@ const asyncFilter = async (arr, predicate) => {
 
 class GroupsController {
 	async showByUserId(req, res) {
-		const groupRows = await pgConnector.executeStoredProcedure("get_groups_of_user_by_id", [req.session.userId]);
-		await getMembersByGroupId(groupRows);
+		const groupRows = await pgConnector.getGroupsOfUserById(req.session.userId);
+		await MembersByGroupId(groupRows);
 		renderGroups(res, req, groupRows);
 	}
 
 	async showBySubjectAbbr(req, res) {
 		const { abbreviation } = req.params;
-		const subjectRow = await pgConnector.executeStoredProcedure("get_subject_by_abbreviation", [abbreviation]);
+		const subjectRow = await pgConnector.getSubjectbyAbbreviation(abbreviation);
 		if (!subjectRow || subjectRow.length === 0) {
 			return res.send("Invalid subject");
 		}
 
-		let groupRows = await pgConnector.executeStoredProcedure("get_groups_by_subject_id", [subjectRow[0].id]);
-		await getMembersByGroupId(groupRows);
+		let groupRows = await pgConnector.getGroupsBySubjectId(subjectRow[0].id);
+		await MembersByGroupId(groupRows);
 		groupRows = await getIsApplicationPossiblePerGroup(groupRows, req);
 
 		return renderGroupList(res, groupRows, req);
@@ -30,14 +30,14 @@ class GroupsController {
 
 	async showGroupById(req, res) {
 		const { id } = req.params;
-		const groupRow = await pgConnector.executeStoredProcedure("get_group_by_id", [id]);
+		const groupRow = await pgConnector.getGroupById(id);
 		if (!groupRow || groupRow.length === 0) {
 			return res.send("Invalid GroupId");
 		}
 
 		const isOwner = req.session.userId === groupRow[0].owner_id;
-		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
-		const applicants = await pgConnector.executeStoredProcedure("get_applications_to_group", [id]);
+		const members = await pgConnector.getMembersByGroupId(id);
+		const applicants = await pgConnector.getApplicationsToGroup(id);
 		return renderGroup(res, groupRow, isOwner, applicants, members);
 	}
 
@@ -49,7 +49,7 @@ class GroupsController {
 			return res.send("Invalid parameters");
 		}
 
-		const groupRow = await pgConnector.executeStoredProcedure("get_group_by_id", [groupId]);
+		const groupRow = await pgConnector.getGroupById(groupId);
 		if (!groupRow || groupRow.length === 0) {
 			return res.send("Invalid GroupId");
 		}
@@ -59,7 +59,7 @@ class GroupsController {
 		}
 
 		const isAccepted = accept === "true";
-		await pgConnector.executeStoredProcedure("do_close_application", [applicationId, isAccepted]);
+		await pgConnector.isApplicationPossible(applicationId, isAccepted);
 		const successMsg = isAccepted ? "Application approved" : "Application denied";
 		req.flash("success", successMsg);
 		return res.redirect("/groups/".concat(groupId));
@@ -67,8 +67,8 @@ class GroupsController {
 
 	async leaveGroup(req, res) {
 		const { id } = req.params;
-		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
-		const groupRow = await pgConnector.executeStoredProcedure("get_group_by_id", [id]);
+		const members = await pgConnector.getMembersByGroupId(id);
+		const groupRow = await pgConnector.getGroupById(id);
 		if (!groupRow || groupRow.length === 0) {
 			return res.send("Invalid GroupId");
 		}
@@ -78,7 +78,7 @@ class GroupsController {
 			return res.send("Cannot leave group");
 		}
 
-		await pgConnector.executeStoredProcedure("do_remove_user_from_group", [req.session.userId, id]);
+		await pgConnector.removeUserFromGroup(req.session.userId, id);
 		req.flash("success", "Successfully left group");
 		return res.redirect("/groups");
 	}
@@ -97,7 +97,7 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		const subjectRow = await pgConnector.executeStoredProcedure("get_subject_by_abbreviation", [abbreviation]);
+		const subjectRow = await pgConnector.getSubjectbyAbbreviation(abbreviation);
 		if (!subjectRow || subjectRow.length === 0) {
 			return res.send("No subject found with the provided abbreviation");
 		}
@@ -112,7 +112,7 @@ class GroupsController {
 			new Date().toISOString(),
 			new Date(applyByDate).toISOString(),
 		];
-		const groupRow = await pgConnector.executeStoredProcedure("add_group", options);
+		const groupRow = await pgConnector.addGroup(options);
 
 		return res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/", groupRow[0].id));
 	}
@@ -126,13 +126,13 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		const groupRow = await pgConnector.executeStoredProcedure("get_group_by_id", [id]);
+		const groupRow = await pgConnector.getGroupById(id);
 		if (!groupRow || groupRow.length === 0) {
 			req.flash("error", "Couldn't find group");
 			return res.redirect("/");
 		}
 
-		const groupMembers = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
+		const groupMembers = await pgConnector.getMembersByGroupId(id);
 		if (!groupMembers || groupMembers.length === groupRow[0].maxMemberCount) {
 			req.flash("error", "Group member limit reached");
 			return res.redirect("/");
@@ -145,7 +145,7 @@ class GroupsController {
 			description,
 			new Date().toISOString(),
 		];
-		const applyResponseRow = await pgConnector.executeStoredProcedure("add_application", options);
+		const applyResponseRow = await pgConnector.addApplication(options);
 		if (!applyResponseRow || applyResponseRow.length === 0) {
 			req.flash("error", "An error occurred with your application");
 			return res.redirect("/");
@@ -155,7 +155,7 @@ class GroupsController {
 		+ "<p> Click on the following link to view all applicants: "
 		+ `<a href="${websiteConfig.hostname}:${websiteConfig.port}/groups/${id}">link</a></p>`;
 
-		const groupOwnerRow = await pgConnector.executeStoredProcedure("get_owner_by_group_id", [id]);
+		const groupOwnerRow = await pgConnector.getOwnerByGroupId(id);
 		const response = await mailer.SendMail(groupOwnerRow[0].email, "New Application - OSTeams", htmlBody);
 		req.flash("hint", response);
 		return res.redirect("/");
@@ -164,16 +164,16 @@ class GroupsController {
 
 export default new GroupsController();
 
-async function getMembersByGroupId(groupRows) {
+async function MembersByGroupId(groupRows) {
 	for (const group of groupRows) {
-		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [group.id]);
+		const members = await pgConnector.getMembersByGroupId(group.id);
 		group.current_member_count = members.length;
 	}
 }
 
 async function getIsApplicationPossiblePerGroup(groupRows, req) {
 	groupRows = await asyncFilter(groupRows, async (group) => {
-		const isApplicationPossible = await pgConnector.executeStoredProcedure("is_application_possible", [req.session.userId, group.id]);
+		const isApplicationPossible = await pgConnector.isApplicationPossible(req.session.userId, group.id);
 		return isApplicationPossible[0].is_application_possible;
 	});
 	return groupRows;
