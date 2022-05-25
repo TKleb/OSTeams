@@ -7,8 +7,8 @@
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
     grid-template-areas:
-            "info members interaction"
-            "info full interaction";
+        "info members interaction"
+        "info full interaction";
     /* stylelint-enable */
 
     height: 7em;
@@ -27,8 +27,8 @@
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
     grid-template-areas:
-            "info members"
-            "info full";
+        "info members"
+        "info full";
     /* stylelint-enable */
     height: 7em;
     margin-bottom: 10px;
@@ -255,9 +255,9 @@
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
     grid-template-areas:
-            "group-desc group-members"
-            "group-desc group-appli"
-            "group-settings group-settings";
+        "group-desc group-members"
+        "group-desc group-appli"
+        "group-settings group-settings";
     /* stylelint-enable */
     column-gap: 2%;
     row-gap: 10px;
