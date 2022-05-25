@@ -50,6 +50,11 @@ $subject_tests$ BEGIN
 
     ASSERT 1 = COUNT(*) FROM get_subject_by_abbreviation('NEWSUBJECT'),
         'get_subject_by_abbreviation failed';
+
+    ASSERT 1 = COUNT(*) FROM get_subject_by_id(
+            (SELECT id FROM subjects ORDER BY id DESC LIMIT 1)
+        ), 'get_subject_by_id failed';
+
     ROLLBACK;
 END $subject_tests$;
 \echo subject_tests passed
@@ -77,6 +82,14 @@ $user_tests$ BEGIN
     ASSERT 1 = COUNT(*) FROM get_user_by_email('user1@verified.ch'),
         'get_user_by_email failed';
 
+    ASSERT 1 = COUNT(*) FROM get_user_by_id(
+        (SELECT id FROM users ORDER BY id DESC LIMIT 1)
+    ), 'get_user_by_id failed';
+
+    ASSERT do_remove_user_by_id(
+        (SELECT id FROM users ORDER BY id DESC LIMIT 1)
+    ), 'do_remove_user_by_id failed';
+
     ROLLBACK;
 END $user_tests$;
 \echo user_tests passed
@@ -99,11 +112,13 @@ $group_tests$ BEGIN
             '2069-4-20'
         ), 'add_group failed';
 
-    ASSERT 1 = COUNT(*) FROM get_group_by_id((SELECT id FROM groups ORDER BY id DESC LIMIT 1)),
-        'get_group_by_id failed';
+    ASSERT 1 = COUNT(*) FROM get_group_by_id(
+        (SELECT id FROM groups ORDER BY id DESC LIMIT 1)
+    ), 'get_group_by_id failed';
 
-    ASSERT 1 = COUNT(*) FROM get_groups_by_subject_id((SELECT id FROM subjects ORDER BY id DESC LIMIT 1)),
-        'get_groups_by_subject_id failed';
+    ASSERT 1 = COUNT(*) FROM get_groups_by_subject_id(
+        (SELECT id FROM subjects ORDER BY id DESC LIMIT 1)
+    ), 'get_groups_by_subject_id failed';
 
     ASSERT do_remove_group_by_id((SELECT id FROM groups ORDER BY id DESC LIMIT 1)),
         'do_remove_group_by_id failed';
