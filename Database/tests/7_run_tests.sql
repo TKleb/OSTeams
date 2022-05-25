@@ -77,6 +77,9 @@ $user_tests$ BEGIN
     ASSERT 1 = COUNT(*) FROM get_user_by_email('user1@verified.ch'),
         'get_user_by_email failed';
 
+    ASSERT 1 = COUNT(*) FROM get_user_by_id(1),
+        'get_user_by_id failed';
+
     ROLLBACK;
 END $user_tests$;
 \echo user_tests passed
