@@ -166,8 +166,8 @@ class GroupsController {
 			return res.redirect("/groups");
 		}
 
-		const groupRemoved = await pgConnector.executeStoredProcedure("do_remove_group", [id]);
-		if (!groupRemoved) {
+		const groupRemovedRow = await pgConnector.executeStoredProcedure("do_remove_group_by_id", [id]);
+		if (!groupRemovedRow[0].do_remove_group_by_id) {
 			req.flash("error", "Couldn't delete group");
 			return res.redirect("/groups");
 		}
