@@ -188,7 +188,7 @@ AS $$
 		WITH fu AS (
 			DELETE FROM groups WHERE id = p_group_id RETURNING *
 		)
-		SELECT COUNT(*) FROM fu;
+		SELECT COUNT(*) FROM fu INTO count;
 		RETURN 0 < count;
     END
 $$;
