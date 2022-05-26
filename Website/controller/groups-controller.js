@@ -25,12 +25,10 @@ const asyncFilter = async (arr, predicate) => {
 };
 
 async function getIsApplicationPossiblePerGroup(groupRows, req) {
-	const groupRow = await asyncFilter(groupRows, async (group) => {
-		return await pgConnector.isApplicationPossible(
-			req.session.userId,
-			group.id,
-		);
-	});
+	const groupRow = await asyncFilter(groupRows, async (group) => pgConnector.isApplicationPossible(
+		req.session.userId,
+		group.id,
+	));
 	return groupRow;
 }
 async function MembersByGroupId(groupRows) {
@@ -82,10 +80,8 @@ class GroupsController {
 		await MembersByGroupId(groupRows);
 		groupRows = await getIsApplicationPossiblePerGroup(groupRows, req);
 
-
 		return res.render("grouplist", {
 			title: "Groups",
-			groups: groupRows,
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
