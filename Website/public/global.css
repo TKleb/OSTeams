@@ -20,6 +20,25 @@ body {
     margin: auto;
 }
 
+/* ========================= NOTIFICATION STYLING ========================= */
+.notice {
+    background: #f9f9f9;
+    padding: 0.25em 1em 0.25em 2em;
+    border-left: 4px solid #ddd;
+}
+
+.hint {
+    border-color: #0074d9;
+}
+
+.success {
+    border-color: #2ecc40;
+}
+
+.error {
+    border-color: #ff4136;
+}
+
 /* ========================= CONTROL PANEL STYLING ========================= */
 #control-panel {
     margin: 0 auto;

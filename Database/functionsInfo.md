@@ -13,6 +13,7 @@
 |---|---|---|---|
 |get_subjects()|-|Subject[0..n] |Returns all subjects in DB|
 |get_subject_by_abbreviation()|abbreviation|Subject[0..1] |Returns subject|
+|get_subject_by_id()|id|Subject[0..1] |Returns subject|
 |get_users()|-| User[0..n] |Returns all users in DB|
 |get_unverified_users()|-| UnverifiedUser[0..n] |Returns all unverified_users in DB|
 |get_user_by_id()|id| User[0..1] |Returns user matching the id if nothing matches it returns empty results|
@@ -49,3 +50,4 @@
 |do_verify_user()|verification_token| User[0..1] |Verifies the user with the given verification code if it exists, returns the now verified user|
 |do_remove_user_from_group()|user_id, group_id| - |Kicks the user from the group if present|
 |do_close_application()|application_id, accepted| GroupMembership[0..1] |Closes the application. If `accepted`, a GroupMembership is created.|
+|do_remove_user_by_id()|user_id| BOOLEAN |Deletes the user where id = user_id|

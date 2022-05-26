@@ -38,10 +38,17 @@
 	<div id="background">
 		<div id="container">
 			{{#if error}}
-			<p>{{error}}</p>
-			{{/if}}
-			{{#if hint}}
-			<p>{{hint}}</p>
+				<div class="notice error">
+					<p>{{error}}</p>
+				</div>
+			{{else if hint}}
+				<div class="notice hint">
+					<p>{{hint}}</p>
+				</div>
+			{{else if success}}
+				<div class="notice success">
+					<p>{{success}}</p>
+				</div>
 			{{/if}}
 			{{{body}}}
 		</div>
