@@ -169,8 +169,8 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		const subjectRow = await pgConnector.getSubjectbyAbbreviation(abbreviation);
-		if (!subjectRow || subjectRow.length === 0) {
+		const subject = await pgConnector.getSubjectbyAbbreviation(abbreviation);
+		if (!subject) {
 			return res.send("No subject found with the provided abbreviation");
 		}
 
@@ -178,15 +178,15 @@ class GroupsController {
 		const options = [
 			groupName,
 			req.session.userId,
-			subjectRow[0].id,
+			subject.id,
 			description,
 			maxMemberCount,
 			new Date().toISOString(),
 			new Date(applyByDate).toISOString(),
 		];
-		const groupRow = await pgConnector.addGroup(options);
+		const group = await pgConnector.addGroup(options);
 
-		return res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/", groupRow[0].id));
+		return res.redirect("/groups/".concat(group.id));
 	}
 
 	async applyToGroup(req, res) {
