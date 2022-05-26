@@ -11,6 +11,7 @@ function getFirst(reply) {
 class PGConnector {
 	constructor() {
 		const pgp = pgPromise({});
+		pgp.pg.types.setTypeParser(20, BigInt); // Type Id 20 = BIGINT | BIGSERIAL
 		this.db = pgp(pgConfig);
 	}
 
