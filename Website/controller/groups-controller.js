@@ -7,6 +7,69 @@ const asyncFilter = async (arr, predicate) => {
 	return arr.filter((_v, index) => results[index]);
 };
 
+async function MembersByGroupId(groupRows) {
+	for (const group of groupRows) {
+		const members = await pgConnector.getMembersByGroupId(group.id);
+		group.current_member_count = members.length;
+	}
+}
+
+async function getIsApplicationPossiblePerGroup(groupRows, req) {
+	const groupRow = await asyncFilter(groupRows, async (group) => {
+		const isApplicationPossible = await
+		pgConnector.isApplicationPossible(req.session.userId, group.id);
+		return isApplicationPossible[0].is_application_possible;
+	});
+	return groupRow;
+}
+
+function renderGroups(res, req, groupRows) {
+	res.render("groups", {
+		title: "Groups",
+		hint: req.flash("hint"),
+		error: req.flash("error"),
+		success: req.flash("success"),
+		groups: groupRows,
+	});
+}
+
+function renderGroupList(res, groupRows, req) {
+	return res.render("grouplist", {
+		title: "Groups",
+		groups: groupRows,
+		hint: req.flash("hint"),
+		error: req.flash("error"),
+		success: req.flash("success"),
+	});
+}
+
+function renderGroup(res, groupRow, isOwner, applicants, members) {
+	return res.render("group", {
+		title: groupRow[0].name,
+		group: groupRow[0],
+		isOwner,
+		applicants,
+		members,
+	});
+}
+
+async function userLeaveGroup(req, id, res) {
+	await pgConnector.removeUserFromGroup(req.session.userId, id);
+	req.flash("success", "Successfully left group");
+	return res.redirect("/groups");
+}
+
+async function sendApplicationEmailToOwner(req, id, res) {
+	const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
+		+ "<p> Click on the following link to view all applicants: "
+		+ `<a href="${websiteConfig.hostname}:${websiteConfig.port}/groups/${id}">link</a></p>`;
+
+	const groupOwnerRow = await pgConnector.getOwnerByGroupId(id);
+	const response = await mailer.SendMail(groupOwnerRow[0].email, "New Application - OSTeams", htmlBody);
+	req.flash("hint", response);
+	return res.redirect("/");
+}
+
 class GroupsController {
 	async showByUserId(req, res) {
 		const groupRows = await pgConnector.getGroupsOfUserById(req.session.userId);
@@ -74,13 +137,11 @@ class GroupsController {
 		}
 
 		if ((members.find((member) => member.id === req.session.userId) === undefined)
-		|| (groupRow[0].owner_id === req.session.userId)) {
+			|| (groupRow[0].owner_id === req.session.userId)) {
 			return res.send("Cannot leave group");
 		}
 
-		await pgConnector.removeUserFromGroup(req.session.userId, id);
-		req.flash("success", "Successfully left group");
-		return res.redirect("/groups");
+		return await userLeaveGroup(req, id, res);
 	}
 
 	async insert(req, res) {
@@ -151,60 +212,7 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
-		+ "<p> Click on the following link to view all applicants: "
-		+ `<a href="${websiteConfig.hostname}:${websiteConfig.port}/groups/${id}">link</a></p>`;
-
-		const groupOwnerRow = await pgConnector.getOwnerByGroupId(id);
-		const response = await mailer.SendMail(groupOwnerRow[0].email, "New Application - OSTeams", htmlBody);
-		req.flash("hint", response);
-		return res.redirect("/");
+		return await sendApplicationEmailToOwner(req, id, res);
 	}
 }
-
 export default new GroupsController();
-
-async function MembersByGroupId(groupRows) {
-	for (const group of groupRows) {
-		const members = await pgConnector.getMembersByGroupId(group.id);
-		group.current_member_count = members.length;
-	}
-}
-
-async function getIsApplicationPossiblePerGroup(groupRows, req) {
-	groupRows = await asyncFilter(groupRows, async (group) => {
-		const isApplicationPossible = await pgConnector.isApplicationPossible(req.session.userId, group.id);
-		return isApplicationPossible[0].is_application_possible;
-	});
-	return groupRows;
-}
-
-function renderGroups(res, req, groupRows) {
-	res.render("groups", {
-		title: "Groups",
-		hint: req.flash("hint"),
-		error: req.flash("error"),
-		success: req.flash("success"),
-		groups: groupRows,
-	});
-}
-
-function renderGroupList(res, groupRows, req) {
-	return res.render("grouplist", {
-		title: "Groups",
-		groups: groupRows,
-		hint: req.flash("hint"),
-		error: req.flash("error"),
-		success: req.flash("success"),
-	});
-}
-
-function renderGroup(res, groupRow, isOwner, applicants, members) {
-	return res.render("group", {
-		title: groupRow[0].name,
-		group: groupRow[0],
-		isOwner,
-		applicants,
-		members,
-	});
-}
