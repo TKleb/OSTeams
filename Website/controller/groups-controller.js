@@ -24,36 +24,6 @@ const asyncFilter = async (arr, predicate) => {
 	return arr.filter((_v, index) => results[index]);
 };
 
-function renderGroup(res, group, isOwner, applicants, members) {
-	return res.render("group", {
-		title: group[0].name,
-		group: group[0],
-		isOwner,
-		applicants,
-		members,
-	});
-}
-
-function renderGroups(res, req, groupRows) {
-	res.render("groups", {
-		title: "Groups",
-		hint: req.flash("hint"),
-		error: req.flash("error"),
-		success: req.flash("success"),
-		groups: groupRows,
-	});
-}
-
-function renderGroupList(res, groupRows, req) {
-	return res.render("grouplist", {
-		title: "Groups",
-		groups: groupRows,
-		hint: req.flash("hint"),
-		error: req.flash("error"),
-		success: req.flash("success"),
-	});
-}
-
 async function getIsApplicationPossiblePerGroup(groupRows, req) {
 	const groupRow = await asyncFilter(groupRows, async (group) => {
 		const isApplicationPossible = await pgConnector.isApplicationPossible(
@@ -68,6 +38,8 @@ async function MembersByGroupId(groupRows) {
 	for (const group of groupRows) {
 		const members = await pgConnector.getMembersByGroupId(group.id);
 		group.current_member_count = members.length;
+		const groupOwner = await pgConnector.getUserById(group.owner_id);
+		group.owner = groupOwner.email;
 	}
 }
 
@@ -90,11 +62,14 @@ class GroupsController {
 	async showByUserId(req, res) {
 		const groupRows = await pgConnector.getGroupsOfUserById(req.session.userId);
 		await MembersByGroupId(groupRows);
-		renderGroups(
-			res,
-			req,
-			groupRows
-		);
+		res.render("grouplist", {
+			title: "Groups",
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
+			showAllGroups: false,
+			groups: groupRows,
+		});
 	}
 
 	async showBySubjectAbbr(req, res) {
@@ -108,11 +83,16 @@ class GroupsController {
 		await MembersByGroupId(groupRows);
 		groupRows = await getIsApplicationPossiblePerGroup(groupRows, req);
 
-		return renderGroupList(
-			res,
-			groupRows,
-			req
-		);
+
+		return res.render("grouplist", {
+			title: "Groups",
+			groups: groupRows,
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
+			showAllGroups: true,
+			groups: groupRows,
+		});
 	}
 
 	async showGroupById(req, res) {
@@ -125,13 +105,16 @@ class GroupsController {
 		const isOwner = req.session.userId === group[0].owner_id;
 		const members = await pgConnector.getMembersByGroupId(id);
 		const applicants = await getApplicationsToGroupForDisplay(id);
-		return renderGroup(
-			res,
-			group,
+		const isVisitor = members.find((member) => member.id === req.session.userId) === undefined;
+
+		return res.render("group", {
+			title: group[0].name,
+			group: group[0],
 			isOwner,
+			isVisitor,
 			applicants,
 			members,
-		);
+		});
 	}
 
 	async closeApplication(req, res) {
