@@ -60,7 +60,7 @@ class GroupsController {
 		const groupRows = await pgConnector.getGroupsOfUserById(req.session.userId);
 		await MembersByGroupId(groupRows);
 		res.render("grouplist", {
-			title: "Groups",
+			title: "Your Groups",
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
