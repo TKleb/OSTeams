@@ -16,8 +16,10 @@ async function MembersByGroupId(groupRows) {
 
 async function getIsApplicationPossiblePerGroup(groupRows, req) {
 	const groupRow = await asyncFilter(groupRows, async (group) => {
-		const isApplicationPossible = await
-		pgConnector.isApplicationPossible(req.session.userId, group.id);
+		const isApplicationPossible = await pgConnector.isApplicationPossible(
+			req.session.userId,
+			group.id,
+		);
 		return isApplicationPossible[0].is_application_possible;
 	});
 	return groupRow;
@@ -141,7 +143,7 @@ class GroupsController {
 			return res.send("Cannot leave group");
 		}
 
-		return await userLeaveGroup(req, id, res);
+		return userLeaveGroup(req, id, res);
 	}
 
 	async insert(req, res) {
@@ -212,7 +214,7 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		return await sendApplicationEmailToOwner(req, id, res);
+		return sendApplicationEmailToOwner(req, id, res);
 	}
 }
 export default new GroupsController();
