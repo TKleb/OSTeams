@@ -1,8 +1,7 @@
-import chai from "chai";
+import chai, {expect} from "chai";
 import chaiHttp from "chai-http";
 import server from "../index.js";
 import assert from "assert";
-
 
 chai.should();
 chai.use(chaiHttp);
@@ -17,9 +16,37 @@ describe("Test login page", () => {
 	});
 
 	describe("POST /login", () => {
-		it("It should log in a user.", async() => {
+		it("It should throw error: Please provide email and password.", async() => {
 			const res = await chai.request(server)
-				.get("/account/login");
+				.post("/account/login")
+			assert.equal(res.statusCode, 200);
+			assert.match(res.text, /Please provide email and password/)
+		});
+	});
+
+	describe("POST /login with invalid credentials", () => {
+		it("It should throw error: Invalid credentials.", async () => {
+			const res = await chai.request(server)
+				.post("/account/login")
+				.type("form")
+				.send({
+					"email":"doesntexist@ost.ch",
+					"password":"Test12345"
+				})
+			assert.equal(res.statusCode, 200);
+			assert.match(res.text, /Invalid credentials/);
+		});
+	});
+
+	describe("POST /login", () => {
+		it("It should log in a user", async() => {
+			const res = await chai.request(server)
+				.post("/account/login")
+				.type("form")
+				.send({
+					"email":"user1@verified.ch",
+					"password":"Test12345"
+				})
 			assert.equal(res.statusCode, 200);
 		});
 	});
