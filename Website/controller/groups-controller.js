@@ -84,7 +84,6 @@ class GroupsController {
 
 		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
 		const isVisitor = members.find((member) => member.id === req.session.userId) === undefined;
-		const applicants = await pgConnector.executeStoredProcedure("get_applications_to_group", [id]);
 
 		return res.render("group", {
 			title: groupRow[0].name,
