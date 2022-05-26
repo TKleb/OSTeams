@@ -105,8 +105,10 @@ class GroupsController {
 		}
 
 		const isOwner = req.session.userId === group.owner_id;
-		const members = await pgConnector.getMembersByGroupId(id);
-		const applicants = await getApplicationsToGroupForDisplay(id);
+		const [members, applicants] = await Promise.all([
+			pgConnector.getMembersByGroupId(id),
+			getApplicationsToGroupForDisplay(id),
+		])
 		const isVisitor = members.find((member) => member.id === req.session.userId) === undefined;
 
 		return res.render("group", {
