@@ -63,7 +63,7 @@ const getApplicationsToGroupForDisplay = async (id) => {
 };
 
 class GroupsController {
-	async showByUserId(req, res) {
+	async showGroupsOfUser(req, res) {
 		const groups = await pgConnector.getGroupsOfUserById(req.session.userId);
 		await attachOwnerAndMemberCount(groups);
 		res.render("grouplist", {
@@ -76,7 +76,7 @@ class GroupsController {
 		});
 	}
 
-	async showBySubjectAbbr(req, res) {
+	async showGroupsOfSubject(req, res) {
 		const { abbreviation } = req.params;
 		const subject = await pgConnector.getSubjectbyAbbreviation(abbreviation);
 		if (!subject) {
@@ -96,7 +96,7 @@ class GroupsController {
 		});
 	}
 
-	async showGroupById(req, res) {
+	async showGroupInDetail(req, res) {
 		const { id } = req.params;
 		const group = await pgConnector.getGroupById(id);
 		if (!group) {
@@ -158,7 +158,7 @@ class GroupsController {
 		return userLeaveGroup(req, id, res);
 	}
 
-	async insert(req, res) {
+	async addGroup(req, res) {
 		const { abbreviation } = req.params;
 		const {
 			groupName,
