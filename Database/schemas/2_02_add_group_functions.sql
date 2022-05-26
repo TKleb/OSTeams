@@ -182,14 +182,14 @@ CREATE OR REPLACE FUNCTION do_remove_group_by_id(
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
-	DECLARE
-		count INT;
+    DECLARE
+        count INT;
     BEGIN
-		WITH fu AS (
-			DELETE FROM groups WHERE id = p_group_id RETURNING *
-		)
-		SELECT COUNT(*) FROM fu INTO count;
-		RETURN 0 < count;
+        WITH fu AS (
+            DELETE FROM groups WHERE id = p_group_id RETURNING *
+        )
+        SELECT COUNT(*) FROM fu INTO count;
+        RETURN 0 < count;
     END
 $$;
 

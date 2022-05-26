@@ -120,8 +120,9 @@ $group_tests$ BEGIN
         (SELECT id FROM subjects ORDER BY id DESC LIMIT 1)
     ), 'get_groups_by_subject_id failed';
 
-    ASSERT do_remove_group_by_id((SELECT id FROM groups ORDER BY id DESC LIMIT 1)),
-        'do_remove_group_by_id failed';
+    ASSERT do_remove_group_by_id(
+        (SELECT id FROM groups ORDER BY id DESC LIMIT 1)
+    ), 'do_remove_group_by_id failed';
 
     ROLLBACK;
 END $group_tests$;
