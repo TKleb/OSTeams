@@ -189,7 +189,7 @@ class GroupsController {
 		return res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/", groupRow[0].id));
 	}
 
-	async delete(req, res) {
+	async deleteGroup(req, res) {
 		const { id } = req.params;
 
 		if (!id) {
@@ -208,7 +208,7 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		const isGroupRemoved = await pgConnector.removeGroupFromId(id);
+		const isGroupRemoved = await pgConnector.removeGroup(id);
 		if (!isGroupRemoved) {
 			req.flash("error", "Couldn't delete group");
 			return res.redirect("/");

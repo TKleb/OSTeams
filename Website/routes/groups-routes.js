@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/", groupsController.showByUserId);
 router.get("/:id", groupsController.showGroupById);
 router.post("/leave/:id", asyncHandler(groupsController.leaveGroup));
-router.post("/delete/:id", asyncHandler(groupsController.delete));
+router.post("/delete/:id", asyncHandler(groupsController.deleteGroup));
 router.post("/applyTo/:id", asyncHandler(groupsController.applyToGroup));
 router.post("/closeApplication/:applicationId/:groupId", asyncHandler(groupsController.closeApplication));
 export default router;

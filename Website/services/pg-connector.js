@@ -78,7 +78,7 @@ class PGConnector {
 			.then((reply) => reply.is_application_possible);
 	}
 
-	removeGroupFromId(groupId) {
+	removeGroup(groupId) {
 		return this.executeStoredProcedure("do_remove_group_by_id", [groupId])
 			.then(getFirst)
 			.then((reply) => reply.do_remove_group_by_id);
