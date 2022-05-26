@@ -13,8 +13,8 @@ async function sendApplicationEmailToOwner(req, id, res) {
 	return res.redirect("/");
 }
 
-async function userLeaveGroup(req, id, res) {
-	await pgConnector.removeUserFromGroup(req.session.userId, id);
+async function userLeaveGroup(req, groupId, res) {
+	await pgConnector.removeUserFromGroup(req.session.userId, groupId);
 	req.flash("success", "Successfully left group");
 	return res.redirect("/groups");
 }
@@ -23,7 +23,6 @@ const asyncFilter = async (arr, predicate) => {
 	const results = await Promise.all(arr.map(predicate));
 	return arr.filter((_v, index) => results[index]);
 };
-
 
 function getGroupsUserCanApplyTo(subjectId, userId) {
 	return pgConnector.getGroupsBySubjectId(subjectId)
@@ -37,9 +36,13 @@ async function attachOwnerAndMemberCount(groups) {
 	await Promise.all(
 		groups.map((group) => [
 			pgConnector.getMembersByGroupId(group.id)
-				.then((members) => group.current_member_count = members.length),
+				.then((members) => {
+					group.current_member_count = members.length;
+				}),
 			pgConnector.getUserById(group.owner_id)
-				.then((owner) => group.owner = owner.email)
+				.then((owner) => {
+					group.owner = owner.email;
+				})
 		])
 	);
 }
@@ -69,7 +72,7 @@ class GroupsController {
 			error: req.flash("error"),
 			success: req.flash("success"),
 			showAllGroups: false,
-			groups: groups,
+			groups,
 		});
 	}
 
@@ -89,7 +92,7 @@ class GroupsController {
 			error: req.flash("error"),
 			success: req.flash("success"),
 			showAllGroups: true,
-			groups: groups,
+			groups,
 		});
 	}
 
@@ -192,7 +195,7 @@ class GroupsController {
 	async applyToGroup(req, res) {
 		const { id: groupId } = req.params;
 		const { description } = req.body;
-		const userId = req.session.userId;
+		const { userId } = req.session;
 
 		if (!groupId || !description) {
 			req.flash("error", "Missing fields");
