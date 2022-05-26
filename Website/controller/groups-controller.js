@@ -7,6 +7,21 @@ const asyncFilter = async (arr, predicate) => {
 	return arr.filter((_v, index) => results[index]);
 };
 
+const getApplicationsToGroupForDisplay = async (id) => {
+	let applicants = [];
+	const applications = await pgConnector.executeStoredProcedure("get_applications_to_group", [id]);
+	const promises = applications.map((app) => pgConnector.getUserById(app.user_id));
+	if (promises.length > 0) {
+		applicants = await Promise.all(promises)
+			.then((arr) => arr.map((user, i) => {
+				const application = applications[i];
+				application.user_email = user.email;
+				return application;
+			}));
+	}
+	return applicants;
+};
+
 class GroupsController {
 	async showByUserId(req, res) {
 		const groupRows = await pgConnector.executeStoredProcedure("get_groups_of_user_by_id", [req.session.userId]);
@@ -65,6 +80,8 @@ class GroupsController {
 		}
 
 		const isOwner = req.session.userId === groupRow[0].owner_id;
+		const applicants = await getApplicationsToGroupForDisplay(id);
+
 		const members = await pgConnector.executeStoredProcedure("get_members_by_group_id", [id]);
 		const isVisitor = members.find((member) => member.id === req.session.userId) === undefined;
 		const applicants = await pgConnector.executeStoredProcedure("get_applications_to_group", [id]);

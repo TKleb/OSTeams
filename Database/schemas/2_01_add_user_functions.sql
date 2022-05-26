@@ -211,7 +211,7 @@ GRANT ALL ON FUNCTION do_remove_user_from_group TO backend;
 CREATE OR REPLACE FUNCTION get_groups_of_user_by_id(
     p_user_id INT
 )
-    RETURNS SETOF groups
+RETURNS SETOF groups
 LANGUAGE plpgsql
 SECURITY DEFINER
 AS $$
@@ -224,3 +224,40 @@ AS $$
 $$;
 
 GRANT ALL ON FUNCTION get_groups_of_user_by_id TO backend;
+
+-- get_user_by_id
+CREATE OR REPLACE FUNCTION get_user_by_id(
+    p_user_id INT
+)
+RETURNS SETOF users
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+    BEGIN
+        RETURN QUERY
+        SELECT * FROM users WHERE id = p_user_id;
+    END
+$$;
+
+GRANT ALL ON FUNCTION get_user_by_id TO backend;
+
+-- do_remove_user_by_id
+CREATE OR REPLACE FUNCTION do_remove_user_by_id(
+    p_user_id INT
+)
+    RETURNS BOOLEAN
+    LANGUAGE plpgsql
+    SECURITY DEFINER
+AS $$
+	DECLARE
+		count INT;
+    BEGIN
+		WITH deletedRows AS (
+			DELETE FROM users WHERE id = p_user_id RETURNING *
+		)
+		SELECT COUNT(*) FROM deletedRows INTO count;
+		RETURN 0 < count;
+    END
+$$;
+
+GRANT ALL ON FUNCTION do_remove_user_by_id TO backend;
