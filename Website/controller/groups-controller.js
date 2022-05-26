@@ -49,18 +49,14 @@ async function attachOwnerAndMemberCount(groups) {
 }
 
 const getApplicationsToGroupForDisplay = async (id) => {
-	let applicants = [];
 	const applications = await pgConnector.executeStoredProcedure("get_applications_to_group", [id]);
 	const promises = applications.map((app) => pgConnector.getUserById(app.user_id));
-	if (promises.length > 0) {
-		applicants = await Promise.all(promises)
-			.then((arr) => arr.map((user, i) => {
-				const application = applications[i];
-				application.user_email = user.email;
-				return application;
-			}));
-	}
-	return applicants;
+	return await Promise.all(promises)
+		.then((arr) => arr.map((applicant, i) => {
+			const application = applications[i];
+			application.user_email = applicant.email;
+			return application;
+		}));
 };
 
 class GroupsController {
@@ -98,16 +94,16 @@ class GroupsController {
 	}
 
 	async showGroupInDetail(req, res) {
-		const { id } = req.params;
-		const group = await pgConnector.getGroupById(id);
+		const { id: groupId } = req.params;
+		const group = await pgConnector.getGroupById(groupId);
 		if (!group) {
 			return res.send("Invalid GroupId");
 		}
 
 		const isOwner = req.session.userId === group.owner_id;
 		const [members, applicants] = await Promise.all([
-			pgConnector.getMembersByGroupId(id),
-			getApplicationsToGroupForDisplay(id),
+			pgConnector.getMembersByGroupId(groupId),
+			getApplicationsToGroupForDisplay(groupId),
 		])
 		const isVisitor = members.find((member) => member.id === req.session.userId) === undefined;
 
@@ -146,9 +142,9 @@ class GroupsController {
 	}
 
 	async leaveGroup(req, res) {
-		const { id } = req.params;
-		const members = await pgConnector.getMembersByGroupId(id);
-		const group = await pgConnector.getGroupById(id);
+		const { id: groupId } = req.params;
+		const members = await pgConnector.getMembersByGroupId(groupId);
+		const group = await pgConnector.getGroupById(groupId);
 		if (!group) {
 			return res.send("Invalid GroupId");
 		}
@@ -158,7 +154,7 @@ class GroupsController {
 			return res.send("Cannot leave group");
 		}
 
-		return userLeaveGroup(req, id, res);
+		return userLeaveGroup(req, groupId, res);
 	}
 
 	async addGroup(req, res) {
