@@ -6,7 +6,7 @@ function searchElements(textField, searchBar, elements) {
 			if (!textField[i].innerHTML.toLowerCase().includes(input)) {
 				elements[i].style.display = "none";
 			} else {
-				elements[i].style.display = "flex";
+				elements[i].style.display = "grid";
 			}
 		}
 	};
