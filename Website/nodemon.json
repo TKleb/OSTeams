@@ -3,6 +3,6 @@
     "watch": [
         "**/*"
     ],
-    "ext": "js,mjs,json,jbs,html,ts,css,png",
+    "ext": "js,mjs,json,jbs,html,ts,css,png,hbs",
     "delay": 2500
 }
