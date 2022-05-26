@@ -59,23 +59,24 @@ class PGConnector {
 	}
 
 	addApplication(options) {
-		return this.executeStoredProcedure("add_application", options);
+		return this.executeStoredProcedure("add_application", options)
+			.then(getFirst);
 	}
 
 	addGroup(options) {
 		return this.executeStoredProcedure("add_group", options);
 	}
 
-	removeUserFromGroup(sessionId, id) {
-		return this.executeStoredProcedure("do_remove_user_from_group", [sessionId, id]);
+	removeUserFromGroup(userId, groupId) {
+		return this.executeStoredProcedure("do_remove_user_from_group", [userId, groupId]);
 	}
 
 	closeApplication(applicationId, isAccepted) {
 		return this.executeStoredProcedure("do_close_application", [applicationId, isAccepted]);
 	}
 
-	isApplicationPossible(sessionId, groupId) {
-		return this.executeStoredProcedure("is_application_possible", [sessionId, groupId])
+	isApplicationPossible(userId, groupId) {
+		return this.executeStoredProcedure("is_application_possible", [userId, groupId])
 			.then(getFirst)
 			.then((reply) => reply.is_application_possible);
 	}

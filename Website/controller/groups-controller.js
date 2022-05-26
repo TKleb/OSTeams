@@ -190,40 +190,41 @@ class GroupsController {
 	}
 
 	async applyToGroup(req, res) {
-		const { id } = req.params;
+		const { id: groupId } = req.params;
 		const { description } = req.body;
+		const userId = req.session.userId;
 
-		if (!id || !description) {
+		if (!groupId || !description) {
 			req.flash("error", "Missing fields");
 			return res.redirect("/");
 		}
 
-		const group = await pgConnector.getGroupById(id);
+		const group = await pgConnector.getGroupById(groupId);
 		if (!group) {
 			req.flash("error", "Couldn't find group");
 			return res.redirect("/");
 		}
 
-		const groupMembers = await pgConnector.getMembersByGroupId(id);
-		if (!groupMembers || groupMembers.length >= group.maxMemberCount) {
-			req.flash("error", "Group member limit reached");
+		const applicationPossible = await pgConnector.isApplicationPossible(userId, groupId);
+		if (!applicationPossible) {
+			req.flash("error", "Application to this group is not possible");
 			return res.redirect("/");
 		}
 
 		// 	user_id, group_id, text, timestamp
 		const options = [
-			req.session.userId,
-			id,
+			userId,
+			groupId,
 			description,
 			new Date().toISOString(),
 		];
-		const applyResponseRow = await pgConnector.addApplication(options);
-		if (!applyResponseRow || applyResponseRow.length === 0) {
+		const application = await pgConnector.addApplication(options);
+		if (!application) {
 			req.flash("error", "An error occurred with your application");
 			return res.redirect("/");
 		}
 
-		return sendApplicationEmailToOwner(req, id, res);
+		return sendApplicationEmailToOwner(req, groupId, res);
 	}
 }
 export default new GroupsController();
