@@ -28,7 +28,8 @@ class PGConnector {
 	}
 
 	getGroupById(id) {
-		return this.executeStoredProcedure("get_group_by_id", [id]);
+		return this.executeStoredProcedure("get_group_by_id", [id])
+			.then(getFirst);
 	}
 
 	getMembersByGroupId(id) {
