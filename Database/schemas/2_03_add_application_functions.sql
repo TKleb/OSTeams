@@ -124,7 +124,22 @@ AS $$
             -- Existing membership by the user to the group
             SELECT 1 FROM group_memberships
             WHERE user_id = p_user_id AND group_id = p_group_id
-        );
+        )
+        AND (
+			-- group not full
+			(SELECT max_member_count from groups
+            	WHERE group_id = p_group_id LIMIT 1)
+            >
+        	(SELECT count(*) FROM group_memberships
+            	WHERE group_id = p_group_id)
+		)
+        AND (
+			-- not after apply by date
+			(SELECT apply_by_date FROM groups
+				WHERE group_id = p_group_id LIMIT 1)
+			>
+			(SELECT CURRENT_TIMESTAMP)
+		);
     END
 $$;
 
