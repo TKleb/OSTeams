@@ -34,7 +34,8 @@ function getGroupsUserCanApplyTo(subjectId, userId) {
 
 async function attachOwnerAndMemberCount(groups) {
 	await Promise.all(
-		groups.map((group) => [
+		groups.map((group) =>
+			Promise.all([
 			pgConnector.getMembersByGroupId(group.id)
 				.then((members) => {
 					group.current_member_count = members.length;
@@ -43,7 +44,7 @@ async function attachOwnerAndMemberCount(groups) {
 				.then((owner) => {
 					group.owner = owner.email;
 				})
-		])
+			]))
 	);
 }
 
