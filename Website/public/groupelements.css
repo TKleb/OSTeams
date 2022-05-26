@@ -315,6 +315,16 @@
     background-color: rgb(146 71 146);
 }
 
+#delete-group-btn {
+    height: 80%;
+    width: 150px;
+    margin: auto 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+    background-color: rgb(223 19 46);
+}
+
 #group-interaction-btns .group-btn:hover {
     cursor: pointer;
     background-color: rgb(176 86 176);

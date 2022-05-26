@@ -66,7 +66,7 @@
 			{{else}}
 				{{#if isOwner}}
 				<form id="deleteGroup-form" method="post" action="/groups/delete/{{group.id}}">
-					<button id="delete-group-btn" class="group-btn">Delete</button>
+					<button id="delete-group-btn" class="delete-group-btn">Delete</button>
 				</form>
 				{{else}}
 				<form id="application-form" method="post" action="/groups/leave/{{group.id}}">
