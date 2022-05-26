@@ -1,14 +1,14 @@
 /* ========================= GroupList Page ========================= */
 .group {
     display: grid;
-    grid-template-columns: 60% 25% 15%;
+    grid-template-columns: 70% 30%;
     grid-template-rows: 50px;
 
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
     grid-template-areas:
-        "info members interaction"
-        "info full interaction";
+        "info members"
+        "info full";
     /* stylelint-enable */
 
     height: 7em;
@@ -17,6 +17,7 @@
     background-color: #fefefe;
     border-radius: 5px;
     box-shadow: 0 0 3px 2px #ccc;
+    cursor: pointer;
 }
 
 .own-group {
@@ -222,42 +223,21 @@
 }
 
 /* ========================= Group Information ========================= */
-#group-interaction-div {
-    display: flex;
-    justify-content: space-between;
-}
-
-#group-interaction-btns {
-    margin-left: 100px;
-    display: flex;
-    align-items: center;
-}
-
-#group-interaction-btns #leave-group-btn {
-    margin-right: 60px;
-    height: 35px;
-    width: 80px;
-    cursor: pointer;
-}
-
-#group-interaction-btns #delete-group-btn {
-    margin-right: 30px;
-    height: 35px;
-    width: 80px;
-}
-
 #group-div {
     display: grid;
     height: 100%;
     grid-template-columns: 60% 35%;
-    grid-template-rows: 25% 25% 50%;
+    grid-template-rows: 3% 25% 3% 25% 10%;
 
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
     grid-template-areas:
-        "group-desc group-members"
-        "group-desc group-appli"
-        "group-settings group-settings";
+            "desc-title mem-title"
+            "group-desc group-members"
+            "group-desc appli-title"
+            "group-desc group-appli"
+            "empty interactions"
+            "group-settings group-settings";
     /* stylelint-enable */
     column-gap: 2%;
     row-gap: 10px;
@@ -294,8 +274,58 @@
     border: 2px solid purple;
 }
 
+.applicants-title {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    grid-area: appli-title;
+}
+
+.description-title {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    grid-area: desc-title;
+}
+
+.members-title {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    grid-area: mem-title;
+}
+
 #groupmember-list ul,
 #group-applications ul {
     list-style-type: none;
     padding-inline-start: 10px;
+}
+
+#group-interaction-btns {
+    grid-area: interactions;
+    display: flex;
+    justify-content: center;
+}
+
+#group-interaction-btns .group-btn {
+    height: 80%;
+    width: 150px;
+    margin: auto 0;
+    cursor: pointer;
+    background-color: rgb(146 71 146);
+}
+
+#delete-group-btn {
+    height: 80%;
+    width: 150px;
+    margin: auto 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+    background-color: rgb(223 19 46);
+}
+
+#group-interaction-btns .group-btn:hover {
+    cursor: pointer;
+    background-color: rgb(176 86 176);
 }

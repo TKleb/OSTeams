@@ -80,10 +80,6 @@ body {
     background-color: rgb(184 102 184);
 }
 
-@media (max-width: 735px) {
-    .control-button { display: none; }
-}
-
 /* ========================= BASIC PAGE LAYOUT ========================= */
 #background {
     position: absolute;
@@ -213,7 +209,7 @@ a:visited {
 
 #login-form h2 span {
     font-family: Arial, sans-serif;
-    background: #fff;
+    background: #f0eeee;
     padding: 0 10px;
 }
 

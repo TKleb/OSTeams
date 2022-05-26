@@ -14,7 +14,7 @@ import groupsRouter from "./routes/groups-routes.js";
 import helpers from "./utils/handlebar-util.js";
 import sessionUserSettings from "./utils/session-middleware.index.js";
 import saveSessionToLocals from "./middleware/saveSessionToLocals.js";
-import auth from "./middleware/auth.js";
+import { isAuthenticated } from "./middleware/auth.js";
 import errorHandling from "./middleware/errorHandling.js";
 
 export const app = express();
@@ -43,6 +43,6 @@ app.use(bodyParser.json());
 
 app.use("/", indexRoutes);
 app.use("/account", accountRouter);
-app.use("/subjects", auth, subjectsRouter);
-app.use("/groups", auth, groupsRouter);
+app.use("/subjects", isAuthenticated, subjectsRouter);
+app.use("/groups", isAuthenticated, groupsRouter);
 app.use(errorHandling);
