@@ -93,18 +93,18 @@ class GroupsController {
 	async showGroupById(req, res) {
 		const { id } = req.params;
 		const group = await pgConnector.getGroupById(id);
-		if (!group || group.length === 0) {
+		if (!group) {
 			return res.send("Invalid GroupId");
 		}
 
-		const isOwner = req.session.userId === group[0].owner_id;
+		const isOwner = req.session.userId === group.owner_id;
 		const members = await pgConnector.getMembersByGroupId(id);
 		const applicants = await getApplicationsToGroupForDisplay(id);
 		const isVisitor = members.find((member) => member.id === req.session.userId) === undefined;
 
 		return res.render("group", {
-			title: group[0].name,
-			group: group[0],
+			title: group.name,
+			group,
 			isOwner,
 			isVisitor,
 			applicants,
@@ -120,12 +120,12 @@ class GroupsController {
 			return res.send("Invalid parameters");
 		}
 
-		const groupRow = await pgConnector.getGroupById(groupId);
-		if (!groupRow || groupRow.length === 0) {
+		const group = await pgConnector.getGroupById(groupId);
+		if (!group) {
 			return res.send("Invalid GroupId");
 		}
 
-		if (groupRow[0].owner_id !== req.session.userId) {
+		if (group.owner_id !== req.session.userId) {
 			return res.send("Insufficient permissions");
 		}
 
@@ -139,13 +139,13 @@ class GroupsController {
 	async leaveGroup(req, res) {
 		const { id } = req.params;
 		const members = await pgConnector.getMembersByGroupId(id);
-		const groupRow = await pgConnector.getGroupById(id);
-		if (!groupRow || groupRow.length === 0) {
+		const group = await pgConnector.getGroupById(id);
+		if (!group) {
 			return res.send("Invalid GroupId");
 		}
 
 		if ((members.find((member) => member.id === req.session.userId) === undefined)
-			|| (groupRow[0].owner_id === req.session.userId)) {
+			|| (group.owner_id === req.session.userId)) {
 			return res.send("Cannot leave group");
 		}
 
@@ -195,14 +195,14 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		const groupRow = await pgConnector.getGroupById(id);
-		if (!groupRow || groupRow.length === 0) {
+		const group = await pgConnector.getGroupById(id);
+		if (!group) {
 			req.flash("error", "Couldn't find group");
 			return res.redirect("/");
 		}
 
 		const groupMembers = await pgConnector.getMembersByGroupId(id);
-		if (!groupMembers || groupMembers.length === groupRow[0].maxMemberCount) {
+		if (!groupMembers || groupMembers.length >= group.maxMemberCount) {
 			req.flash("error", "Group member limit reached");
 			return res.redirect("/");
 		}
