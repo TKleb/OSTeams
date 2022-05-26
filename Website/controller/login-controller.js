@@ -25,7 +25,9 @@ class LoginController {
 			req.session.email = email;
 			req.session.userId = user.id;
 			req.flash("success", "Logged in successfully.");
-			return res.redirect("/");
+			const referer = req.get("referer");
+			const redirectURL = referer.includes("/login") ? "/" : referer;
+			return res.redirect(redirectURL);
 		}
 		return res.render("login", { error: "Invalid credentials" });
 	}

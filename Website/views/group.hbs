@@ -1,18 +1,12 @@
 {{#if group}}
-	<div id="group-interaction-div">
-		<h1>{{title}}</h1>
-		<div id="group-interaction-btns">
-			<form id="application-form" method="post" action="/groups/leave/{{group.id}}">
-				<button id="leave-group-btn" {{#if isOwner}} disabled {{/if}}>Leave</button>
-			</form>
-			{{#if isOwner}}
-			<form id="deleteGroup-form" method="post" action="/groups/delete/{{group.id}}">
-				<button id="delete-group-btn">Delete</button>
-			</form>
-			{{/if}}
-		</div>
-	</div>
+	<h1>{{title}}</h1>
 	<div id="group-div">
+		<div class="description-title">
+			Group Description
+		</div>
+		<div class="members-title">
+			Members
+		</div>
 		<div id="group-description">
 			{{group.description}}
 		</div>
@@ -24,10 +18,13 @@
 				{{/each}}
 			</ul>
 		</div>
+		<div class="applicants-title">
+			Applicants
+		</div>
 		<div id="group-applications">
 			<ul>
 				{{#each applicants}}
-					<li>{{id}} {{#if ../isOwner}} <button data-modal-target="#application-{{id}}-modal" class="view-application">View </button> {{/if}}</li>
+					<li>{{user_email}} {{#if ../isOwner}} <button data-modal-target="#application-{{id}}-modal" class="view-application">View </button> {{/if}}</li>
 				{{/each}}
 			</ul>
 		</div>
@@ -51,8 +48,34 @@
 			</div>
 		{{/each}}
 		<div class="overlay"></div>
+		<div id="group-interaction-btns">
+			{{#if isVisitor}}
+				<div class="modal" id="application-modal">
+					<div class="modal-header">
+						<div class="title">Group Application</div>
+						<button data-close-button class="close-button">&times;</button>
+					</div>
+					<div class="modal-body">
+						<form id="application-form" method="post" action="/groups/applyTo/{{group.id}}">
+							<textarea id="application-text" name="description" maxlength="200" required placeholder="add a brief summary"></textarea>
+							<button type="submit" class="submit-btn">Submit</button>
+						</form>
+					</div>
+				</div>
+				<button data-modal-target="#application-modal" class="group-btn apply">Apply</button>
+			{{else}}
+				{{#if isOwner}}
+				<form id="deleteGroup-form" method="post" action="/groups/delete/{{group.id}}">
+					<button id="delete-group-btn" class="delete-group-btn">Delete</button>
+				</form>
+				{{else}}
+				<form id="application-form" method="post" action="/groups/leave/{{group.id}}">
+					<button id="leave-group-btn" class="group-btn">Leave</button>
+				</form>
+				{{/if}}
+			{{/if}}
+		</div>
 	</div>
 {{else}}
 	<h1>NO GROUP</h1>
 {{/if}}
-
