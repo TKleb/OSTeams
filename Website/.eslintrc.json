@@ -21,6 +21,10 @@
             "error",
             "always"
         ],
+        "comma-dangle": [
+            "error",
+            "only-multiline"
+        ],
         "no-param-reassign": [
             "error",
             {
