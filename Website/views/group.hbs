@@ -65,9 +65,20 @@
 				<button data-modal-target="#application-modal" class="group-btn apply">Apply</button>
 			{{else}}
 				{{#if isOwner}}
-				<form id="deleteGroup-form" method="post" action="/groups/delete/{{group.id}}">
-					<button id="delete-group-btn" class="delete-group-btn">Delete</button>
-				</form>
+					<button data-modal-target="#delete-group-modal" id="delete-group-btn" class="delete-group-btn">Delete</button>
+					<div class="modal" id="delete-group-modal">
+						<div class="modal-header">
+							<div class="title">Delete Group</div>
+							<button data-close-button class="close-button">&times;</button>
+						</div>
+						<div class="modal-body">
+							<div>Are you sure you want to delete the group <b>{{title}}</b>?</div>
+							<form id="delete-group-form">
+								<button id="cancel-delete-modal" class="delete-modal-button">Cancel</button>
+								<button type="submit" method="post" formaction="/groups/delete/{{group.id}}" id="delete-group-button" class="delete-modal-button">Delete</button>
+							</form>
+						</div>
+					</div>
 				{{else}}
 				<form id="application-form" method="post" action="/groups/leave/{{group.id}}">
 					<button id="leave-group-btn" class="group-btn">Leave</button>
