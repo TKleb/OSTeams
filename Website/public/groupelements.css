@@ -1,14 +1,14 @@
 /* ========================= GroupList Page ========================= */
 .group {
     display: grid;
-    grid-template-columns: 60% 25% 15%;
+    grid-template-columns: 70% 30%;
     grid-template-rows: 50px;
 
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
     grid-template-areas:
-        "info members interaction"
-        "info full interaction";
+        "info members"
+        "info full";
     /* stylelint-enable */
 
     height: 7em;
