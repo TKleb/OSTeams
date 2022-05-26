@@ -1,7 +1,14 @@
-{{#if showAllGroups}}
-	<h1>{{abbr}}</h1>
-	<div id="create-group-div">
-		<button data-modal-target="#create-group-modal" class="grp-btn create-group">Create Group</button>
+<h1>{{abbr}}</h1>
+<div id="create-group-div">
+	<button data-modal-target="#create-group-modal" class="grp-btn create-group">Create Group</button>
+</div>
+<div class="search">
+	<input id="searchbar" autocomplete="off" type="text" name="search" placeholder="Search For Group Name...">
+</div>
+<div class="modal" id="create-group-modal">
+	<div class="modal-header">
+		<div class="title">Create A Group</div>
+		<button data-close-button class="close-button">&times;</button>
 	</div>
 	<div class="modal" id="create-group-modal">
 		<div class="modal-header">
@@ -33,7 +40,7 @@
 {{#each groups}}
 	<article onclick="location.href='/groups/{{id}}'" class="group">
 		<div class="group-info">
-			<p>{{name}}</p>
+			<p class="group-name">{{name}}</p>
 			{{description}}
 		</div>
 		<div class="group-members">
@@ -44,3 +51,18 @@
 		</div>
 	</article>
 {{/each}}
+{{#each groups}}
+	<div class="modal" id="application-modal">
+			<div class="modal-header">
+				<div class="title">Group Application</div>
+				<button data-close-button class="close-button">&times;</button>
+			</div>
+				<div class="modal-body">
+					<form id="application-form" method="post" action="/groups/applyTo/{{id}}">
+						<textarea id="application-text" name="description" maxlength="200" required placeholder="add a brief summary"></textarea>
+						<button type="submit" class="submit-btn">Submit</button>
+					</form>
+				</div>
+			</div>
+{{/each}}
+<script type="module" src="/js/grouplist-script.js" defer></script>

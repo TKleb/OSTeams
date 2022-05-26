@@ -7,8 +7,8 @@
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
     grid-template-areas:
-            "info members interaction"
-            "info full interaction";
+        "info members interaction"
+        "info full interaction";
     /* stylelint-enable */
 
     height: 7em;
@@ -28,8 +28,8 @@
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
     grid-template-areas:
-            "info members"
-            "info full";
+        "info members"
+        "info full";
     /* stylelint-enable */
     height: 7em;
     margin-bottom: 10px;
