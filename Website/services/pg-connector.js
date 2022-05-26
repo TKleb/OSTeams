@@ -45,7 +45,8 @@ class PGConnector {
 	}
 
 	getSubjectbyAbbreviation(id) {
-		return this.executeStoredProcedure("get_subject_by_abbreviation", [id]);
+		return this.executeStoredProcedure("get_subject_by_abbreviation", [id])
+			.then(getFirst);
 	}
 
 	getApplicationsToGroup(id) {

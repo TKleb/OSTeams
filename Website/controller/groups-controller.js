@@ -24,20 +24,24 @@ const asyncFilter = async (arr, predicate) => {
 	return arr.filter((_v, index) => results[index]);
 };
 
-async function getIsApplicationPossiblePerGroup(groupRows, req) {
-	const groupRow = await asyncFilter(groupRows, async (group) => pgConnector.isApplicationPossible(
-		req.session.userId,
-		group.id,
-	));
-	return groupRow;
+
+function getGroupsUserCanApplyTo(subjectId, userId) {
+	return pgConnector.getGroupsBySubjectId(subjectId)
+		.then(async (groups) => asyncFilter(groups, async (group) => pgConnector.isApplicationPossible(
+			userId,
+			group.id,
+		)));
 }
-async function MembersByGroupId(groupRows) {
-	for (const group of groupRows) {
-		const members = await pgConnector.getMembersByGroupId(group.id);
-		group.current_member_count = members.length;
-		const groupOwner = await pgConnector.getUserById(group.owner_id);
-		group.owner = groupOwner.email;
-	}
+
+async function attachOwnerAndMemberCount(groups) {
+	await Promise.all(
+		groups.map((group) => [
+			pgConnector.getMembersByGroupId(group.id)
+				.then((members) => group.current_member_count = members.length),
+			pgConnector.getUserById(group.owner_id)
+				.then((owner) => group.owner = owner.email)
+		])
+	);
 }
 
 const getApplicationsToGroupForDisplay = async (id) => {
@@ -57,28 +61,27 @@ const getApplicationsToGroupForDisplay = async (id) => {
 
 class GroupsController {
 	async showByUserId(req, res) {
-		const groupRows = await pgConnector.getGroupsOfUserById(req.session.userId);
-		await MembersByGroupId(groupRows);
+		const groups = await pgConnector.getGroupsOfUserById(req.session.userId);
+		await attachOwnerAndMemberCount(groups);
 		res.render("grouplist", {
 			title: "Groups",
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
 			showAllGroups: false,
-			groups: groupRows,
+			groups: groups,
 		});
 	}
 
 	async showBySubjectAbbr(req, res) {
 		const { abbreviation } = req.params;
-		const subjectRow = await pgConnector.getSubjectbyAbbreviation(abbreviation);
-		if (!subjectRow || subjectRow.length === 0) {
+		const subject = await pgConnector.getSubjectbyAbbreviation(abbreviation);
+		if (!subject) {
 			return res.send("Invalid subject");
 		}
 
-		let groupRows = await pgConnector.getGroupsBySubjectId(subjectRow[0].id);
-		await MembersByGroupId(groupRows);
-		groupRows = await getIsApplicationPossiblePerGroup(groupRows, req);
+		const groups = await getGroupsUserCanApplyTo(subject.id, req.session.userId);
+		await attachOwnerAndMemberCount(groups);
 
 		return res.render("grouplist", {
 			title: "Groups",
@@ -86,7 +89,7 @@ class GroupsController {
 			error: req.flash("error"),
 			success: req.flash("success"),
 			showAllGroups: true,
-			groups: groupRows,
+			groups: groups,
 		});
 	}
 
