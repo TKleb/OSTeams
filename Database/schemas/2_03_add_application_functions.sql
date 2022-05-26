@@ -128,15 +128,15 @@ AS $$
         AND (
 			-- group not full
 			(SELECT max_member_count from groups
-            	WHERE group_id = p_group_id LIMIT 1)
+            	WHERE id = p_group_id LIMIT 1)
             >
-        	(SELECT count(*) FROM group_memberships
+        	(SELECT COUNT(*) FROM group_memberships
             	WHERE group_id = p_group_id)
 		)
         AND (
 			-- not after apply by date
 			(SELECT apply_by_date FROM groups
-				WHERE group_id = p_group_id LIMIT 1)
+				WHERE id = p_group_id LIMIT 1)
 			>
 			(SELECT CURRENT_TIMESTAMP)
 		);
