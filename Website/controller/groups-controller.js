@@ -26,11 +26,10 @@ const asyncFilter = async (arr, predicate) => {
 
 async function getIsApplicationPossiblePerGroup(groupRows, req) {
 	const groupRow = await asyncFilter(groupRows, async (group) => {
-		const isApplicationPossible = await pgConnector.isApplicationPossible(
+		return await pgConnector.isApplicationPossible(
 			req.session.userId,
 			group.id,
 		);
-		return isApplicationPossible[0].is_application_possible;
 	});
 	return groupRow;
 }
@@ -135,7 +134,7 @@ class GroupsController {
 		}
 
 		const isAccepted = accept === "true";
-		await pgConnector.isApplicationPossible(applicationId, isAccepted);
+		await pgConnector.closeApplication(applicationId, isAccepted);
 		const successMsg = isAccepted ? "Application approved" : "Application denied";
 		req.flash("success", successMsg);
 		return res.redirect("/groups/".concat(groupId));
