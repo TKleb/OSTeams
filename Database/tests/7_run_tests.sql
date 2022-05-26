@@ -154,6 +154,40 @@ $group_application_tests$ BEGIN
         (SELECT id FROM groups ORDER BY id DESC LIMIT 1)
     ), 'get_applications_to_group failed';
 
+    -- is_application_possible tests
+    PERFORM add_group(
+        'maxMemberTestGroup',
+        (SELECT id FROM users ORDER BY id ASC LIMIT 1),
+        (SELECT id FROM subjects ORDER BY id ASC LIMIT 1),
+        'desc',
+        1,
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP + '10m'
+    );
+
+    ASSERT NOT(
+        is_application_possible(
+            (SELECT id FROM users ORDER BY id DESC LIMIT 1),
+            (SELECT id FROM groups ORDER BY id DESC LIMIT 1)
+        )
+    ), 'is_application_possible max_group_size test failed';
+
+    PERFORM add_group(
+        'afterApplyDate',
+        (SELECT id FROM users ORDER BY id ASC LIMIT 1),
+        (SELECT id FROM subjects ORDER BY id ASC LIMIT 1),
+        'desc',
+        5,
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP + '-10m'
+    );
+    ASSERT NOT(
+        is_application_possible(
+            (SELECT id FROM users ORDER BY id DESC LIMIT 1),
+            (SELECT id FROM groups ORDER BY id DESC LIMIT 1)
+        )
+    ), 'is_application_possible after_apply_date test failed';
+
     ROLLBACK;
 END $group_application_tests$;
 \echo group_application_tests passed

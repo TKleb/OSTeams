@@ -259,6 +259,8 @@
     background-color: #fefefe;
     border-radius: 5px;
     box-shadow: 0 0 3px 2px #ccc;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 #group-applications {
@@ -267,6 +269,8 @@
     background-color: #fefefe;
     border-radius: 5px;
     box-shadow: 0 0 3px 2px #ccc;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 #additional-group-settings {
