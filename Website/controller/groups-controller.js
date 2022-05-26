@@ -104,6 +104,9 @@ class GroupsController {
 
 		return res.render("group", {
 			title: group.name,
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
 			group,
 			isOwner,
 			isVisitor,
@@ -194,22 +197,23 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		const groupRow = await pgConnector.executeStoredProcedure("get_group_by_id", [id]);
-		if (!groupRow || groupRow.length === 0) {
+		const group = await pgConnector.getGroupById(id);
+		if (!group) {
 			req.flash("error", "Couldn't find group");
 			return res.redirect("/");
 		}
 
-		if (groupRow[0].owner_id !== req.session.userId) {
+		if (group.owner_id !== req.session.userId) {
 			req.flash("error", "You're not allowed to perform this action");
 			return res.redirect("/");
 		}
 
-		const groupRemovedRow = await pgConnector.executeStoredProcedure("do_remove_group_by_id", [id]);
-		if (!groupRemovedRow[0].do_remove_group_by_id) {
+		const isGroupRemoved = await pgConnector.removeGroupFromId(id);
+		if (!isGroupRemoved) {
 			req.flash("error", "Couldn't delete group");
 			return res.redirect("/");
 		}
+
 		req.flash("success", "Group deleted successfully");
 		return res.redirect("/groups");
 	}
