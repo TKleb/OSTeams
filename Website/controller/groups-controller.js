@@ -34,8 +34,7 @@ function getGroupsUserCanApplyTo(subjectId, userId) {
 
 async function attachOwnerAndMemberCount(groups) {
 	await Promise.all(
-		groups.map((group) =>
-			Promise.all([
+		groups.map((group) => Promise.all([
 			pgConnector.getMembersByGroupId(group.id)
 				.then((members) => {
 					group.current_member_count = members.length;
@@ -44,14 +43,14 @@ async function attachOwnerAndMemberCount(groups) {
 				.then((owner) => {
 					group.owner = owner.email;
 				})
-			]))
+		]))
 	);
 }
 
 const getApplicationsToGroupForDisplay = async (id) => {
-	const applications = await pgConnector.executeStoredProcedure("get_applications_to_group", [id]);
+	const applications = await pgConnector.getApplicationsToGroup(id);
 	const promises = applications.map((app) => pgConnector.getUserById(app.user_id));
-	return await Promise.all(promises)
+	return Promise.all(promises)
 		.then((arr) => arr.map((applicant, i) => {
 			const application = applications[i];
 			application.user_email = applicant.email;
@@ -104,7 +103,7 @@ class GroupsController {
 		const [members, applicants] = await Promise.all([
 			pgConnector.getMembersByGroupId(groupId),
 			getApplicationsToGroupForDisplay(groupId),
-		])
+		]);
 		const isVisitor = members.find((member) => member.id === req.session.userId) === undefined;
 
 		return res.render("group", {
