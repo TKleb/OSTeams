@@ -35,13 +35,12 @@ describe("Test groups page", () => {
 	});
 
 	describe("GET /groups/9", () => {
-		it("It should get the group with the id '9'", function(done) {
+		it("It should get the group with the id '9'", async () => {
 			authenticatedUser
 				.get("/groups/9")
 				.end((error, res) => {
 					assert.equal(res.statusCode, 200);
 					expect("Location", "/groups/9")
-					done();
 				});
 		});
 	});
@@ -53,7 +52,7 @@ describe("Test groups page", () => {
 				.end((err, res) => {
 					assert.equal(res.statusCode, 200);
 					expect("Location", "/subjects/CN1");
-					assert.doesNotMatch(res.text, /Peter hackt die Welt/);
+					assert.doesNotMatch(res.text, /hans.muster@ost.ch/);
 				});
 		});
 	});
