@@ -41,7 +41,7 @@ async function MembersByGroupId(groupRows) {
 }
 
 function isNumeric(val) {
-    return /^\d+$/.test(val);
+	return /^\d+$/.test(val);
 }
 
 function areNumeric(...values) {
@@ -101,10 +101,10 @@ class GroupsController {
 	async showGroupById(req, res) {
 		const { id } = req.params;
 
-		if(!isNumeric(id)) {
+		if (!isNumeric(id)) {
 			req.flash("error", "Invalid parameter");
 			return res.redirect("/");
-		};
+		}
 
 		const group = await pgConnector.getGroupById(id);
 		if (!group) {
@@ -157,10 +157,10 @@ class GroupsController {
 	async leaveGroup(req, res) {
 		const { id } = req.params;
 
-		if(!isNumeric(id)) {
+		if (!isNumeric(id)) {
 			req.flash("error", "Invalid parameter");
 			return res.redirect("/");
-		};
+		}
 
 		const members = await pgConnector.getMembersByGroupId(id);
 		const group = await pgConnector.getGroupById(id);
