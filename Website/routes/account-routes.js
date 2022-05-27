@@ -7,7 +7,7 @@ import { isAuthenticated, isUnauthenticated } from "../middleware/auth.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 
 const router = express.Router();
-router.get("/", isAuthenticated, accountController.index);
+router.get("/", isAuthenticated, accountController.showUserInfo);
 router.get("/edit", isAuthenticated, accountController.edit);
 router.get("/logout", isAuthenticated, accountController.logout);
 router.get("/login", isUnauthenticated, loginController.index);

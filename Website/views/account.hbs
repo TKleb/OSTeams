@@ -1,2 +1,58 @@
 <h1>Account</h1>
-<a href="/">Home</a>
+<div class="account-container">
+	{{#if user}}
+		<form class="display-info" id="account-info-form">
+			<div class="account-name">
+				<p>Name:</p>
+				{{#if_eq user.surname ''}}
+					<input class="info-input" disabled placeholder="No Name">
+				{{else}}
+					<input class="info-input" disabled value="{{user.surname}} {{user.name}}">
+				{{/if_eq}}
+			</div>
+			<div class="account-email">
+				<p>Email:</p>
+				<input class="info-input" disabled value="{{user.email}}">
+			</div>
+			<div class="account-fulltime">
+				<p>Occupation:</p>
+				{{#if_eq user.fulltime null}}
+					<input class="info-input" disabled value="Part Time">
+				{{else}}
+					<input class="info-input" disabled value="Full Time">
+				{{/if_eq}}
+			</div>
+			<div class="account-startyear">
+				<p>Start Year:</p>
+				{{#if_eq user.start_year null}}
+					<input class="info-input" id="start-year" disabled placeholder="Startyear not defined">
+				{{else}}
+					<input class="info-input" disabled value="{{user.start_year}}">
+				{{/if_eq}}
+			</div>
+			<div class="account-info">
+				<p>Info:</p>
+				{{#if_eq user.custom_info ''}}
+					<textarea class="info-input" disabled placeholder="No Custom Info"></textarea>
+				{{else}}
+					<textarea class="info-input" disabled value="{{user.custom_info}}"></textarea>
+				{{/if_eq}}
+			</div>
+		</form>
+		<div class="profile-picture">
+			{{#if_eq user.profile_picture_path null}}
+				<img src="/images/default-pic.jpg">
+			{{else}}
+				<img src="{{profile_picture_path}}">
+			{{/if_eq}}
+		</div>
+		<div class="account-interaction">
+			<button id="start-account-edit" class="center">Edit</button>
+			<button type="submit" form="account-info-form" class="acc-edit-btn center">Save</button>
+			<button class="acc-edit-btn center">Return</button>
+		</div>
+	{{else}}
+		<p>Test</p>
+	{{/if}}
+</div>
+<script type="text/javascript" src="/js/account-script.js" defer></script>
