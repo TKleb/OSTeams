@@ -1,6 +1,7 @@
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
+import { isNumeric, areNumeric } from "../utils/input-validation-util.js";
 
 async function sendApplicationEmailToOwner(req, id, res) {
 	const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
@@ -38,14 +39,6 @@ async function MembersByGroupId(groupRows) {
 		const groupOwner = await pgConnector.getUserById(group.owner_id);
 		group.owner = groupOwner.email;
 	}
-}
-
-function isNumeric(val) {
-	return /^\d+$/.test(val);
-}
-
-function areNumeric(...values) {
-	return values.every(isNumeric);
 }
 
 const getApplicationsToGroupForDisplay = async (id) => {
