@@ -3,9 +3,10 @@ import groupsController from "../controller/groups-controller.js";
 import asyncHandler from "../middleware/asyncHandler.js";
 
 const router = express.Router();
-router.get("/", groupsController.showGroupsOfUser);
-router.get("/:id", groupsController.showGroupInDetail);
+router.get("/", asyncHandler(groupsController.showGroupsOfUser));
+router.get("/:id", asyncHandler(groupsController.showGroupInDetail));
 router.post("/leave/:id", asyncHandler(groupsController.leaveGroup));
+router.post("/delete/:id", asyncHandler(groupsController.deleteGroup));
 router.post("/applyTo/:id", asyncHandler(groupsController.applyToGroup));
 router.post("/closeApplication/:applicationId/:groupId", asyncHandler(groupsController.closeApplication));
 export default router;

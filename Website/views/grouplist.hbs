@@ -1,11 +1,13 @@
+<h1>{{title}}</h1>
 {{#if showAllGroups}}
-	<h1>{{abbr}}</h1>
 	<div id="create-group-div">
 		<button data-modal-target="#create-group-modal" class="grp-btn create-group">Create Group</button>
 	</div>
+{{/if}}
 	<div class="search">
 		<input id="searchbar" autocomplete="off" type="text" name="search" placeholder="Search For Group Name...">
 	</div>
+{{#if showAllGroups}}
 	<div class="modal" id="create-group-modal">
 		<div class="modal-header">
 			<div class="title">Create A Group</div>
@@ -17,7 +19,7 @@
 				<input name="groupName" id="create-group-size" type="text" required>
 
 				<label for="create-group-size">Group Size:</label>
-				<input name="maxMemberCount" id="create-group-size" type="number" min="2" max="5" required>
+				<input name="maxMemberCount" id="create-group-size" type="number" min="2" max="99" required>
 
 				<label for="create-group-applydate">"Apply-By"-Date:</label>
 				<input name="applyByDate" id="create-group-applydate" type="date" required>
@@ -29,8 +31,6 @@
 			</form>
 		</div>
 	</div>
-{{else}}
-	<h1>Your Groups</h1>
 {{/if}}
 <div class="overlay"></div>
 {{#each groups}}

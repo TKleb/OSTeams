@@ -56,3 +56,8 @@ closeModalButtons.forEach((button) => {
 		closeModal(modal);
 	});
 });
+
+export {
+	openModal,
+	closeModal
+};
