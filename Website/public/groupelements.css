@@ -330,8 +330,8 @@
     background-color: rgb(176 86 176);
 }
 
-#delete-group-form {
-    margin-top: 10px;
+.form-buttons-delete {
+    margin-top: 15px;
     display: flex;
     justify-content: center;
 }

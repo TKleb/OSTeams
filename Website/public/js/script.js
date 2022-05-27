@@ -4,8 +4,6 @@ const overlay = document.querySelector(".overlay");
 const createGroupButton = document.querySelectorAll(".create-group");
 const viewApplication = document.querySelectorAll(".view-application");
 const groupPanels = document.querySelectorAll(".group");
-const deleteGroupButton = document.getElementById("delete-group-btn");
-const cancelGroupDelete = document.getElementById("cancel-delete-modal");
 
 // eslint-disable-next-line consistent-return
 function openModal(modal) {
@@ -45,21 +43,11 @@ applyToGroupButtons.forEach((button) => {
 	});
 });
 
-cancelGroupDelete.addEventListener("click", () => {
-	const modal = cancelGroupDelete.closest(".modal");
-	closeModal(modal);
-});
-
 createGroupButton.forEach((button) => {
 	button.addEventListener("click", () => {
 		const modal = document.querySelector(button.dataset.modalTarget);
 		openModal(modal);
 	});
-});
-
-deleteGroupButton.addEventListener("click", () => {
-	const modal = document.querySelector(deleteGroupButton.dataset.modalTarget);
-	openModal(modal);
 });
 
 closeModalButtons.forEach((button) => {
@@ -68,3 +56,8 @@ closeModalButtons.forEach((button) => {
 		closeModal(modal);
 	});
 });
+
+export {
+	openModal,
+	closeModal
+};
