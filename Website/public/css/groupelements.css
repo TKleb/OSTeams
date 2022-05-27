@@ -1,0 +1,111 @@
+/* ========================= Group Information ========================= */
+#group-div {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 60% 35%;
+    grid-template-rows: 3% 25% 3% 25% 10%;
+
+    /* Strange interaction with linter and grid template */
+    /* stylelint-disable */
+    grid-template-areas:
+            "desc-title mem-title"
+            "group-desc group-members"
+            "group-desc appli-title"
+            "group-desc group-appli"
+            "empty interactions"
+            "group-settings group-settings";
+    /* stylelint-enable */
+    column-gap: 2%;
+    row-gap: 10px;
+}
+
+#group-description {
+    grid-area: group-desc;
+    text-align: justify;
+    padding: 10px;
+    border: 2px solid rgb(170 170 170);
+    background-color: #fefefe;
+    border-radius: 5px;
+    box-shadow: 0 0 3px 2px #ccc;
+}
+
+#groupmember-list {
+    grid-area: group-members;
+    border: 2px solid rgb(170 170 170);
+    background-color: #fefefe;
+    border-radius: 5px;
+    box-shadow: 0 0 3px 2px #ccc;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#group-applications {
+    grid-area: group-appli;
+    border: 2px solid rgb(170 170 170);
+    background-color: #fefefe;
+    border-radius: 5px;
+    box-shadow: 0 0 3px 2px #ccc;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#additional-group-settings {
+    grid-area: group-settings;
+    border: 2px solid purple;
+}
+
+.applicants-title {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    grid-area: appli-title;
+}
+
+.description-title {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    grid-area: desc-title;
+}
+
+.members-title {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    grid-area: mem-title;
+}
+
+#groupmember-list ul,
+#group-applications ul {
+    list-style-type: none;
+    padding-inline-start: 10px;
+}
+
+#group-interaction-btns {
+    grid-area: interactions;
+    display: flex;
+    justify-content: center;
+}
+
+#group-interaction-btns .group-btn {
+    height: 80%;
+    width: 150px;
+    margin: auto 0;
+    cursor: pointer;
+    background-color: rgb(146 71 146);
+}
+
+#delete-group-btn {
+    height: 80%;
+    width: 150px;
+    margin: auto 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+    background-color: rgb(223 19 46);
+}
+
+#group-interaction-btns .group-btn:hover {
+    cursor: pointer;
+    background-color: rgb(176 86 176);
+}
