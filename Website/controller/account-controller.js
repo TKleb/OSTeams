@@ -7,7 +7,11 @@ class AccountController {
 
 	async showUserInfo(req, res) {
 		const currentUserData = await pgConnector.executeStoredProcedure("get_user_by_email", [req.session.email]);
-		res.render("account", { title: "Account", user: currentUserData[0] });
+		res.render("account", {
+			title: "Account",
+			edit: false,
+			user: currentUserData[0]
+		});
 	}
 
 	logout(req, res) {
@@ -15,8 +19,13 @@ class AccountController {
 		res.redirect("/");
 	}
 
-	edit(req, res) {
-		res.render("editAccount", { title: "edit" });
+	async edit(req, res) {
+		const currentUserData = await pgConnector.executeStoredProcedure("get_user_by_email", [req.session.email]);
+		res.render("account", {
+			title: "edit",
+			edit: true,
+			user: currentUserData[0]
+		});
 	}
 }
 
