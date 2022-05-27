@@ -95,14 +95,13 @@
     background-color: rgb(146 71 146);
 }
 
-#delete-group-btn {
+#delete-group-button {
     height: 80%;
     width: 150px;
     margin: auto 0;
     cursor: pointer;
     font-weight: bold;
     color: black;
-    background-color: rgb(223 19 46);
 }
 
 #group-interaction-btns .group-btn:hover {
@@ -123,11 +122,16 @@
     cursor: pointer;
 }
 
-#delete-group-button {
+#confirm-delete-group-button {
     margin-left: 10px;
+}
+
+#delete-group-button,
+#confirm-delete-group-button {
     background-color: rgb(223 19 46);
 }
 
-#delete-group-button:hover {
+#delete-group-button:hover,
+#confirm-delete-group-button:hover {
     background-color: rgb(241 46 72);
 }

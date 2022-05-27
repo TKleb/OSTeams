@@ -1,7 +1,7 @@
 import { openModal, closeModal } from "./script.js";
 
-const deleteGroupButton = document.getElementById("delete-group-btn");
-const cancelGroupDelete = document.getElementById("cancel-delete-modal");
+const deleteGroupButton = document.getElementById("delete-group-button");
+const cancelGroupDelete = document.getElementById("cancel-delete-group-button");
 
 cancelGroupDelete.addEventListener("click", () => {
 	const modal = cancelGroupDelete.closest(".modal");
