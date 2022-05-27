@@ -157,11 +157,11 @@ class GroupsController {
 			applydate,
 			groupRow.closed,
 		]
-		console.log("before");
 
 		await pgConnector.editGroupById(options);
 
-		console.log("after");
+		req.flash("success", "Successfully Saved");
+
 		return res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/edit/", id));
 	}
 

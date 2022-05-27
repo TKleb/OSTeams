@@ -23,6 +23,9 @@
 				<button id="edit-group-btn" class="grp-btn">Save Changes</button>
 			</div>
 		</form>
+		<form method="get" action="/groups/{{group.id}}">
+			<button class="back-btn">Back</button>
+		</form>
 	{{else}}
 		<h1>You're not allowed to edit this group.</h1>
 	{{/if}}

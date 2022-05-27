@@ -389,3 +389,17 @@
     cursor: pointer;
     background-color: rgb(176 86 176);
 }
+
+.back-btn {
+    font-size: 15px;
+    height: 2em;
+    cursor: pointer;
+    background-color: lightgrey;
+    margin: 10px auto;
+    display: block;
+}
+
+.back-btn:hover {
+    cursor: pointer;
+    background-color: grey;
+}
