@@ -1,7 +1,7 @@
 function isApplyByDateValid(date) {
-	let currDate = new Date();
-	currDate.setHours(0,0,0,0);
-	let maxDate = new Date();
+	const currDate = new Date();
+	currDate.setHours(0, 0, 0, 0);
+	const maxDate = new Date();
 	maxDate.setFullYear(currDate.getFullYear() + 1);
 	const applyByDate = new Date(date);
 	return applyByDate >= currDate && applyByDate <= maxDate;
@@ -9,4 +9,4 @@ function isApplyByDateValid(date) {
 
 export {
 	isApplyByDateValid
-}
+};
