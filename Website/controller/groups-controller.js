@@ -104,6 +104,9 @@ class GroupsController {
 
 		return res.render("group", {
 			title: group.name,
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
 			group,
 			isOwner,
 			isVisitor,
@@ -234,6 +237,35 @@ class GroupsController {
 		const groupRow = await pgConnector.addGroup(options);
 
 		return res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/", groupRow[0].id));
+	}
+
+	async deleteGroup(req, res) {
+		const { id } = req.params;
+
+		if (!id) {
+			req.flash("error", "Missing fields");
+			return res.redirect("/");
+		}
+
+		const group = await pgConnector.getGroupById(id);
+		if (!group) {
+			req.flash("error", "Couldn't find group");
+			return res.redirect("/");
+		}
+
+		if (group.owner_id !== req.session.userId) {
+			req.flash("error", "You're not allowed to perform this action");
+			return res.redirect("/");
+		}
+
+		const isGroupRemoved = await pgConnector.removeGroup(id);
+		if (!isGroupRemoved) {
+			req.flash("error", "Couldn't delete group");
+			return res.redirect("/");
+		}
+
+		req.flash("success", "Group deleted successfully");
+		return res.redirect("/groups");
 	}
 
 	async applyToGroup(req, res) {
