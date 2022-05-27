@@ -4,11 +4,6 @@ import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
 
-function checkEmailUsed(email) {
-	return pgConnector.executeStoredProcedure("is_email_in_use", [email])
-		.then((response) => response[0].is_email_in_use);
-}
-
 function sendVerificationEmail(verificationToken, email) {
 	const htmlBody = "<p>In order to use OSTeams, "
 		+ `click on the following link <a href="${websiteConfig.hostname}:${websiteConfig.port}/account/verifyEmail?token=${verificationToken}">link</a> `
@@ -51,18 +46,19 @@ class RegisterController {
 			return res.render("register", { error: "Please provide email and password." });
 		}
 
-		return checkEmailUsed(email).then(async (isUsed) => {
-			if (isUsed) {
-				return res.render("register", { error: "The provided email is already in use." });
-			}
+		return pgConnector.isEmailInUse(email)
+			.then(async (isUsed) => {
+				if (isUsed) {
+					return res.render("register", { error: "The provided email is already in use." });
+				}
 
-			const encryptedPassword = hashPassword(password);
-			const verificationToken = generateToken();
+				const encryptedPassword = hashPassword(password);
+				const verificationToken = generateToken();
 
-			await addUnverifiedUserToDB(email, encryptedPassword, verificationToken);
-			const response = await sendVerificationEmail(verificationToken, email);
-			return res.render("login", { hint: response });
-		});
+				await addUnverifiedUserToDB(email, encryptedPassword, verificationToken);
+				const response = await sendVerificationEmail(verificationToken, email);
+				return res.render("login", { hint: response });
+			});
 	}
 
 	verifyMail(req, res) {
@@ -82,7 +78,6 @@ export default new RegisterController();
 export {
 	hashPassword,
 	generateToken,
-	checkEmailUsed,
 	addUnverifiedUserToDB,
 	sendVerificationEmail,
 };

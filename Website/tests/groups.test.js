@@ -58,7 +58,7 @@ describe("Test groups page", () => {
 	});
 
 	describe("Leave own group", () => {
-		it("It should throw error: Cannot leave group.", async () => {
+		it("It should not allow a group owner to leave their own group.", async () => {
 			authenticatedUser
 				.post("/groups/leave/11")
 				.end((err, res) => {

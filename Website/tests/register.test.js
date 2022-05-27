@@ -3,7 +3,8 @@ import chaiHttp from "chai-http";
 import assert from "assert";
 import server from "../index.js";
 import Chance from "chance";
-import { generateToken, hashPassword, addUnverifiedUserToDB, checkEmailUsed } from "../controller/register-controller.js";
+import { generateToken, hashPassword, addUnverifiedUserToDB } from "../controller/register-controller.js";
+import pgConnector from "../services/pg-connector.js";
 
 chai.should();
 chai.use(chaiHttp);
@@ -40,7 +41,7 @@ describe("Test register page", () => {
 			const res = await chai.request(server)
 				.get(`/account/verifyEmail?token=${token}`);
 			assert.match(res.text, /Email verified successfully/);
-			assert.equal(await checkEmailUsed(email), true);
+			assert.equal(await pgConnector.isEmailInUse(email), true);
 		});
 	});
 });

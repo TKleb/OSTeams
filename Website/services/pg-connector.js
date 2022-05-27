@@ -82,6 +82,12 @@ class PGConnector {
 			.then((reply) => reply.is_application_possible);
 	}
 
+	isEmailInUse(email) {
+		return this.executeStoredProcedure("is_email_in_use", [email])
+			.then(getFirst)
+			.then((reply) => reply.is_email_in_use);
+	}
+
 	removeGroup(groupId) {
 		return this.executeStoredProcedure("do_remove_group_by_id", [groupId])
 			.then(getFirst)
