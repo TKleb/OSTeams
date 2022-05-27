@@ -1,6 +1,7 @@
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
+import { isNumeric, areNumeric, isApplyByDateValid } from "../utils/input-validation-util.js";
 
 async function sendApplicationEmailToOwner(req, id, res) {
 	const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
@@ -92,9 +93,16 @@ class GroupsController {
 
 	async showGroupById(req, res) {
 		const { id } = req.params;
+
+		if (!isNumeric(id)) {
+			req.flash("error", "Invalid parameter");
+			return res.redirect("/");
+		}
+
 		const group = await pgConnector.getGroupById(id);
 		if (!group) {
-			return res.send("Invalid GroupId");
+			req.flash("error", "Invalid GroupId");
+			return res.redirect("/");
 		}
 
 		const isOwner = req.session.userId === group.owner_id;
@@ -169,7 +177,7 @@ class GroupsController {
 		const { applicationId, groupId } = req.params;
 		const { accept } = req.body;
 
-		if (!applicationId || !groupId || accept === undefined) {
+		if (!areNumeric(applicationId, groupId) || accept === undefined) {
 			return res.send("Invalid parameters");
 		}
 
@@ -191,6 +199,12 @@ class GroupsController {
 
 	async leaveGroup(req, res) {
 		const { id } = req.params;
+
+		if (!isNumeric(id)) {
+			req.flash("error", "Invalid parameter");
+			return res.redirect("/");
+		}
+
 		const members = await pgConnector.getMembersByGroupId(id);
 		const group = await pgConnector.getGroupById(id);
 		if (!group) {
@@ -216,7 +230,17 @@ class GroupsController {
 
 		if (!abbreviation || !description || !maxMemberCount || !applyByDate || !groupName) {
 			req.flash("error", "Missing fields");
-			return res.redirect("/");
+			return res.redirect(req.get("referer"));
+		}
+
+		if (
+			!isApplyByDateValid(applyByDate)
+			|| !isNumeric(maxMemberCount)
+			|| maxMemberCount > 99
+			|| maxMemberCount < 2
+		) {
+			req.flash("error", "Invalid input");
+			return res.redirect(req.get("referer"));
 		}
 
 		const subjectRow = await pgConnector.getSubjectbyAbbreviation(abbreviation);
@@ -272,8 +296,8 @@ class GroupsController {
 		const { id } = req.params;
 		const { description } = req.body;
 
-		if (!id || !description) {
-			req.flash("error", "Missing fields");
+		if (!isNumeric(id) || !description) {
+			req.flash("error", "Invalid paramers");
 			return res.redirect("/");
 		}
 

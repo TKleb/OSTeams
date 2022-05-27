@@ -1,0 +1,62 @@
+/* ========================= Account Page ========================= */
+.account-container {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 30% 70%;
+
+    /* Strange interaction with linter and grid template */
+    /* stylelint-disable */
+    grid-template-areas:
+            "info propic"
+            "info acc-interaction";
+    /* stylelint-enable */
+}
+
+.display-info {
+    grid-area: info;
+}
+
+.profile-picture {
+    grid-area: propic;
+    text-align: center;
+}
+
+.account-interaction {
+    grid-area: acc-interaction;
+    text-align: center;
+}
+
+.profile-picture img {
+    aspect-ratio: 1 / 1;
+    width: 60%;
+}
+
+.display-info textarea {
+    width: 70%;
+    min-height: 150px;
+    resize: none;
+}
+
+#start-account-edit {
+    width: 30%;
+    aspect-ratio: 2/1;
+    cursor: pointer;
+    background-color: rgb(146 71 146);
+    margin-bottom: 5px;
+}
+
+.acc-edit-btn {
+    display: none;
+    width: 30%;
+    aspect-ratio: 2/1;
+    cursor: pointer;
+    background-color: rgb(146 71 146);
+    margin-bottom: 5px;
+}
+
+#start-account-edit:hover,
+.acc-edit-btn:hover {
+    cursor: pointer;
+    background-color: rgb(176 86 176);
+}

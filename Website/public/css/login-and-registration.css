@@ -1,0 +1,145 @@
+/* ========================= LOGIN PAGE ========================= */
+.display-info p {
+    margin-bottom: 2px;
+}
+
+#login-form-div {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#login-form-div > section > h1 {
+    font-family: Arial, sans-serif;
+}
+
+input[name="email"] {
+    width: 100%;
+    height: 40px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    display: block;
+}
+
+input[name="password"],
+input[name="passwordConfirmation"] {
+    width: 100%;
+    height: 40px;
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    margin: 10px 0 5px;
+}
+
+#login-button {
+    width: 100%;
+    height: 40px;
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    margin: 10px 0 20px;
+    background-color: rgb(146 71 146);
+}
+
+#login-button:hover {
+    cursor: pointer;
+    background-color: rgb(176 86 176);
+}
+
+#register-button {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    font-size: 15px;
+    margin: 10px 0 20px;
+    background-color: rgb(125 123 123);
+    align-items: center;
+    justify-content: center;
+}
+
+#register-button:hover {
+    background-color: rgb(148 145 145);
+}
+
+#forgot-password {
+    font-size: 13px;
+}
+
+a {
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+}
+
+a:visited {
+    color: inherit;
+}
+
+#login-form h2 {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid black;
+    font-size: 18px;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+}
+
+#login-form h2 span {
+    font-family: Arial, sans-serif;
+    background: #f0eeee;
+    padding: 0 10px;
+}
+
+/* ========================= Registration Page ========================= */
+#login-form-div p {
+    font-family: Arial, sans-serif;
+}
+
+#register-buttons {
+    display: inline-flex;
+}
+
+#verify-button {
+    height: 40px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    margin: 10px 10px 0 0;
+    background-color: rgb(146 71 146);
+}
+
+#verify-button:hover {
+    cursor: pointer;
+    background-color: rgb(176 86 176);
+}
+
+#cancel-verification {
+    text-align: center;
+    width: 30%;
+    height: 36px;
+    font-size: 15px;
+    margin: 10px;
+    background-color: rgb(125 123 123);
+    border-top: 2px solid #767676;
+    border-right: 2px solid #212121;
+    border-bottom: 2px solid #212121;
+    border-left: 2px solid #767676;
+}
+
+#cancel-verification:hover {
+    cursor: pointer;
+    background-color: rgb(156 154 154);
+}
+
+/* ========================= Reset Password Page ========================= */
+#reset-password {
+    width: 40%;
+    height: 40px;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    margin: 10px 0 20px;
+    background-color: rgb(146 71 146);
+}
+
+#reset-password:hover {
+    cursor: pointer;
+    background-color: rgb(176 86 176);
+}
