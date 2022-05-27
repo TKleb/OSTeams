@@ -7,8 +7,8 @@ async function sendApplicationEmailToOwner(req, id, res) {
 		+ "<p> Click on the following link to view all applicants: "
 		+ `<a href="${websiteConfig.hostname}:${websiteConfig.port}/groups/${id}">link</a></p>`;
 
-	const groupOwnerRow = await pgConnector.getOwnerByGroupId(id);
-	const response = await mailer.SendMail(groupOwnerRow[0].email, "New Application - OSTeams", htmlBody);
+	const groupOwner = await pgConnector.getOwnerByGroupId(id);
+	const response = await mailer.SendMail(groupOwner.email, "New Application - OSTeams", htmlBody);
 	req.flash("hint", response);
 	return res.redirect("/");
 }

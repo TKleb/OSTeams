@@ -55,7 +55,8 @@ class PGConnector {
 	}
 
 	getOwnerByGroupId(id) {
-		return this.executeStoredProcedure("get_owner_by_group_id", [id]);
+		return this.executeStoredProcedure("get_owner_by_group_id", [id])
+			.then(getFirst);
 	}
 
 	addApplication(options) {
