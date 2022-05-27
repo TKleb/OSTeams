@@ -229,3 +229,6 @@ class GroupsController {
 	}
 }
 export default new GroupsController();
+export {
+	userLeaveGroup,
+};
