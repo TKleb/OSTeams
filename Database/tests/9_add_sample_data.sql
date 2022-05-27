@@ -11,7 +11,7 @@ $add_development_presets$ BEGIN
     PERFORM add_unverified_user('Default', 'User', 'default.user@ost.ch', '$2a$10$cDazn1uv0sSaQ1KosKQ5/edSE04vP0D5YSlFKO6YceUVPkhop0YGi', 'verifyUser', NOW());
     PERFORM do_verify_user('verifyUser');
     PERFORM add_group(
-        'My own grou',
+        'My own group',
         (SELECT id FROM users ORDER BY id DESC LIMIT 1),
         (SELECT id FROM subjects ORDER BY id ASC LIMIT 1),
         'Default defaults to default',
