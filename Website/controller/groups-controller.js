@@ -56,13 +56,9 @@ const getApplicationsToGroupForDisplay = async (id) => {
 	return applicants;
 };
 
-const isMaxMemberCountValid = (maxMemberCount) => {
-	return (
-		isNumeric(maxMemberCount)
-		&& maxMemberCount <= 99
-		&& maxMemberCount >= 2
-		);
-};
+const isMaxMemberCountValid = (maxMemberCount) => (
+	isNumeric(maxMemberCount) && maxMemberCount <= 99 && maxMemberCount >= 2
+);
 
 class GroupsController {
 	async showByUserId(req, res) {
@@ -189,9 +185,9 @@ class GroupsController {
 			maxMemberCount,
 			applyByDate,
 			group.closed,
-		]
+		];
 
-		await pgConnector.editGroupById(options)
+		await pgConnector.editGroupById(options);
 		req.flash("success", "Successfully Saved");
 		return res.redirect("/groups/".concat(id));
 	}
