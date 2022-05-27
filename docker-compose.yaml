@@ -1,5 +1,22 @@
 version: '3.9'
 services:
+  # Traefik routing
+  traefik:
+    build:
+      context: Traefik
+    container_name: traefik
+    hostname: traefik
+    networks:
+      - traefik_net
+    command:
+      - --log.level=${TRAEFIK_LOG_LEVEL:-INFO}
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - /ostchat/traefik/letsencrypt/acme.json:/letsencrypt/acme.json:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
   # Website
   web:
     build:
@@ -7,15 +24,24 @@ services:
       dockerfile: dockerfile
       target: ${TARGET:-development}
     restart: "no"
+    extends:
+      file: ./Website/docker-compose.web.yaml
+      service: "web-${TARGET:-development}"
     working_dir: /usr/app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`${DOMAIN:-localhost}`)"
+      - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.docker.network=traefik_net"
+      - "traefik.http.services.web.loadBalancer.sticky.cookie=true"
     volumes:
-      - ./Website/:/usr/app/
       - /usr/app/node_modules
     ports:
       - "3001:3001"
     depends_on:
       - db
     networks:
+      - traefik_net
       - backend-db
   # Postgres Database
   db:
@@ -58,9 +84,15 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-root}
       PGADMIN_CONFIG_SERVER_MODE: ${PGADMIN_CONFIG_SERVER_MODE:-False}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.pgadmin.rule=Host(`pgadmin.${DOMAIN:-localhost}`)
+      - "traefik.http.routers.pgadmin.entrypoints=websecure"
+      - traefik.docker.network=traefik_net
     volumes:
       - pgadmin:/var/lib/pgadmin
     networks:
+      - traefik_net
       - db-pgadmin4
     ports:
       - "${PGADMIN_PORT:-5050}:80"
@@ -72,6 +104,7 @@ volumes:
     external: false
   pgadmin:
   db-backup:
+  letsencrypt:
 
 
 networks:
@@ -82,5 +115,9 @@ networks:
     ipam:
       driver: default
   db-backup:
+    ipam:
+      driver: default
+  traefik_net:
+    name: traefik_net
     ipam:
       driver: default
