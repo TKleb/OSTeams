@@ -16,7 +16,7 @@ router.get("/register", isUnauthenticated, registerController.index);
 router.get("/verifyEmail", isUnauthenticated, registerController.verifyMail);
 
 router.post("/login", isUnauthenticated, asyncHandler(loginController.login));
-router.post("/forgot", isUnauthenticated, forgotPwController.forgotPassword);
+router.post("/forgot", isUnauthenticated, asyncHandler(forgotPwController.forgotPassword));
 router.post("/register", isUnauthenticated, asyncHandler(registerController.register));
 
 export default router;
