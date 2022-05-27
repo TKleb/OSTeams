@@ -3,7 +3,36 @@
 	{{#if user}}
 		<div class="display-info" id="account-info">
 			{{#if edit}}
-				<h3>EDIT</h3>
+				<form class="display-info" id="account-info-form">
+					<div class="account-name">
+						<p>Name:</p>
+						<input type="text" class="info-input" name="surname"
+							{{#if_eq user.surname ''}} placeholder="No Surname"
+							{{else}} value="{{user.surname}}" {{/if_eq}}>
+						<input type="text" class="info-input" name="name" ¨
+							{{#if_eq user.name ''}} placeholder="No Name"
+							{{else}} value="{{user.name}}" {{/if_eq}}>
+					</div>
+					<div class="account-fulltime">
+						<p>Occupation:</p>
+						<input type="radio" id="parttime-radio" name="occupation" class="info-input"
+							{{#if_eq user.fulltime false}} checked {{/if_eq}} value="false" >
+						<label for="parttime-radio">Part Time</label>
+						<input type="radio" id="fulltime-radio" name="occupation" class="info-input"
+							{{#if_eq user.fulltime true}} checked {{/if_eq}} value="true">
+						<label for="fulltime-radio">Full Time</label>
+					</div>
+					<div class="account-startyear">
+						<p>Start Year:</p>
+						<select id="date-dropdown" name="startyear"></select>
+					</div>
+					<div class="account-info">
+						<p>Info:</p>
+						<textarea class="info-input"
+							{{#if_eq user.custom_info ''}} placeholder="No Custom Info"
+							{{else}} value="{{user.custom_info}}" {{/if_eq}}></textarea>
+					</div>
+				</form>
 			{{else}}
 				<div class="account-name">
 					<p>Name:</p>
@@ -54,9 +83,18 @@
 			{{/if_eq}}
 		</div>
 		<div class="account-interaction">
-			<form method="get" action="/account/edit">
-				<button type="submit" id="start-account-edit" class="center">Edit</button>
-			</form>
+			{{#if edit}}
+				<form method="post" action="/account/wherever">
+					<button type="submit" class="account-edit" form="account-info-form" formaction="/account/wherever" class="center">Save</button>
+				</form>
+				<form action="/account">
+					<button type="submit" class="account-edit" class="center">Return</button>
+				</form>
+			{{else}}
+				<form method="get" action="/account/edit">
+					<button type="submit" class="account-edit" id="account-edit-btn" class="center">Edit</button>
+				</form>
+			{{/if}}
 		</div>
 	{{else}}
 		<h3>ERROR</h3>

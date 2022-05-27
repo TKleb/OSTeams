@@ -1,39 +1,13 @@
 // Account Page Magic
-const editButton = document.getElementById("start-account-edit");
-const saveAndReturnButton = document.querySelectorAll(".acc-edit-btn");
-const infoInput = document.querySelectorAll(".info-input");
+const dateDropdown = document.getElementById("date-dropdown");
 
-const form = document.getElementById("account-info-form");
+let currentYear = new Date().getFullYear();
+const earliestYear = 2015;
 
-form.addEventListener("submit", (e) => {
-	e.preventDefault();
-	infoInput.forEach((input) => {
-		console.log(input.value);
-	});
-});
-
-// Disable eslint because of "no-param-reassign" Error
-/* eslint-disable */
-editButton.addEventListener("click", () => {
-	saveAndReturnButton.forEach((button) => {
-		button.style.display = "block";
-		editButton.style.display = "none";
-	});
-	infoInput.forEach((input) => {
-		input.removeAttribute("disabled");
-	});
-});
-
-
-saveAndReturnButton.forEach((b) => {
-	b.addEventListener("click", () => {
-		saveAndReturnButton.forEach((button) => {
-			button.style.display = "none";
-			editButton.style.display = "block";
-		});
-		infoInput.forEach((input) => {
-			input.setAttribute("disabled", "");
-		});
-	});
-});
-/* eslint-enable */
+while (currentYear >= earliestYear) {
+	const dateOption = document.createElement("option");
+	dateOption.text = currentYear;
+	dateOption.value = currentYear;
+	dateDropdown.add(dateOption);
+	currentYear -= 1;
+}

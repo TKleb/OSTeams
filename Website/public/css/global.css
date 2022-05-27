@@ -203,13 +203,6 @@ body {
     border: 1px solid black;
 }
 
-.display-info input {
-    height: 40px;
-    width: 70%;
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
 #create-group-form label,
 #create-group-form input {
     display: block;
