@@ -2,6 +2,7 @@ import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
 import { isApplyByDateValid } from "../utils/controller-util.js";
+import { isNumeric, areNumeric } from "../utils/input-validation-util.js";
 
 async function sendApplicationEmailToOwner(req, id, res) {
 	const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
@@ -93,9 +94,16 @@ class GroupsController {
 
 	async showGroupById(req, res) {
 		const { id } = req.params;
+
+		if (!isNumeric(id)) {
+			req.flash("error", "Invalid parameter");
+			return res.redirect("/");
+		}
+
 		const group = await pgConnector.getGroupById(id);
 		if (!group) {
-			return res.send("Invalid GroupId");
+			req.flash("error", "Invalid GroupId");
+			return res.redirect("/");
 		}
 
 		const isOwner = req.session.userId === group.owner_id;
@@ -120,7 +128,7 @@ class GroupsController {
 		const { applicationId, groupId } = req.params;
 		const { accept } = req.body;
 
-		if (!applicationId || !groupId || accept === undefined) {
+		if (!areNumeric(applicationId, groupId) || accept === undefined) {
 			return res.send("Invalid parameters");
 		}
 
@@ -142,6 +150,12 @@ class GroupsController {
 
 	async leaveGroup(req, res) {
 		const { id } = req.params;
+
+		if (!isNumeric(id)) {
+			req.flash("error", "Invalid parameter");
+			return res.redirect("/");
+		}
+
 		const members = await pgConnector.getMembersByGroupId(id);
 		const group = await pgConnector.getGroupById(id);
 		if (!group) {
@@ -228,8 +242,8 @@ class GroupsController {
 		const { id } = req.params;
 		const { description } = req.body;
 
-		if (!id || !description) {
-			req.flash("error", "Missing fields");
+		if (!isNumeric(id) || !description) {
+			req.flash("error", "Invalid paramers");
 			return res.redirect("/");
 		}
 
