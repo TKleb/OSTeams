@@ -56,6 +56,14 @@ const getApplicationsToGroupForDisplay = async (id) => {
 	return applicants;
 };
 
+const isMaxMemberCountValid = (maxMemberCount) => {
+	return (
+		isNumeric(maxMemberCount)
+		&& maxMemberCount <= 99
+		&& maxMemberCount >= 2
+		);
+};
+
 class GroupsController {
 	async showByUserId(req, res) {
 		const groupRows = await pgConnector.getGroupsOfUserById(req.session.userId);
@@ -125,15 +133,24 @@ class GroupsController {
 
 	async editGroupById(req, res) {
 		const { id } = req.params;
+
+		if (!isNumeric(id)) {
+			req.flash("error", "Missing fields");
+			return res.redirect("/");
+		}
+
 		const group = await pgConnector.getGroupById(id);
 		if (!group) {
-			return res.send("Invalid GroupId");
+			req.flash("error", "Invalid GroupId");
+			return res.redirect("/");
 		}
 
 		const isOwner = req.session.userId === group.owner_id;
-
 		return res.render("editGroup", {
 			title: group.name,
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
 			group,
 			isOwner,
 		});
@@ -144,33 +161,39 @@ class GroupsController {
 		const {
 			name,
 			description,
-			size,
-			applydate,
+			maxMemberCount,
+			applyByDate,
 		} = req.body;
 
-		if (!description || !size || !applydate || !name) {
+		if (!description || !isNumeric(id) || !maxMemberCount || !applyByDate || !name) {
 			req.flash("error", "Missing fields");
 			return res.redirect("/");
 		}
 
-		const groupRow = await pgConnector.getGroupById(id);
+		if (!isApplyByDateValid(applyByDate) || !isMaxMemberCountValid(maxMemberCount)) {
+			req.flash("error", "Invalid input");
+			return res.redirect(req.get("referer"));
+		}
 
+		const group = await pgConnector.getGroupById(id);
+		if (group.owner_id !== req.session.userId) {
+			req.flash("error", "Insufficient permissions");
+			return res.redirect(req.get("referer"));
+		}
 		const options = [
-			groupRow.id,
+			group.id,
 			name,
-			groupRow.owner_id,
-			groupRow.subject_id,
+			group.owner_id,
+			group.subject_id,
 			description,
-			size,
-			applydate,
-			groupRow.closed,
+			maxMemberCount,
+			applyByDate,
+			group.closed,
 		]
 
-		await pgConnector.editGroupById(options);
-
+		await pgConnector.editGroupById(options)
 		req.flash("success", "Successfully Saved");
-
-		return res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/edit/", id));
+		return res.redirect("/groups/".concat(id));
 	}
 
 	async closeApplication(req, res) {
@@ -233,12 +256,7 @@ class GroupsController {
 			return res.redirect(req.get("referer"));
 		}
 
-		if (
-			!isApplyByDateValid(applyByDate)
-			|| !isNumeric(maxMemberCount)
-			|| maxMemberCount > 99
-			|| maxMemberCount < 2
-		) {
+		if (!isApplyByDateValid(applyByDate) || !isMaxMemberCountValid(maxMemberCount)) {
 			req.flash("error", "Invalid input");
 			return res.redirect(req.get("referer"));
 		}

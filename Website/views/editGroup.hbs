@@ -10,21 +10,21 @@
 				Description:
 			</label>
 			<textarea name="description" required>{{group.description}}</textarea>
-			<label for="size">
+			<label for="maxMemberCount">
 				Group size:
 			</label>
-			<input name="size" type="number" value="{{group.max_member_count}}" min="2" max="99" required>
-			<label for="applydate">
+			<input name="maxMemberCount" type="number" value="{{group.max_member_count}}" min="2" max="99" required>
+			<label for="applyByDate">
 				Apply-By Date:
 			</label>
-			<input name="applydate" type="date" value="{{timestampToDate group.apply_by_date}}" required>
+			<input name="applyByDate" type="date" value="{{timestampToDate group.apply_by_date}}" required>
 			<div class="overlay"></div>
 			<div id="group-interaction-btns">
 				<button id="edit-group-btn" class="grp-btn">Save Changes</button>
 			</div>
 		</form>
 		<form method="get" action="/groups/{{group.id}}">
-			<button class="back-btn">Back</button>
+			<button class="back-btn">Cancel</button>
 		</form>
 	{{else}}
 		<h1>You're not allowed to edit this group.</h1>
