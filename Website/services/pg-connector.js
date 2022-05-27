@@ -28,6 +28,11 @@ class PGConnector {
 			.then(getFirst);
 	}
 
+	getUserByEmail(email) {
+		return this.executeStoredProcedure("get_user_by_email", [email])
+			.then(getFirst);
+	}
+
 	getGroupById(id) {
 		return this.executeStoredProcedure("get_group_by_id", [id])
 			.then(getFirst);

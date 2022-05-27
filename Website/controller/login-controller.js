@@ -14,12 +14,11 @@ class LoginController {
 			return res.render("login", { error: "Please provide email and password" });
 		}
 
-		const userRow = await pgConnector.executeStoredProcedure("get_user_by_email", [email]);
-		if (userRow.length === 0) {
+		const user = await pgConnector.getUserByEmail(email);
+		if (!user) {
 			return res.render("login", { error: "Invalid credentials" });
 		}
 
-		const user = userRow[0];
 		if (await bcrypt.compare(password, user.password_hash)) {
 			req.session.loggedIn = true;
 			req.session.email = email;
