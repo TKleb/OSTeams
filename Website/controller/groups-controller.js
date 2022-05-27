@@ -1,7 +1,12 @@
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
-import { isNumeric, areNumeric, isApplyByDateValid } from "../utils/input-validation-util.js";
+import {
+	isNumeric,
+	areNumeric,
+	isApplyByDateValid,
+	isMaxMemberCountValid,
+} from "../utils/input-validation-util.js";
 
 async function sendApplicationEmailToOwner(req, id, res) {
 	const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
@@ -55,10 +60,6 @@ const getApplicationsToGroupForDisplay = async (id) => {
 	}
 	return applicants;
 };
-
-const isMaxMemberCountValid = (maxMemberCount) => (
-	isNumeric(maxMemberCount) && maxMemberCount <= 99 && maxMemberCount >= 2
-);
 
 class GroupsController {
 	async showByUserId(req, res) {

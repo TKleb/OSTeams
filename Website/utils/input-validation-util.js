@@ -15,8 +15,13 @@ function isApplyByDateValid(date) {
 	return applyByDate >= currDate && applyByDate <= maxDate;
 }
 
+const isMaxMemberCountValid = (maxMemberCount) => (
+	isNumeric(maxMemberCount) && maxMemberCount <= 99 && maxMemberCount >= 2
+);
+
 export {
 	isNumeric,
 	areNumeric,
 	isApplyByDateValid,
+	isMaxMemberCountValid,
 };
