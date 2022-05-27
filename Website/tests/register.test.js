@@ -17,7 +17,6 @@ describe("Test register page", () => {
 		});
 	});
 
-
 	describe("POST /account/register without body", () => {
 		it("It should throw error: Please provide email and password.", async () => {
 			const res = await chai.request(server)
@@ -37,7 +36,7 @@ describe("Test register page", () => {
 		it("It should create and verify a new user.", async () => {
 			const token = generateToken();
 			const email = Chance().email({ domain: "ost.ch", length: 20 });
-			addUnverifiedUserToDB(email, hashPassword("Test12345"), token);
+			await addUnverifiedUserToDB(email, hashPassword("Test12345"), token);
 			const res = await chai.request(server)
 				.get(`/account/verifyEmail?token=${token}`);
 			assert.match(res.text, /Email verified successfully/);
