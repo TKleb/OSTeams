@@ -5,6 +5,8 @@ import asyncHandler from "../middleware/asyncHandler.js";
 const router = express.Router();
 router.get("/", groupsController.showByUserId);
 router.get("/:id", groupsController.showGroupById);
+router.get("/edit/:id", groupsController.editGroupById);
+router.post("/edit/:id", asyncHandler(groupsController.updateGroup));
 router.post("/leave/:id", asyncHandler(groupsController.leaveGroup));
 router.post("/applyTo/:id", asyncHandler(groupsController.applyToGroup));
 router.post("/closeApplication/:applicationId/:groupId", asyncHandler(groupsController.closeApplication));

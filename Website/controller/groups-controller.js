@@ -112,6 +112,56 @@ class GroupsController {
 		});
 	}
 
+	async editGroupById(req, res) {
+		const { id } = req.params;
+		const group = await pgConnector.getGroupById(id);
+		if (!group) {
+			return res.send("Invalid GroupId");
+		}
+
+		const isOwner = req.session.userId === group.owner_id;
+
+		return res.render("editGroup", {
+			title: group.name,
+			group,
+			isOwner,
+		});
+	}
+
+	async updateGroup(req, res) {
+		const { id } = req.params;
+		const {
+			name,
+			description,
+			size,
+			applydate,
+		} = req.body;
+
+		if (!description || !size || !applydate || !name) {
+			req.flash("error", "Missing fields");
+			return res.redirect("/");
+		}
+
+		const groupRow = await pgConnector.getGroupById(id);
+
+		const options = [
+			groupRow.id,
+			name,
+			groupRow.owner_id,
+			groupRow.subject_id,
+			description,
+			size,
+			applydate,
+			groupRow.closed,
+		]
+		console.log("before");
+
+		await pgConnector.editGroupById(options);
+
+		console.log("after");
+		return res.redirect(websiteConfig.hostname.concat(":", websiteConfig.port, "/groups/edit/", id));
+	}
+
 	async closeApplication(req, res) {
 		const { applicationId, groupId } = req.params;
 		const { accept } = req.body;

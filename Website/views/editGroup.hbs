@@ -1,0 +1,31 @@
+{{#if group}}
+	{{#if isOwner}}
+		<h1>Edit Group: {{title}}</h1>
+		<form id="edit-group-form" method="post" action="/groups/edit/{{group.id}}">
+			<label for="name">
+				Name:
+			</label>
+			<input name="name" type="text" value="{{group.name}}" required>
+			<label for="description">
+				Description:
+			</label>
+			<textarea name="description" required>{{group.description}}</textarea>
+			<label for="size">
+				Group size:
+			</label>
+			<input name="size" type="number" value="{{group.max_member_count}}" min="2" max="99" required>
+			<label for="applydate">
+				Apply-By Date:
+			</label>
+			<input name="applydate" type="date" value="{{timestampToDate group.apply_by_date}}" required>
+			<div class="overlay"></div>
+			<div id="group-interaction-btns">
+				<button id="edit-group-btn" class="grp-btn">Save Changes</button>
+			</div>
+		</form>
+	{{else}}
+		<h1>You're not allowed to edit this group.</h1>
+	{{/if}}
+{{else}}
+		<h1>Invalid Group.</h1>
+{{/if}}

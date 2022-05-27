@@ -65,6 +65,9 @@
 				<button data-modal-target="#application-modal" class="group-btn apply">Apply</button>
 			{{else}}
 				{{#if isOwner}}
+				<form id="editGroup-form" method="get" action="/groups/edit/{{group.id}}">
+					<button id="edit-group-btn" class="group-btn">Edit</button>
+				</form>
 				<form id="deleteGroup-form" method="post" action="/groups/delete/{{group.id}}">
 					<button id="delete-group-btn" class="delete-group-btn">Delete</button>
 				</form>
