@@ -83,7 +83,7 @@ class GroupsController {
 		await attachOwnerAndMemberCount(groups);
 
 		return res.render("grouplist", {
-			title: "Groups",
+			title: "Groups of ".concat(abbreviation),
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
