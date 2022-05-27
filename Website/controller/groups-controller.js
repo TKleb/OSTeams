@@ -1,6 +1,7 @@
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
+import { isApplyByDateValid } from "../utils/controller-util.js";
 import { isNumeric, areNumeric } from "../utils/input-validation-util.js";
 
 async function sendApplicationEmailToOwner(req, id, res) {
@@ -180,7 +181,12 @@ class GroupsController {
 
 		if (!abbreviation || !description || !maxMemberCount || !applyByDate || !groupName) {
 			req.flash("error", "Missing fields");
-			return res.redirect("/");
+			return res.redirect(req.get("referer"));
+		}
+
+		if (!isApplyByDateValid(applyByDate) || maxMemberCount > 99 || maxMemberCount < 2) {
+			req.flash("error", "Invalid input");
+			return res.redirect(req.get("referer"));
 		}
 
 		const subjectRow = await pgConnector.getSubjectbyAbbreviation(abbreviation);
