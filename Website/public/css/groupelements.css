@@ -109,3 +109,25 @@
     cursor: pointer;
     background-color: rgb(176 86 176);
 }
+
+.form-buttons-delete {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.delete-modal-button {
+    display: inline-block;
+    width: 40%;
+    height: 30px;
+    cursor: pointer;
+}
+
+#delete-group-button {
+    margin-left: 10px;
+    background-color: rgb(223 19 46);
+}
+
+#delete-group-button:hover {
+    background-color: rgb(241 46 72);
+}
