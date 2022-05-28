@@ -22,7 +22,7 @@ async function userLeaveGroup(req, id, res) {
 
 async function kickUserFromGroup(req, userId, groupId, res) {
 	await pgConnector.removeUserFromGroup(userId, groupId);
-	req.flash("success", "Member kicked successfully");
+	req.flash("success", "Member kicked out successfully");
 	return res.redirect("/groups/".concat(groupId));
 }
 
@@ -191,7 +191,7 @@ class GroupsController {
 			return res.send("/");
 		}
 		if (group.owner_id === userId) {
-			req.flash("error", "This user cannot get kicked out");
+			req.flash("error", "Cannot kick out owner of the group");
 			return res.redirect("/");
 		}
 
