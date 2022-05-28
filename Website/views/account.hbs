@@ -4,17 +4,17 @@
 		<div class="display-info" id="account-info">
 			{{#if edit}}
 				<form class="display-info" id="account-info-form">
-					<div class="account-name">
-						<p>Name:</p>
-						<input type="text" class="info-input" name="surname"
+					<div class="account-name info">
+						<p class="title">Name:</p>
+						<input type="text" class="info-input" name="surname" autocomplete="off"
 							{{#if_eq user.surname ''}} placeholder="No Surname"
 							{{else}} value="{{user.surname}}" {{/if_eq}}>
-						<input type="text" class="info-input" name="name" ¨
+						<input type="text" class="info-input" name="name" autocomplete="off"
 							{{#if_eq user.name ''}} placeholder="No Name"
 							{{else}} value="{{user.name}}" {{/if_eq}}>
 					</div>
-					<div class="account-fulltime">
-						<p>Occupation:</p>
+					<div class="account-fulltime info">
+						<p class="title">Occupation:</p>
 						<input type="radio" id="parttime-radio" name="occupation" class="info-input"
 							{{#if_eq user.fulltime false}} checked {{/if_eq}} value="false" >
 						<label for="parttime-radio">Part Time</label>
@@ -22,55 +22,55 @@
 							{{#if_eq user.fulltime true}} checked {{/if_eq}} value="true">
 						<label for="fulltime-radio">Full Time</label>
 					</div>
-					<div class="account-startyear">
-						<p>Start Year:</p>
+					<div class="account-startyear info">
+						<p class="title">Start Year:</p>
 						<select id="date-dropdown" name="startyear"></select>
 					</div>
-					<div class="account-info">
-						<p>Info:</p>
+					<div class="account-info info">
+						<p class="title">Custom Info:</p>
 						<textarea class="info-input"
 							{{#if_eq user.custom_info ''}} placeholder="No Custom Info"
 							{{else}} value="{{user.custom_info}}" {{/if_eq}}></textarea>
 					</div>
 				</form>
 			{{else}}
-				<div class="account-name">
-					<p>Name:</p>
+				<div class="account-name info">
+					<p class="title">Name:</p>
 					{{#if_eq user.surname ''}}
-						<p>No Name Saved</p>
+						<p class="info-value">No Name Saved</p>
 					{{else}}
-						<p>{{user.surname}} {{user.name}}</p>
+						<p class="info-value">{{user.surname}} {{user.name}}</p>
 					{{/if_eq}}
 				</div>
-				<div class="account-email">
-					<p>Email:</p>
-					<p>{{user.email}}</p>
+				<div class="account-email info">
+					<p class="title">Email:</p>
+					<p class="info-value">{{user.email}}</p>
 				</div>
-				<div class="account-fulltime">
-					<p>Occupation:</p>
+				<div class="account-fulltime info">
+					<p class="title">Occupation:</p>
 					{{#if_eq user.fulltime false}}
-						<p>Part Time</p>
+						<p class="info-value">Part Time</p>
 					{{/if_eq}}
 					{{#if_eq user.fulltime null}}
-						<p>No Info</p>
+						<p class="info-value">No Info</p>
 					{{else}}
-						<p>Full Time</p>
+						<p class="info-value">Full Time</p>
 					{{/if_eq}}
 				</div>
-				<div class="account-startyear">
-					<p>Start Year:</p>
+				<div class="account-startyear info">
+					<p class="title">Start Year:</p>
 					{{#if_eq user.start_year null}}
-						<p>Startyear not defined</p>
+						<p class="info-value">Startyear not defined</p>
 					{{else}}
-						<p>{{user.start_year}}</p>
+						<p class="info-value">{{user.start_year}}</p>
 					{{/if_eq}}
 				</div>
-				<div class="account-info">
-					<p>Info:</p>
+				<div class="account-info info">
+					<p class="title">Info:</p>
 					{{#if_eq user.custom_info ''}}
-						<p>No Custom Info</p>
+						<p class="info-value">No Custom Info</p>
 					{{else}}
-						<p>{{user.custom_info}}</p>
+						<p class="info-value">{{user.custom_info}}</p>
 					{{/if_eq}}
 				</div>
 			{{/if}}

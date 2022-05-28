@@ -1,15 +1,4 @@
 /* ========================= Account Page ========================= */
-.display-info p {
-    margin-bottom: 2px;
-}
-
-.display-info input:not([type=radio]) {
-    height: 40px;
-    width: 70%;
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
 .account-container {
     display: grid;
     height: 100%;
@@ -41,6 +30,8 @@
 .profile-picture img {
     aspect-ratio: 1 / 1;
     width: 60%;
+    max-height: 150px;
+    max-width: 150px;
 }
 
 .display-info textarea {
@@ -60,4 +51,40 @@
 .account-edit:hover {
     cursor: pointer;
     background-color: rgb(176 86 176);
+}
+
+/* ========================= Default Page ========================= */
+.info {
+    margin-bottom: 10px;
+    width: 70%;
+    border: 2px solid rgb(170 170 170);
+    background-color: #fefefe;
+    border-radius: 5px;
+    box-shadow: 0 0 3px 2px #ccc;
+    padding: 10px;
+}
+
+.info .title {
+    margin-bottom: 5px;
+    margin-top: 2px;
+    font-weight: bold;
+}
+
+.info .info-value {
+    margin-bottom: 5px;
+    margin-top: 2px;
+}
+
+/* ========================= Edit Page ========================= */
+#date-dropdown {
+    width: 20%;
+    height: 40px;
+    font-size: 18px;
+}
+
+.display-info input:not([type=radio]) {
+    height: 40px;
+    width: 70%;
+    font-size: 18px;
+    margin-bottom: 10px;
 }
