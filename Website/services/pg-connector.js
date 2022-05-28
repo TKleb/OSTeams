@@ -11,6 +11,7 @@ function getFirst(reply) {
 class PGConnector {
 	constructor() {
 		const pgp = pgPromise({});
+		pgp.pg.types.setTypeParser(20, BigInt); // Type Id 20 = BIGINT | BIGSERIAL
 		this.db = pgp(pgConfig);
 	}
 
@@ -24,6 +25,11 @@ class PGConnector {
 
 	getUserById(id) {
 		return this.executeStoredProcedure("get_user_by_id", [id])
+			.then(getFirst);
+	}
+
+	getUserByEmail(email) {
+		return this.executeStoredProcedure("get_user_by_email", [email])
 			.then(getFirst);
 	}
 
@@ -45,7 +51,8 @@ class PGConnector {
 	}
 
 	getSubjectbyAbbreviation(id) {
-		return this.executeStoredProcedure("get_subject_by_abbreviation", [id]);
+		return this.executeStoredProcedure("get_subject_by_abbreviation", [id])
+			.then(getFirst);
 	}
 
 	getApplicationsToGroup(id) {
@@ -53,15 +60,18 @@ class PGConnector {
 	}
 
 	getOwnerByGroupId(id) {
-		return this.executeStoredProcedure("get_owner_by_group_id", [id]);
+		return this.executeStoredProcedure("get_owner_by_group_id", [id])
+			.then(getFirst);
 	}
 
 	addApplication(options) {
-		return this.executeStoredProcedure("add_application", options);
+		return this.executeStoredProcedure("add_application", options)
+			.then(getFirst);
 	}
 
 	addGroup(options) {
-		return this.executeStoredProcedure("add_group", options);
+		return this.executeStoredProcedure("add_group", options)
+			.then(getFirst);
 	}
 
 	removeUserFromGroup(userId, groupId) {
@@ -72,10 +82,16 @@ class PGConnector {
 		return this.executeStoredProcedure("do_close_application", [applicationId, isAccepted]);
 	}
 
-	isApplicationPossible(sessionId, groupId) {
-		return this.executeStoredProcedure("is_application_possible", [sessionId, groupId])
+	isApplicationPossible(userId, groupId) {
+		return this.executeStoredProcedure("is_application_possible", [userId, groupId])
 			.then(getFirst)
 			.then((reply) => reply.is_application_possible);
+	}
+
+	isEmailInUse(email) {
+		return this.executeStoredProcedure("is_email_in_use", [email])
+			.then(getFirst)
+			.then((reply) => reply.is_email_in_use);
 	}
 
 	removeGroup(groupId) {
