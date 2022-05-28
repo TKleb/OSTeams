@@ -24,7 +24,11 @@
 		<div id="group-applications">
 			<ul>
 				{{#each applicants}}
-					<li>{{user_email}} {{#if ../isOwner}} <button data-modal-target="#application-{{id}}-modal" class="view-application">View </button> {{/if}}</li>
+					<li>{{user_email}}
+						{{#if_and ../isOwner ../isNotFull}}
+							<button data-modal-target="#application-{{id}}-modal" class="grp-btn view-application">View</button>
+						{{/if_and}}
+					</li>
 				{{/each}}
 			</ul>
 		</div>

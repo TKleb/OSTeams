@@ -105,9 +105,10 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		const isOwner = req.session.userId === group.owner_id;
-		const members = await pgConnector.getMembersByGroupId(id);
 		const applicants = await getApplicationsToGroupForDisplay(id);
+		const members = await pgConnector.getMembersByGroupId(id);
+		const isNotFull = members.length < group.max_member_count;
+		const isOwner = req.session.userId === group.owner_id;
 		const isVisitor = members.find((member) => member.id === req.session.userId) === undefined;
 
 		return res.render("group", {
@@ -116,6 +117,7 @@ class GroupsController {
 			error: req.flash("error"),
 			success: req.flash("success"),
 			group,
+			isNotFull,
 			isOwner,
 			isVisitor,
 			applicants,
