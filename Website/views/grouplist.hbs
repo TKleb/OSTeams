@@ -15,7 +15,7 @@
 		</div>
 		<div class="modal-body">
 			<form id="create-group-form" method="post">
-				<label for="create-content-title">Group name:</label>
+				<label for="create-group-name">Group name:</label>
 				<input name="groupName" id="create-group-size" type="text" required>
 
 				<label for="create-group-size">Group Size:</label>
@@ -25,7 +25,7 @@
 				<input name="applyByDate" id="create-group-applydate" type="date" required>
 
 				<label for="create-group-description">Description:</label>
-				<textarea name="description" id="create-group-description" required></textarea>
+				<textarea name="description" id="create-group-description" maxlength="256" required></textarea>
 
 				<button type="submit" class="submit-btn">Submit</button>
 			</form>
@@ -37,10 +37,10 @@
 	<article onclick="location.href='/groups/{{id}}'" class="content-box group">
 		<div class="group-info">
 			<h3 class="content-title">{{name}}</h3>
-			<p>{{description}}</p>
+			<p class="group-desc">{{description}}</p>
 		</div>
 		<div class="group-members center">
-			<p>{{owner}}</p>
+			<p class="group-owner">{{owner}}</p>
 		</div>
 		<div class="group-full center">
 			<p>{{current_member_count}}/{{max_member_count}} Members</p>

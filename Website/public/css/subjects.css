@@ -33,11 +33,6 @@
     cursor: pointer;
 }
 
-.group:hover {
-    cursor: pointer;
-    transform: scale(1.02);
-}
-
 .group:not(.no-hover):hover {
     transform: scale(1.02);
 }

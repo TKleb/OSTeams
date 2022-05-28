@@ -1,6 +1,7 @@
 import { searchElements } from "./search-script.js";
 
 const nameField = document.getElementsByClassName("content-title");
+const ownerEmail = document.getElementsByClassName("group-owner");
 const searchBar = document.getElementById("searchbar");
 const elements = document.getElementsByClassName("group");
 const createGroupApplyByDate = document.getElementById("create-group-applydate");
@@ -14,4 +15,4 @@ if (createGroupApplyByDate) {
 	createGroupApplyByDate.max = oneYearFromNow.toISOString().split("T")[0];
 }
 
-searchBar.addEventListener("keyup", searchElements(nameField, searchBar, elements));
+searchBar.addEventListener("keyup", searchElements(searchBar, elements, nameField, ownerEmail));
