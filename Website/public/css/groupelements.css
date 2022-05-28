@@ -22,6 +22,7 @@
 #group-description {
     grid-area: group-desc;
     text-align: justify;
+    word-wrap: break-word;
     padding: 10px;
     border: 2px solid rgb(170 170 170);
     background-color: #fefefe;
