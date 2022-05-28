@@ -90,22 +90,17 @@
 
 #group-interaction-btns .group-btn {
     height: 80%;
-    width: 150px;
+    width: 35%;
     margin: auto 0;
     cursor: pointer;
+    margin: 0 10px;
+}
+
+#edit-group-btn {
     background-color: rgb(146 71 146);
 }
 
-#delete-group-button {
-    height: 80%;
-    width: 150px;
-    margin: auto 0;
-    cursor: pointer;
-    font-weight: bold;
-    color: black;
-}
-
-#group-interaction-btns .group-btn:hover {
+#edit-group-btn:hover {
     cursor: pointer;
     background-color: rgb(176 86 176);
 }
@@ -130,6 +125,7 @@
 #delete-group-button,
 #confirm-delete-group-button {
     background-color: rgb(223 19 46);
+    font-weight: bold;
 }
 
 #delete-group-button:hover,
@@ -138,6 +134,11 @@
 }
 
 /* ========================= Edit Group Page ========================= */
+.edit-group-container {
+    width: 65%;
+    margin: 0 auto;
+}
+
 #edit-group-form input {
     display: block;
     width: 100%;
@@ -160,15 +161,21 @@
     width: 100%;
     font-weight: bold;
 }
+#group-edit-interaction-btns {
+    height: 10%;
+    width: 30%;
+    float: right;
+}
 
-.grp-btn {
+#group-edit-interaction-btns .group-btn {
     font-size: 15px;
     height: 2em;
     cursor: pointer;
     background-color: rgb(146 71 146);
+    float: right;
 }
 
-.grp-btn:hover {
+#group-edit-interaction-btns .group-btn:hover {
     cursor: pointer;
     background-color: rgb(176 86 176);
 }
@@ -178,8 +185,7 @@
     height: 2em;
     cursor: pointer;
     background-color: lightgrey;
-    margin: 10px auto;
-    display: block;
+    float: left;
 }
 
 .back-btn:hover {
