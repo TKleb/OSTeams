@@ -61,7 +61,8 @@
     grid-area: mem-title;
 }
 
-.view-application {
+.view-application,
+.kick-member {
     float: right;
     margin-right: 1em;
 }
