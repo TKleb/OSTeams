@@ -16,7 +16,7 @@ deleteGroupButton.addEventListener("click", () => {
 });
 
 cancelMemberKick.addEventListener("click", () => {
-	const modal = cancelGroupDelete.closest(".modal");
+	const modal = cancelMemberKick.closest(".modal");
 	closeModal(modal);
 });
 
