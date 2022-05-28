@@ -81,7 +81,8 @@
     padding-inline-start: 10px;
 }
 
-.view-application {
+.view-application,
+.kick-member {
     float: right;
     margin-right: 1em;
 }
