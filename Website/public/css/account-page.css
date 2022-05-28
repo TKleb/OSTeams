@@ -82,7 +82,7 @@
     font-size: 18px;
 }
 
-.display-info input:not([type=radio]) {
+.display-info input:not([type="radio"]) {
     height: 40px;
     width: 70%;
     font-size: 18px;
