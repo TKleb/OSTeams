@@ -26,10 +26,10 @@ async function kickUserFromGroup(req, userId, groupId, res) {
 	return res.redirect("/groups/".concat(groupId));
 }
 
-const asyncFilter = async (arr, predicate) => {
+async function asyncFilter(arr, predicate) {
 	const results = await Promise.all(arr.map(predicate));
 	return arr.filter((_v, index) => results[index]);
-};
+}
 
 function getGroupsUserCanApplyTo(subjectId, userId) {
 	return pgConnector.getGroupsBySubjectId(subjectId)
@@ -54,7 +54,7 @@ async function attachOwnerAndMemberCount(groups) {
 	);
 }
 
-const getApplicationsToGroupForDisplay = async (id) => {
+async function getApplicationsToGroupForDisplay(id) {
 	const applications = await pgConnector.getApplicationsToGroup(id);
 	const promises = applications.map((app) => pgConnector.getUserById(app.user_id));
 	return Promise.all(promises)
@@ -63,7 +63,7 @@ const getApplicationsToGroupForDisplay = async (id) => {
 			application.user_email = applicant.email;
 			return application;
 		}));
-};
+}
 
 class GroupsController {
 	async showGroupsOfUser(req, res) {
