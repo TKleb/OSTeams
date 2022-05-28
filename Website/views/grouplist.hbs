@@ -25,7 +25,7 @@
 				<input name="applyByDate" id="create-group-applydate" type="date" required>
 
 				<label for="create-group-description">Description:</label>
-				<textarea name="description" id="create-group-description" required></textarea>
+				<textarea name="description" id="create-group-description" maxlength="256" required></textarea>
 
 				<button type="submit" class="submit-btn">Submit</button>
 			</form>
@@ -37,7 +37,7 @@
 	<article onclick="location.href='/groups/{{id}}'" class="group">
 		<div class="group-info">
 			<p class="group-name">{{name}}</p>
-			{{description}}
+			<p class="group-desc">{{description}}</p>
 		</div>
 		<div class="group-members">
 			<p>{{owner}}</p>

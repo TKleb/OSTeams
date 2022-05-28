@@ -27,6 +27,7 @@
     background-color: #fefefe;
     border-radius: 5px;
     box-shadow: 0 0 3px 2px #ccc;
+    overflow-wrap: break-word;
 }
 
 #groupmember-list {

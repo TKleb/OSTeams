@@ -48,30 +48,6 @@
     cursor: pointer;
 }
 
-.own-group {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    grid-template-rows: 50px;
-
-    /* Strange interaction with linter and grid template */
-    /* stylelint-disable */
-    grid-template-areas:
-        "info members"
-        "info full";
-    /* stylelint-enable */
-    height: 7em;
-    margin-bottom: 10px;
-    border: 2px solid rgb(170 170 170);
-    background-color: #fefefe;
-    border-radius: 5px;
-    box-shadow: 0 0 3px 2px #ccc;
-}
-
-.own-group:hover {
-    cursor: pointer;
-    transform: scale(1.02);
-}
-
 .group:not(.no-hover):hover {
     transform: scale(1.02);
 }
@@ -146,8 +122,16 @@
     background-color: rgb(176 86 176);
 }
 
-.group-info p {
+.group-info .group-name {
     margin-top: 0;
     margin-bottom: 5px;
     font-weight: bold;
+}
+
+.group-info .group-desc {
+    margin-top: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 80%;
 }
