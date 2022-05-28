@@ -23,7 +23,7 @@ async function userLeaveGroup(req, id, res) {
 async function kickUserFromGroup(req, userId, groupId, res) {
 	await pgConnector.removeUserFromGroup(userId, groupId);
 	req.flash("success", "Member kicked successfully");
-	return res.redirect("/groups".concat(groupId));
+	return res.redirect("/groups/".concat(groupId));
 }
 
 const asyncFilter = async (arr, predicate) => {

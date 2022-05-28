@@ -17,7 +17,21 @@
 					<li>{{email}}
 						{{#if ../isOwner}}
 							{{#if_memberIsNotGroupOwner id ../group}}
-								<button data-modal-target="#kickMember-{{id}}-modal">X {{id}}</button>
+								<button data-modal-target="#kickMember-{{id}}-modal" id="kick-member-button">X</button>
+								<div class="modal" id="kickMember-{{id}}-modal">
+									<div class="modal-header">
+										<div class="title">Kick {{email}}</div>
+										<button data-close-button class="close-button">&times;</button>
+									</div>
+									<div class="modal-body">
+										<div>Are you sure you want to remove <b>{{email}}</b> from your group?</div>
+										<div class="form-buttons-delete">
+											<button id="cancel-kick-member-button" class="delete-modal-button">Cancel</button>
+											<button type="submit" form="kick-member-form" id="confirm-delete-group-button" class="delete-modal-button">Kick Member</button>
+										</div>
+										<form id="kick-member-form" method="post" action="/groups/kickOut/{{id}}/{{../group.id}}"></form>
+									</div>
+								</div>
 							{{/if_memberIsNotGroupOwner}}
 						{{/if}}
 					</li>
