@@ -22,6 +22,9 @@
 #group-description {
     grid-area: group-desc;
     min-height: 20em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 #group-member-list {

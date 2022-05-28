@@ -28,7 +28,7 @@
         "info full";
     /* stylelint-enable */
 
-    height: 6em;
+    height: 3.5em;
     margin-bottom: 10px;
     cursor: pointer;
 }
@@ -39,6 +39,12 @@
 
 .group-info {
     grid-area: info;
+}
+
+.group-description {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .group-members {
