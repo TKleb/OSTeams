@@ -8,5 +8,6 @@ router.get("/:id", asyncHandler(groupsController.showGroupInDetail));
 router.post("/leave/:id", asyncHandler(groupsController.leaveGroup));
 router.post("/delete/:id", asyncHandler(groupsController.deleteGroup));
 router.post("/applyTo/:id", asyncHandler(groupsController.applyToGroup));
+router.post("/kickOut/:userId/:groupId", asyncHandler(groupsController.kickOutMember));
 router.post("/closeApplication/:applicationId/:groupId", asyncHandler(groupsController.closeApplication));
 export default router;

@@ -81,6 +81,12 @@
     padding-inline-start: 10px;
 }
 
+.view-application,
+.kick-member {
+    float: right;
+    margin-right: 1em;
+}
+
 #group-interaction-btns {
     grid-area: interactions;
     display: flex;

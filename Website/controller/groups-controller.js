@@ -20,6 +20,12 @@ async function userLeaveGroup(req, groupId, res) {
 	return res.redirect("/groups");
 }
 
+async function kickUserFromGroup(req, userId, groupId, res) {
+	await pgConnector.removeUserFromGroup(userId, groupId);
+	req.flash("success", "Member kicked out successfully");
+	return res.redirect("/groups/".concat(groupId));
+}
+
 const asyncFilter = async (arr, predicate) => {
 	const results = await Promise.all(arr.map(predicate));
 	return arr.filter((_v, index) => results[index]);
@@ -112,6 +118,7 @@ class GroupsController {
 			pgConnector.getMembersByGroupId(groupId),
 			getApplicationsToGroupForDisplay(groupId),
 		]);
+		const isNotFull = members.length < group.max_member_count;
 		const isVisitor = members.find((member) => member.id === req.session.userId) === undefined;
 
 		return res.render("group", {
@@ -120,6 +127,7 @@ class GroupsController {
 			error: req.flash("error"),
 			success: req.flash("success"),
 			group,
+			isNotFull,
 			isOwner,
 			isVisitor,
 			applicants,
@@ -171,6 +179,27 @@ class GroupsController {
 		}
 
 		return userLeaveGroup(req, groupId, res);
+	}
+
+	async kickOutMember(req, res) {
+		const { groupId, userId } = req.params;
+
+		if (!areNumeric(groupId, userId)) {
+			req.flash("error", "Invalid parameter");
+			return res.redirect("/");
+		}
+
+		const group = await pgConnector.getGroupById(groupId);
+		if (group.owner_id !== req.session.userId) {
+			req.flash("error", "Insufficient permissions");
+			return res.send("/");
+		}
+		if (group.owner_id === userId) {
+			req.flash("error", "Cannot kick out owner of the group");
+			return res.redirect("/");
+		}
+
+		return kickUserFromGroup(req, userId, groupId, res);
 	}
 
 	async addGroup(req, res) {
