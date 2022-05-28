@@ -111,4 +111,4 @@
 {{else}}
 	<h1>NO GROUP</h1>
 {{/if}}
-<script type="module" src="/js/group-script.js" defer></script>
+{{#if isOwner}}<script type="module" src="/js/group-owner-script.js" defer></script>{{/if}}
