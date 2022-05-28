@@ -5,11 +5,11 @@
 			<label for="name">
 				Name:
 			</label>
-			<input name="name" type="text" value="{{group.name}}" required>
+			<input name="name" type="text" value="{{group.name}}" maxlength="50" required>
 			<label for="description">
 				Description:
 			</label>
-			<textarea name="description" required>{{group.description}}</textarea>
+			<textarea name="description" maxlength="512" required>{{group.description}}</textarea>
 			<label for="maxMemberCount">
 				Group size:
 			</label>

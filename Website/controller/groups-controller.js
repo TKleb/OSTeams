@@ -6,6 +6,8 @@ import {
 	areNumeric,
 	isApplyByDateValid,
 	isMaxMemberCountValid,
+	isGroupDescriptionValid,
+	isGroupNameValid,
 } from "../utils/input-validation-util.js";
 
 async function sendApplicationEmailToOwner(req, id, res) {
@@ -162,14 +164,14 @@ class GroupsController {
 			applyByDate,
 		} = req.body;
 
-		if (!description || !isNumeric(id) || !maxMemberCount || !applyByDate || !name) {
-			req.flash("error", "Missing fields");
-			return res.redirect("/");
-		}
-
-		if (!isApplyByDateValid(applyByDate) || !isMaxMemberCountValid(maxMemberCount)) {
+		if (!isGroupDescriptionValid(description)
+			|| !isNumeric(id)
+			|| !isMaxMemberCountValid(maxMemberCount)
+			|| !isApplyByDateValid(applyByDate)
+			|| !isGroupNameValid(name)
+		) {
 			req.flash("error", "Invalid input");
-			return res.redirect(req.get("referer"));
+			return res.redirect("/");
 		}
 
 		const group = await pgConnector.getGroupById(id);

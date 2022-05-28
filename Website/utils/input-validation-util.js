@@ -15,13 +15,23 @@ function isApplyByDateValid(date) {
 	return applyByDate >= currDate && applyByDate <= maxDate;
 }
 
-const isMaxMemberCountValid = (maxMemberCount) => (
-	isNumeric(maxMemberCount) && maxMemberCount <= 99 && maxMemberCount >= 2
-);
+function isMaxMemberCountValid(maxMemberCount) {
+	return isNumeric(maxMemberCount) && maxMemberCount <= 99 && maxMemberCount >= 2;
+}
+
+function isGroupDescriptionValid(description) {
+	return description?.length <= 512;
+}
+
+function isGroupNameValid(name) {
+	return name?.length <= 50;
+}
 
 export {
 	isNumeric,
 	areNumeric,
 	isApplyByDateValid,
 	isMaxMemberCountValid,
+	isGroupDescriptionValid,
+	isGroupNameValid,
 };
