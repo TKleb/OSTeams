@@ -191,7 +191,7 @@ class GroupsController {
 		];
 
 		await pgConnector.editGroupById(options);
-		req.flash("success", "Successfully Saved");
+		req.flash("success", "Saved successfully");
 		return res.redirect("/groups/".concat(id));
 	}
 
