@@ -15,7 +15,7 @@
 		</div>
 		<div class="modal-body">
 			<form id="create-group-form" method="post">
-				<label for="create-group-name">Group name:</label>
+				<label for="create-content-title">Group name:</label>
 				<input name="groupName" id="create-group-size" type="text" required>
 
 				<label for="create-group-size">Group Size:</label>
@@ -34,15 +34,15 @@
 {{/if}}
 <div class="overlay"></div>
 {{#each groups}}
-	<article onclick="location.href='/groups/{{id}}'" class="group">
+	<article onclick="location.href='/groups/{{id}}'" class="content-box group">
 		<div class="group-info">
-			<p class="group-name">{{name}}</p>
-			{{description}}
+			<h3 class="content-title">{{name}}</h3>
+			<p>{{description}}</p>
 		</div>
-		<div class="group-members">
+		<div class="group-members center">
 			<p>{{owner}}</p>
 		</div>
-		<div class="group-full">
+		<div class="group-full center">
 			<p>{{current_member_count}}/{{max_member_count}} Members</p>
 		</div>
 	</article>

@@ -7,10 +7,10 @@
 		<div class="members-title">
 			Members
 		</div>
-		<div id="group-description">
+		<div id="group-description" class="content-box">
 			{{group.description}}
 		</div>
-		<div id="groupmember-list">
+		<div id="group-member-list" class="content-box">
 			{{group.owner}}
 			<ul>
 				{{#each members}}
@@ -20,7 +20,7 @@
 								<button data-modal-target="#kickMember-{{id}}-modal" id="kick-member-button">X</button>
 								<div class="modal" id="kickMember-{{id}}-modal">
 									<div class="modal-header">
-										<div class="title">Kick {{email}}</div>
+										<div class="title">Kick out {{email}}</div>
 										<button data-close-button class="close-button">&times;</button>
 									</div>
 									<div class="modal-body">
@@ -41,7 +41,7 @@
 		<div class="applicants-title">
 			Applicants
 		</div>
-		<div id="group-applications">
+		<div id="group-application-list" class="content-box">
 			<ul>
 				{{#each applicants}}
 					<li>{{user_email}} {{#if ../isOwner}} <button data-modal-target="#application-{{id}}-modal" class="view-application">View </button> {{/if}}</li>

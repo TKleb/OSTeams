@@ -2,8 +2,8 @@
 #group-div {
     display: grid;
     height: 100%;
-    grid-template-columns: 60% 35%;
-    grid-template-rows: 3% 25% 3% 25% 10%;
+    grid-template-columns: 60% 38%;
+    grid-template-rows: 3% 30% 3% 30% 10%;
 
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
@@ -21,32 +21,15 @@
 
 #group-description {
     grid-area: group-desc;
-    text-align: justify;
-    padding: 10px;
-    border: 2px solid rgb(170 170 170);
-    background-color: #fefefe;
-    border-radius: 5px;
-    box-shadow: 0 0 3px 2px #ccc;
+    min-height: 20em;
 }
 
-#groupmember-list {
+#group-member-list {
     grid-area: group-members;
-    border: 2px solid rgb(170 170 170);
-    background-color: #fefefe;
-    border-radius: 5px;
-    box-shadow: 0 0 3px 2px #ccc;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
-#group-applications {
+#group-application-list {
     grid-area: group-appli;
-    border: 2px solid rgb(170 170 170);
-    background-color: #fefefe;
-    border-radius: 5px;
-    box-shadow: 0 0 3px 2px #ccc;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
 #additional-group-settings {
@@ -73,12 +56,6 @@
     justify-content: center;
     font-weight: bold;
     grid-area: mem-title;
-}
-
-#groupmember-list ul,
-#group-applications ul {
-    list-style-type: none;
-    padding-inline-start: 10px;
 }
 
 #group-interaction-btns {
