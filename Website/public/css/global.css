@@ -64,6 +64,26 @@ h1 {
     background-color: rgb(241 46 72);
 }
 
+.cancel-button {
+    font-size: 15px;
+    cursor: pointer;
+    background-color: lightgrey;
+    font-weight: bold;
+    border-top: 2px solid #767676;
+    border-left: 2px solid #767676;
+    border-right: 2px solid #212121;
+    border-bottom: 2px solid #212121;
+}
+
+.cancel-button:disabled {
+    background-color: #767676;
+    cursor: default;
+}
+
+.cancel-button:hover {
+    background-color: grey;
+}
+
 /* ========================= NOTIFICATION STYLING ========================= */
 .notice {
     background: #f9f9f9;
