@@ -68,7 +68,7 @@ async function getApplicationsToGroupForDisplay(id) {
 
 class GroupsController {
 	async showGroupsOfUser(req, res) {
-		const groups = await pgConnector.getGroupsOfUserById(req.session.userId);
+		let groups = await pgConnector.getGroupsOfUserById(req.session.userId);
 		await attachOwnerAndMemberCount(groups);
 		groups = convertAndAddDate(groups);
 		res.render("grouplist", {
@@ -88,7 +88,7 @@ class GroupsController {
 			return res.send("Invalid subject");
 		}
 
-		const groups = await getGroupsUserCanApplyTo(subject.id, req.session.userId);
+		let groups = await getGroupsUserCanApplyTo(subject.id, req.session.userId);
 		await attachOwnerAndMemberCount(groups);
 		groups = convertAndAddDate(groups);
 		return res.render("grouplist", {
