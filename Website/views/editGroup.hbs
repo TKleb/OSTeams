@@ -1,6 +1,6 @@
 {{#if group}}
 	{{#if isOwner}}
-		<div class="edit-group-container">
+		<div class="edit-group-container content-box">
 			<h1>Edit Group: {{title}}</h1>
 			<form id="edit-group-form" method="post" action="/groups/edit/{{group.id}}">
 				<label for="name">
@@ -22,9 +22,9 @@
 				<div class="overlay"></div>
 			</form>
 			<form id="cancel-group-edit" method="get" action="/groups/{{group.id}}"></form>
-			<div class="group-edit-interaction-btns">
-				<button form="edit-group-form" id="edit-group-btn" class="group-btn">Save</button>
-				<button form="cancel-group-edit" class="back-btn">Cancel</button>
+			<div class="group-edit-interaction-btns evenly-spaced-button-div">
+				<button form="edit-group-form" id="edit-group-btn" class="group-btn ost-button">Save</button>
+				<button form="cancel-group-edit" class="back-btn cancel-button">Cancel</button>
 			</div>
 		</div>
 		<script type="module" src="/js/edit-group-script.js" defer></script>

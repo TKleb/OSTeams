@@ -3,23 +3,13 @@ import randToken from "rand-token";
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
-import { isValidEmailAddress, inputValidationSettings } from "../utils/input-validation-util.js";
+import { isEmailAddressValid, isPasswordValid, inputValidationSettings } from "../utils/input-validation-util.js";
 
 function sendVerificationEmail(verificationToken, email) {
 	const htmlBody = "<p>In order to use OSTeams, "
 		+ `click on the following link <a href="${websiteConfig.hostname}:${websiteConfig.port}/account/verifyEmail?token=${verificationToken}">link</a> `
 		+ "to verify your email address</p>";
 	return mailer.SendMail(email, "Email verification - OSTeams", htmlBody);
-}
-
-function addUnverifiedUserToDB(email, encryptedPassword, verificationToken) {
-	return pgConnector.executeStoredProcedure("add_unverified_user", [
-		"",
-		"",
-		email.toLowerCase(),
-		encryptedPassword,
-		verificationToken,
-	]);
 }
 
 function generateToken() {
@@ -41,45 +31,51 @@ class RegisterController {
 			error: req.flash("error"),
 			success: req.flash("success"),
 			emailRegex: inputValidationSettings.emailVerificationRegex,
+			maxPasswordLength: inputValidationSettings.maxPasswordLength,
+			minPasswordLength: inputValidationSettings.minPasswordLength,
 		});
 	}
 
 	async register(req, res) {
-		const { email, password } = req.body;
+		const {
+			email,
+			password,
+			passwordConfirmation,
+		} = req.body;
 
-		if (!email || !password) {
+		if (!email || !passwordConfirmation || !isPasswordValid(password)) {
 			return res.render("register", { error: "Please provide email and password." });
 		}
 
-		if (!isValidEmailAddress(email)) {
+		if (password !== passwordConfirmation) {
+			return res.render("register", { error: "Provided passwords don't match." });
+		}
+
+		if (!isEmailAddressValid(email)) {
 			return res.render("register", { error: "E-Mail Address isn't an OST address." });
 		}
 
-		return pgConnector.isEmailInUse(email)
-			.then(async (isUsed) => {
-				if (isUsed) {
-					return res.render("register", { error: "The provided email is already in use." });
-				}
+		const isEmailInUse = await pgConnector.isEmailInUse(email);
+		if (isEmailInUse) {
+			return res.render("register", { error: "The provided email is already in use." });
+		}
 
-				const encryptedPassword = hashPassword(password);
-				const verificationToken = generateToken();
-
-				await addUnverifiedUserToDB(email, encryptedPassword, verificationToken);
-				const response = await sendVerificationEmail(verificationToken, email);
-				return res.render("login", { hint: response });
-			});
+		const encryptedPassword = hashPassword(password);
+		const verificationToken = generateToken();
+		await pgConnector.addUnverifiedUser(email, encryptedPassword, verificationToken);
+		const response = await sendVerificationEmail(verificationToken, email);
+		return res.render("login", { hint: response });
 	}
 
-	verifyMail(req, res) {
+	async verifyMail(req, res) {
 		const verificationToken = req.query.token;
 
 		if (!verificationToken) {
 			return res.send("Invalid token");
 		}
 
-		return pgConnector.executeStoredProcedure("do_verify_user", [verificationToken])
-			.then(() => res.render("index", { hint: "Email verified successfully" }))
-			.catch(() => res.send("Invalid token"));
+		await pgConnector.verifyUser(verificationToken);
+		return res.render("index", { hint: "Email verified successfully" });
 	}
 }
 
@@ -87,6 +83,5 @@ export default new RegisterController();
 export {
 	hashPassword,
 	generateToken,
-	addUnverifiedUserToDB,
 	sendVerificationEmail,
 };

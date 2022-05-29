@@ -11,7 +11,7 @@ router.get("/edit", isAuthenticated, asyncHandler(accountController.edit));
 router.get("/logout", isAuthenticated, accountController.logout);
 router.get("/login", isUnauthenticated, loginController.index);
 router.get("/register", isUnauthenticated, registerController.index);
-router.get("/verifyEmail", isUnauthenticated, registerController.verifyMail);
+router.get("/verifyEmail", isUnauthenticated, asyncHandler(registerController.verifyMail));
 router.get("/:id", isAuthenticated, asyncHandler(accountController.showAccountById));
 
 router.post("/delete", isAuthenticated, asyncHandler(accountController.delete));

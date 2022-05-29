@@ -1,5 +1,10 @@
 {{#if group}}
-	<h1>{{title}}</h1>
+	<div class="group-head">
+		<div><h1>{{title}}</h1></div>
+		{{#if isVisitor}}
+		<div class="apply-by-date">Apply by: {{group.deadlineDisplay}}</div>
+		{{/if}}
+	</div>
 	<div id="group-div">
 		<div class="description-title">
 			Group Description
@@ -7,10 +12,10 @@
 		<div class="members-title">
 			Members
 		</div>
-		<div id="group-description">
+		<div id="group-description" class="content-box">
 			{{group.description}}
 		</div>
-		<div id="groupmember-list">
+		<div id="group-member-list" class="content-box">
 			{{group.owner}}
 			<ul>
 				{{#each members}}
@@ -23,14 +28,14 @@
 								<button data-modal-target="#kickMember-{{id}}-modal" id="kick-member-button" class="kick-member">X</button>
 								<div class="modal" id="kickMember-{{id}}-modal">
 									<div class="modal-header">
-										<div class="title">Kick {{email}}</div>
+										<div class="title">Kick out {{email}}</div>
 										<button data-close-button class="close-button">&times;</button>
 									</div>
 									<div class="modal-body">
 										<div>Are you sure you want to remove <b>{{email}}</b> from your group?</div>
 										<div class="form-buttons-delete">
 											<button id="cancel-kick-member-button" class="delete-modal-button">Cancel</button>
-											<button type="submit" form="kick-member-form" id="confirm-delete-group-button" class="delete-modal-button">Kick Member</button>
+											<button type="submit" form="kick-member-form" id="confirm-delete-group-button" class="delete-modal-button dangerous-button">Kick Member</button>
 										</div>
 										<form id="kick-member-form" method="post" action="/groups/kickOut/{{id}}/{{../group.id}}"></form>
 									</div>
@@ -44,7 +49,7 @@
 		<div class="applicants-title">
 			Applicants
 		</div>
-		<div id="group-applications">
+		<div id="group-application-list" class="content-box">
 			<ul>
 				{{#each applicants}}
 					<li>
@@ -52,7 +57,7 @@
 							{{user_email}}
 						</a>
 						{{#if_and ../isOwner ../isNotFull}}
-							<button data-modal-target="#application-{{id}}-modal" class="grp-btn view-application">View</button>
+							<button data-modal-target="#application-{{id}}-modal" class="grp-btn ost-button view-application">View</button>
 						{{/if_and}}
 					</li>
 				{{/each}}
@@ -68,9 +73,9 @@
 				<div class="modal-body">
 					<form id="application-form" method="post" action="/groups/closeApplication/{{id}}/{{../group.id}}" >
 						<input name="accept" type="radio" class="radio" id="accept-{{id}}" value="true" checked>
-						<label for="radio-{{id}}">Accept</label>
+						<label for="accept-{{id}}">Accept</label>
 						<input name="accept" type="radio" class="radio" id="deny-{{id}}" value="false">
-						<label for="radio-{{id}}">Deny</label>
+						<label for="deny-{{id}}">Deny</label>
 						<textarea name="description" id="group-application-description" disabled>{{text}}</textarea>
 						<button type="submit" class="submit-btn">Submit</button>
 					</form>
@@ -78,7 +83,7 @@
 			</div>
 		{{/each}}
 		<div class="overlay"></div>
-		<div class="group-interaction-btns">
+		<div class="group-interaction-buttons-area evenly-spaced-button-div">
 			{{#if isVisitor}}
 				<div class="modal" id="application-modal">
 					<div class="modal-header">
@@ -87,17 +92,17 @@
 					</div>
 					<div class="modal-body">
 						<form id="application-form" method="post" action="/groups/applyTo/{{group.id}}">
-							<textarea id="application-text" name="description" maxlength="200" required placeholder="add a brief summary"></textarea>
+							<textarea id="application-text" name="description" maxlength="{{applicationLength}}" required placeholder="add a brief summary"></textarea>
 							<button type="submit" class="submit-btn">Submit</button>
 						</form>
 					</div>
 				</div>
-				<button data-modal-target="#application-modal" class="group-btn apply">Apply</button>
+				<button data-modal-target="#application-modal" class="apply group-btn ost-button">Apply</button>
 			{{else}}
 				{{#if isOwner}}
 					<form id="editGroup-form" method="get" action="/groups/edit/{{group.id}}"></form>
-					<button id="edit-group-btn" form="editGroup-form" class="group-btn">Edit</button>
-					<button data-modal-target="#delete-group-modal" id="delete-group-button" class="group-btn">Delete</button>
+					<button id="edit-group-btn" form="editGroup-form" class="group-btn ost-button">Edit</button>
+					<button data-modal-target="#delete-group-modal" id="delete-group-button" class="group-btn dangerous-button">Delete</button>
 					<div class="modal" id="delete-group-modal">
 						<div class="modal-header">
 							<div class="title">Delete Group</div>
@@ -107,7 +112,7 @@
 							<div>Are you sure you want to delete the group <b>{{title}}</b>?</div>
 							<div class="form-buttons-delete">
 								<button id="cancel-delete-group-button" class="delete-modal-button">Cancel</button>
-								<button type="submit" form="delete-group-form" id="confirm-delete-group-button" class="delete-modal-button">Delete</button>
+								<button type="submit" form="delete-group-form" id="confirm-delete-group-button" class="delete-modal-button dangerous-button">Delete</button>
 							</div>
 							<form id="delete-group-form" method="post" action="/groups/delete/{{group.id}}"></form>
 						</div>

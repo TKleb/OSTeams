@@ -19,7 +19,7 @@ const helpers = {
 	},
 	'timestampToDate': function(timestamp) {
 		return timestamp.toISOString().split("T")[0];
-	}
+	},
 }
 
 export default helpers;

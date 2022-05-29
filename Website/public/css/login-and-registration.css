@@ -1,17 +1,16 @@
 /* ========================= LOGIN PAGE ========================= */
-#login-form-div {
-    width: 80%;
-    margin: 0 auto;
+.display-info p {
+    margin-bottom: 2px;
 }
 
-#login-form-div > section > h1 {
-    font-family: Arial, sans-serif;
+.login-or-register-form-div {
+    width: 80%;
+    margin: 0 auto;
 }
 
 input[name="email"] {
     width: 100%;
     height: 40px;
-    font-family: Arial, sans-serif;
     font-size: 18px;
     display: block;
 }
@@ -21,7 +20,6 @@ input[name="passwordConfirmation"] {
     width: 100%;
     height: 40px;
     display: block;
-    font-family: Arial, sans-serif;
     font-size: 18px;
     margin: 10px 0 5px;
 }
@@ -30,15 +28,7 @@ input[name="passwordConfirmation"] {
     width: 100%;
     height: 40px;
     display: block;
-    font-family: Arial, sans-serif;
-    font-size: 15px;
     margin: 10px 0 20px;
-    background-color: rgb(146 71 146);
-}
-
-#login-button:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
 }
 
 #register-button {
@@ -58,7 +48,6 @@ input[name="passwordConfirmation"] {
 
 a {
     text-decoration: none;
-    font-family: Arial, sans-serif;
 }
 
 a:visited {
@@ -75,47 +64,17 @@ a:visited {
 }
 
 #login-form h2 span {
-    font-family: Arial, sans-serif;
-    background: #f0eeee;
+    background: #fefefe;
     padding: 0 10px;
 }
 
 /* ========================= Registration Page ========================= */
-#login-form-div p {
-    font-family: Arial, sans-serif;
+#submission-buttons-div {
+    width: 100%;
 }
 
-#register-buttons {
-    display: inline-flex;
-}
-
-#verify-button {
+#submission-buttons-div * {
     height: 40px;
-    font-family: Arial, sans-serif;
+    margin: auto;
     font-size: 15px;
-    margin: 10px 10px 0 0;
-    background-color: rgb(146 71 146);
-}
-
-#verify-button:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
-}
-
-#cancel-verification {
-    text-align: center;
-    width: 30%;
-    height: 36px;
-    font-size: 15px;
-    margin: 10px;
-    background-color: rgb(125 123 123);
-    border-top: 2px solid #767676;
-    border-right: 2px solid #212121;
-    border-bottom: 2px solid #212121;
-    border-left: 2px solid #767676;
-}
-
-#cancel-verification:hover {
-    cursor: pointer;
-    background-color: rgb(156 154 154);
 }

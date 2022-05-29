@@ -1,4 +1,4 @@
-<div id="login-form-div">
+<div class="login-or-register-form-div content-box">
 	<section>
 		<h1>Sign Up</h1>
 		<p>Registration only works for students with an OST-Email-Address (john.doe@ost.ch).</p>
@@ -6,13 +6,13 @@
 			<label for="id-email"></label><input type="text" name="email" id="id-email"
 				placeholder="Enter Email" pattern={{emailRegex}} autocomplete="off">
 			<label for="id-password"></label><input type="password" name="password" id="id-password"
-				placeholder="Enter Password">
+				placeholder="Enter Password" maxlength="{{maxPasswordLength}}" minlength="{{minPasswordLength}}">
 			<label for="id-password"></label><input type="password" name="passwordConfirmation" id="id-passwordConfirmation"
-				placeholder="Confirm Password">
+				placeholder="Confirm Password" maxlength="{{maxPasswordLength}}" minlength="{{minPasswordLength}}">
 		</form>
-		<div id="register-buttons">
-			<button class="button" form="login-form" id="verify-button" type="submit">Send Verification Email</button>
-			<a class="button" href="/account/login" id="cancel-verification">Cancel</a>
+		<div id="submission-buttons-div" class="evenly-spaced-button-div">
+			<button id="verify-button" class="ost-button" form="login-form" type="submit">Send Verification Email</button>
+			<button id="cancel-verification" class="cancel-button" href="/account/login" type="button">Cancel</button>
 		</div>
 	</section>
 </div>

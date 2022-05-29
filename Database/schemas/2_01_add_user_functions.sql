@@ -90,6 +90,12 @@ AS $$
             RAISE EXCEPTION 'Email already in use.';
         END IF;
 
+        -- Delete unverified user (if exists) with same email address.
+        -- Reason: if something goes wrong after an unverified user is added,
+        -- the user should be able to try signing up again.
+        DELETE FROM unverified_users
+            WHERE email = p_email;
+
         RETURN QUERY
         INSERT INTO unverified_users (
             name,
@@ -129,6 +135,16 @@ AS $$
             RAISE EXCEPTION 'Verification token is not valid.';
         END IF;
 
+        -- Ensure Token not older than 10 Minutes
+        IF NOT EXISTS(
+            SELECT 1 FROM unverified_users
+            WHERE verification_code = p_verification_code
+                AND (date_of_registration > CURRENT_TIMESTAMP - '10 M'::interval)
+        ) THEN
+            DELETE FROM unverified_users WHERE verification_code = p_verification_code;
+            RAISE EXCEPTION 'Verification token is older than 10 Minutes. Please register again.';
+        END IF;
+
         -- Add user
         RETURN QUERY
         WITH unverified_user AS (
@@ -161,7 +177,7 @@ $$;
 
 GRANT ALL ON FUNCTION do_verify_user TO backend;
 
--- Add function to check if email is in use by a user or an unverified user
+-- Add function to check if email is in use by a user
 CREATE OR REPLACE FUNCTION is_email_in_use(
     p_email VARCHAR
 )
@@ -172,11 +188,6 @@ AS $$
     BEGIN
         RETURN EXISTS(
             SELECT 1 FROM users
-            WHERE email = LOWER(p_email)
-        )
-        OR
-        EXISTS(
-            SELECT 1 FROM unverified_users
             WHERE email = LOWER(p_email)
         );
     END
@@ -243,14 +254,14 @@ CREATE OR REPLACE FUNCTION do_remove_user_by_id(
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
-	DECLARE
-		count INT;
+    DECLARE
+        count INT;
     BEGIN
-		WITH deletedRows AS (
-			DELETE FROM users WHERE id = p_user_id RETURNING *
-		)
-		SELECT COUNT(*) FROM deletedRows INTO count;
-		RETURN 0 < count;
+        WITH deletedRows AS (
+            DELETE FROM users WHERE id = p_user_id RETURNING *
+        )
+        SELECT COUNT(*) FROM deletedRows INTO count;
+        RETURN 0 < count;
     END
 $$;
 
