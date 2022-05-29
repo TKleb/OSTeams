@@ -1,10 +1,10 @@
 <div id="login-form-div">
 	<section>
 		<h1>Sign Up</h1>
-		<p>Registration only works for students with a HSR- or OST-Email-Address (name@ost.ch | name@hsr.ch).</p>
+		<p>Registration only works for students with an OST-Email-Address (john.doe@ost.ch).</p>
 		<form method="post" action="#" id="login-form">
 			<label for="id-email"></label><input type="text" name="email" id="id-email"
-				placeholder="Enter Email" autocomplete="off">
+				placeholder="Enter Email" pattern={{emailRegex}} autocomplete="off">
 			<label for="id-password"></label><input type="password" name="password" id="id-password"
 				placeholder="Enter Password">
 			<label for="id-password"></label><input type="password" name="passwordConfirmation" id="id-passwordConfirmation"
