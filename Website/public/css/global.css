@@ -212,3 +212,21 @@ body {
 #create-group-form input {
     margin-bottom: 5px;
 }
+
+.infotext {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 20px 10%;
+}
+
+.img {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+}
+
+.infotext table tr td:nth-child(1) {
+    font-weight: bold;
+    padding: 0 20px;
+}

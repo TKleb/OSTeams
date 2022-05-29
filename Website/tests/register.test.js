@@ -3,7 +3,8 @@ import chaiHttp from "chai-http";
 import assert from "assert";
 import server from "../index.js";
 import Chance from "chance";
-import { generateToken, hashPassword, addUnverifiedUserToDB, checkEmailUsed } from "../controller/register-controller.js";
+import { generateToken, hashPassword, addUnverifiedUserToDB } from "../controller/register-controller.js";
+import pgConnector from "../services/pg-connector.js";
 
 chai.should();
 chai.use(chaiHttp);
@@ -16,7 +17,6 @@ describe("Test register page", () => {
 			assert.equal(res.statusCode, 200);
 		});
 	});
-
 
 	describe("POST /account/register without body", () => {
 		it("It should throw error: Please provide email and password.", async () => {
@@ -37,11 +37,11 @@ describe("Test register page", () => {
 		it("It should create and verify a new user.", async () => {
 			const token = generateToken();
 			const email = Chance().email({ domain: "ost.ch", length: 20 });
-			addUnverifiedUserToDB(email, hashPassword("Test12345"), token);
+			await addUnverifiedUserToDB(email, hashPassword("Test12345"), token);
 			const res = await chai.request(server)
 				.get(`/account/verifyEmail?token=${token}`);
 			assert.match(res.text, /Email verified successfully/);
-			assert.equal(await checkEmailUsed(email), true);
+			assert.equal(await pgConnector.isEmailInUse(email), true);
 		});
 	});
 });

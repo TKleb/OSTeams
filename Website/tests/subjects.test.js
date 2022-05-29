@@ -8,8 +8,8 @@ chai.should();
 chai.use(chaiHttp);
 
 const userCredentials = {
-	"email":"user1@verified.ch",
-	"password":"Test12345"
+	"email":"default.user@ost.ch",
+	"password":"password"
 }
 
 var authenticatedUser = request.agent(server);
@@ -43,7 +43,7 @@ describe("Test subjects page", () => {
 				.get("/subjects")
 				.end((error, res) => {
 					assert.equal(res.statusCode, 200);
-					expect("Location", "/subjects");
+					assert.match(res.text, /Subjects/);
 					done();
 				});
 		});

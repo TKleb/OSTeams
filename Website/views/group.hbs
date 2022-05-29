@@ -14,7 +14,27 @@
 			{{group.owner}}
 			<ul>
 				{{#each members}}
-					<li>{{email}}</li>
+					<li>{{email}}
+						{{#if ../isOwner}}
+							{{#if_memberIsNotGroupOwner id ../group}}
+								<button data-modal-target="#kickMember-{{id}}-modal" id="kick-member-button" class="kick-member">X</button>
+								<div class="modal" id="kickMember-{{id}}-modal">
+									<div class="modal-header">
+										<div class="title">Kick {{email}}</div>
+										<button data-close-button class="close-button">&times;</button>
+									</div>
+									<div class="modal-body">
+										<div>Are you sure you want to remove <b>{{email}}</b> from your group?</div>
+										<div class="form-buttons-delete">
+											<button id="cancel-kick-member-button" class="delete-modal-button">Cancel</button>
+											<button type="submit" form="kick-member-form" id="confirm-delete-group-button" class="delete-modal-button">Kick Member</button>
+										</div>
+										<form id="kick-member-form" method="post" action="/groups/kickOut/{{id}}/{{../group.id}}"></form>
+									</div>
+								</div>
+							{{/if_memberIsNotGroupOwner}}
+						{{/if}}
+					</li>
 				{{/each}}
 			</ul>
 		</div>
@@ -24,7 +44,11 @@
 		<div id="group-applications">
 			<ul>
 				{{#each applicants}}
-					<li>{{user_email}} {{#if ../isOwner}} <button data-modal-target="#application-{{id}}-modal" class="view-application">View </button> {{/if}}</li>
+					<li>{{user_email}}
+						{{#if_and ../isOwner ../isNotFull}}
+							<button data-modal-target="#application-{{id}}-modal" class="grp-btn view-application">View</button>
+						{{/if_and}}
+					</li>
 				{{/each}}
 			</ul>
 		</div>
@@ -91,4 +115,4 @@
 {{else}}
 	<h1>NO GROUP</h1>
 {{/if}}
-<script type="module" src="/js/group-script.js" defer></script>
+{{#if isOwner}}<script type="module" src="/js/group-owner-script.js" defer></script>{{/if}}

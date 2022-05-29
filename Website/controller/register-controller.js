@@ -3,11 +3,7 @@ import randToken from "rand-token";
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
-
-function checkEmailUsed(email) {
-	return pgConnector.executeStoredProcedure("is_email_in_use", [email])
-		.then((response) => response[0].is_email_in_use);
-}
+import { isValidEmailAddress, emailVerificationRegex } from "../utils/input-validation-util.js";
 
 function sendVerificationEmail(verificationToken, email) {
 	const htmlBody = "<p>In order to use OSTeams, "
@@ -40,7 +36,11 @@ function hashPassword(password) {
 class RegisterController {
 	index(req, res) {
 		res.render("register", {
-			title: "register", hint: req.flash("hint"), error: req.flash("error"), success: req.flash("success"),
+			title: "register",
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
+			emailRegex: emailVerificationRegex,
 		});
 	}
 
@@ -51,18 +51,23 @@ class RegisterController {
 			return res.render("register", { error: "Please provide email and password." });
 		}
 
-		return checkEmailUsed(email).then(async (isUsed) => {
-			if (isUsed) {
-				return res.render("register", { error: "The provided email is already in use." });
-			}
+		if (!isValidEmailAddress(email)) {
+			return res.render("register", { error: "E-Mail Address isn't an OST address." });
+		}
 
-			const encryptedPassword = hashPassword(password);
-			const verificationToken = generateToken();
+		return pgConnector.isEmailInUse(email)
+			.then(async (isUsed) => {
+				if (isUsed) {
+					return res.render("register", { error: "The provided email is already in use." });
+				}
 
-			await addUnverifiedUserToDB(email, encryptedPassword, verificationToken);
-			const response = await sendVerificationEmail(verificationToken, email);
-			return res.render("login", { hint: response });
-		});
+				const encryptedPassword = hashPassword(password);
+				const verificationToken = generateToken();
+
+				await addUnverifiedUserToDB(email, encryptedPassword, verificationToken);
+				const response = await sendVerificationEmail(verificationToken, email);
+				return res.render("login", { hint: response });
+			});
 	}
 
 	verifyMail(req, res) {
@@ -82,7 +87,6 @@ export default new RegisterController();
 export {
 	hashPassword,
 	generateToken,
-	checkEmailUsed,
 	addUnverifiedUserToDB,
 	sendVerificationEmail,
 };
