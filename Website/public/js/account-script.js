@@ -12,6 +12,9 @@ while (currentYear >= earliestYear) {
 	const dateOption = document.createElement("option");
 	dateOption.text = currentYear;
 	dateOption.value = currentYear;
+	if (dateOption.text === dateDropdown.dataset.old) {
+		dateOption.selected = true;
+	}
 	dateDropdown.add(dateOption);
 	currentYear -= 1;
 }
