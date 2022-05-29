@@ -32,6 +32,18 @@ h1 {
     margin: auto;
 }
 
+.evenly-spaced-button-div {
+    display: flex;
+    justify-content: center;
+}
+
+.evenly-spaced-button-div button,
+.evenly-spaced-button-div a {
+    margin: auto;
+    height: 80%;
+    width: 35%;
+}
+
 /* ======================== GENERAL PURPOSE BUTTONS ======================== */
 .ost-button {
     font-size: 15px;
