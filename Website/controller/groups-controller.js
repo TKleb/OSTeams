@@ -8,6 +8,7 @@ import {
 	isMaxMemberCountValid,
 	isGroupDescriptionValid,
 	isGroupNameValid,
+	inputValidationSettings,
 } from "../utils/input-validation-util.js";
 
 async function sendApplicationEmailToOwner(req, id, res) {
@@ -103,6 +104,10 @@ class GroupsController {
 			success: req.flash("success"),
 			showAllGroups: true,
 			groups,
+			groupNameLength: inputValidationSettings.maxGroupNameLenght,
+			groupDescriptionLength: inputValidationSettings.maxGroupDescriptionLength,
+			minGroupMembers: inputValidationSettings.minMemberCount,
+			maxGroupMembers: inputValidationSettings.maxMemberCount,
 		});
 	}
 
@@ -164,6 +169,10 @@ class GroupsController {
 			success: req.flash("success"),
 			group,
 			isOwner,
+			descriptionLength: inputValidationSettings.maxGroupDescriptionLength,
+			groupNameLength: inputValidationSettings.maxGroupNameLenght,
+			minMemberCount: inputValidationSettings.minMemberCount,
+			maxMemberCount: inputValidationSettings.maxMemberCount,
 		});
 	}
 

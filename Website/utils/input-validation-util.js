@@ -1,7 +1,14 @@
-const emailVerificationRegex = "^[A-z0-9.-]+@ost\\.ch$";
+const inputValidationSettings = {
+	emailVerificationRegex: "^[A-z0-9.-]+@ost\\.ch$",
+	minMemberCount: 2,
+	maxMemberCount: 99,
+	maxGroupNameLenght: 50,
+	maxGroupDescriptionLength: 512,
+};
 
 function isValidEmailAddress(email) {
-	return new RegExp(emailVerificationRegex).test(email);
+	return new RegExp(inputValidationSettings.emailVerificationRegex)
+		.test(email);
 }
 
 function isNumeric(val) {
@@ -21,16 +28,18 @@ function isApplyByDateValid(date) {
 	return applyByDate >= currDate && applyByDate <= maxDate;
 }
 
-function isMaxMemberCountValid(maxMemberCount) {
-	return isNumeric(maxMemberCount) && maxMemberCount <= 99 && maxMemberCount >= 2;
+function isMaxMemberCountValid(meberCount) {
+	return isNumeric(meberCount)
+		&& meberCount <= inputValidationSettings.maxMemberCount
+		&& meberCount >= inputValidationSettings.minMemberCount;
 }
 
 function isGroupDescriptionValid(description) {
-	return description?.length <= 512;
+	return description?.length <= inputValidationSettings.maxGroupDescriptionLength;
 }
 
 function isGroupNameValid(name) {
-	return name?.length <= 50;
+	return name?.length <= inputValidationSettings.maxGroupNameLenght;
 }
 
 export {
@@ -41,5 +50,5 @@ export {
 	isGroupDescriptionValid,
 	isGroupNameValid,
 	isValidEmailAddress,
-	emailVerificationRegex,
+	inputValidationSettings,
 };

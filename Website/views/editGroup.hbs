@@ -6,15 +6,15 @@
 				<label for="name">
 					Name:
 				</label>
-				<input name="name" type="text" value="{{group.name}}" maxlength="50" required>
+				<input name="name" type="text" value="{{group.name}}" maxlength={{groupNameLength}} required>
 				<label for="description">
 					Description:
 				</label>
-				<textarea name="description" maxlength="512" required>{{group.description}}</textarea>
+				<textarea name="description" maxlength={{descriptionLength}} required>{{group.description}}</textarea>
 				<label for="maxMemberCount">
 					Group size:
 				</label>
-				<input name="maxMemberCount" type="number" value="{{group.max_member_count}}" min="2" max="99" required>
+				<input name="maxMemberCount" type="number" value="{{group.max_member_count}}" min={{minMemberCount}} max={{maxMemberCount}} required>
 				<label for="applyByDate">
 					Apply-By Date:
 				</label>
