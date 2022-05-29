@@ -77,7 +77,7 @@
 			</div>
 		{{/each}}
 		<div class="overlay"></div>
-		<div class="group-interaction-buttons-area">
+		<div class="group-interaction-buttons-area evenly-spaced-button-div">
 			{{#if isVisitor}}
 				<div class="modal" id="application-modal">
 					<div class="modal-header">
@@ -91,7 +91,7 @@
 						</form>
 					</div>
 				</div>
-				<button data-modal-target="#application-modal" class="group-btn ost-button">Apply</button>
+				<button data-modal-target="#application-modal" class="apply group-btn ost-button">Apply</button>
 			{{else}}
 				{{#if isOwner}}
 					<form id="editGroup-form" method="get" action="/groups/edit/{{group.id}}"></form>
