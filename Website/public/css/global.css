@@ -77,18 +77,10 @@ h1 {
     display: inline-block;
     padding: 10px;
     margin: 0.2em auto auto;
-}
-
-.control-button:link {
-    text-decoration: none;
-}
-
-.control-button:visited {
     text-decoration: none;
 }
 
 .control-button:hover {
-    text-decoration: none;
     background-color: rgb(184 102 184);
 }
 
