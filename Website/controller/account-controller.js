@@ -87,7 +87,7 @@ class AccountController {
 
 		await pgConnector.editUserById(options);
 		req.flash("success", "Account details saved successfully");
-		return res.redirect(`/account/edit/${req.session.userId}`);
+		return res.redirect("/account/edit");
 	}
 
 	async delete(req, res) {

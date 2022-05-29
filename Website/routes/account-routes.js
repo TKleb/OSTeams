@@ -7,15 +7,15 @@ import asyncHandler from "../middleware/asyncHandler.js";
 
 const router = express.Router();
 router.get("/", isAuthenticated, asyncHandler(accountController.index));
+router.get("/edit", isAuthenticated, asyncHandler(accountController.edit));
 router.get("/logout", isAuthenticated, accountController.logout);
 router.get("/login", isUnauthenticated, loginController.index);
 router.get("/register", isUnauthenticated, registerController.index);
 router.get("/verifyEmail", isUnauthenticated, registerController.verifyMail);
 router.get("/:id", isAuthenticated, asyncHandler(accountController.showAccountById));
-router.get("/edit/:id", isAuthenticated, asyncHandler(accountController.edit));
 
 router.post("/delete", isAuthenticated, asyncHandler(accountController.delete));
-router.post("/edit/:id", isAuthenticated, asyncHandler(accountController.update));
+router.post("/edit", isAuthenticated, asyncHandler(accountController.update));
 router.post("/login", isUnauthenticated, asyncHandler(loginController.login));
 router.post("/register", isUnauthenticated, asyncHandler(registerController.register));
 
