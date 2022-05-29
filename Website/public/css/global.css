@@ -229,11 +229,11 @@ body {
 
 .img {
     width: 80%;
-    margin: 0px auto;
+    margin: 0 auto;
     display: block;
 }
 
-.infotext table tr td:nth-child(1){
+.infotext table tr td:nth-child(1) {
     font-weight: bold;
-    padding: 0px 20px;
+    padding: 0 20px;
 }

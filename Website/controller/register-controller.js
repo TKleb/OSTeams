@@ -46,8 +46,9 @@ class RegisterController {
 			return res.render("register", { error: "Please provide email and password." });
 		}
 
-		if(!/[A-z0-9.-]+@ost.ch/.test(email))
+		if (!/[A-z0-9.-]+@ost.ch/.test(email)) {
 			return res.render("register", { error: "E-Mail Address isn't an OST address." });
+		}
 
 		return pgConnector.isEmailInUse(email)
 			.then(async (isUsed) => {
