@@ -51,7 +51,7 @@ class RegisterController {
 			email,
 			password,
 			passwordConfirmation,
-		 } = req.body;
+		} = req.body;
 
 		if (!email || !passwordConfirmation || !isPasswordValid(password)) {
 			return res.render("register", { error: "Please provide email and password." });
@@ -84,7 +84,7 @@ class RegisterController {
 			return res.send("Invalid token");
 		}
 
-		await pgConnector.executeStoredProcedure("do_verify_user", [verificationToken])
+		await pgConnector.executeStoredProcedure("do_verify_user", [verificationToken]);
 		return res.render("index", { hint: "Email verified successfully" });
 	}
 }
