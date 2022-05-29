@@ -33,6 +33,10 @@ class PGConnector {
 			.then(getFirst);
 	}
 
+	editUserById(options) {
+		return this.executeStoredProcedure("edit_user_by_id", [options]);
+	}
+
 	getGroupById(id) {
 		return this.executeStoredProcedure("get_group_by_id", [id])
 			.then(getFirst);

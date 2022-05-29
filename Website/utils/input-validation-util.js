@@ -4,6 +4,9 @@ const inputValidationSettings = {
 	maxMemberCount: 99,
 	maxGroupNameLenght: 50,
 	maxGroupDescriptionLength: 512,
+	maxNameLength: 30,
+	maxSurnameLength: 30,
+	maxCustomInfoLength: 512,
 };
 
 function isValidEmailAddress(email) {
@@ -42,6 +45,22 @@ function isGroupNameValid(name) {
 	return name?.length <= inputValidationSettings.maxGroupNameLenght;
 }
 
+function isSurnameValid(surname) {
+	return surname.length <= inputValidationSettings.maxSurnameLength;
+}
+
+function isNameValid(name) {
+	return name.length <= inputValidationSettings.maxNameLength;
+}
+
+function isStartYearValid(year) {
+	return isNumeric(year);
+}
+
+function isCustomInfoValid(info) {
+	return info.length <= inputValidationSettings.maxCustomInfoLength;
+}
+
 export {
 	isNumeric,
 	areNumeric,
@@ -50,5 +69,9 @@ export {
 	isGroupDescriptionValid,
 	isGroupNameValid,
 	isValidEmailAddress,
+	isSurnameValid,
+	isNameValid,
+	isStartYearValid,
+	isCustomInfoValid,
 	inputValidationSettings,
 };
