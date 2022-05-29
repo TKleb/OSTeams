@@ -1,27 +1,35 @@
 import pgConnector from "../services/pg-connector.js";
 import {
+	isNumeric,
 	isCustomInfoValid,
 	isSurnameValid,
 	isStartYearValid,
 	isNameValid,
+	inputValidationSettings,
 } from "../utils/input-validation-util.js";
 
 class AccountController {
 	async index(req, res) {
-		return res.redirect(`/account/${req.session.userId}`);
+		return res.redirect("/account/".concat(req.session.userId));
 	}
 
-	async showSpecificUserInfo(req, res) {
+	async showAccountById(req, res) {
 		const { id } = req.params;
+
+		if (!isNumeric) {
+			req.flash("error", "Invalid input");
+			return res.redirect("/");
+		}
+
 		const currentUserData = await pgConnector.getUserById(id);
-		const isOwn = currentUserData.id === req.session.userId;
+		const isOwnProfile = id == req.session.userId;
 		res.render("account", {
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
 			edit: false,
 			user: currentUserData,
-			isOwnProfile: isOwn
+			isOwnProfile,
 		});
 	}
 
@@ -39,7 +47,10 @@ class AccountController {
 			success: req.flash("success"),
 			edit: true,
 			user: currentUser,
-			isOwnProfile: true
+			isOwnProfile: true,
+			surnameLength: inputValidationSettings.maxSurnameLength,
+			nameLength: inputValidationSettings.maxNameLength,
+			customInfoLength: inputValidationSettings.maxCustomInfoLength,
 		});
 	}
 

@@ -74,6 +74,7 @@
 .info .info-value {
     margin-bottom: 5px;
     margin-top: 2px;
+    word-wrap: break-word;
 }
 
 /* ========================= Edit Page ========================= */

@@ -5,10 +5,10 @@
 				<form method="post" class="display-info" id="account-info-form">
 					<div class="account-name info">
 						<p class="title">Name:</p>
-						<input type="text" class="info-input" name="surname" autocomplete="off"
+						<input type="text" class="info-input" name="surname" autocomplete="off" maxlength="{{surnameLength}}"
 							{{#if_eq user.surname ''}} placeholder="No Surname"
 							{{else}} value="{{user.surname}}" {{/if_eq}}>
-						<input type="text" class="info-input" name="name" autocomplete="off"
+						<input type="text" class="info-input" name="name" autocomplete="off" maxlength="{{nameLength}}"
 							{{#if_eq user.name ''}} placeholder="No Name"
 							{{else}} value="{{user.name}}" {{/if_eq}}>
 					</div>
@@ -27,7 +27,7 @@
 					</div>
 					<div class="account-info info">
 						<p class="title">Custom Info:</p>
-						<textarea class="info-input" name="info" placeholder="No Custom Info">{{user.custom_info}}</textarea>
+						<textarea class="info-input" name="info" placeholder="No Custom Info" maxlength="{{customInfoLength}}">{{user.custom_info}}</textarea>
 					</div>
 				</form>
 			{{else}}

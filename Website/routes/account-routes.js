@@ -12,7 +12,7 @@ router.get("/logout", isAuthenticated, accountController.logout);
 router.get("/login", isUnauthenticated, loginController.index);
 router.get("/register", isUnauthenticated, registerController.index);
 router.get("/verifyEmail", isUnauthenticated, registerController.verifyMail);
-router.get("/:id", isAuthenticated, asyncHandler(accountController.showSpecificUserInfo));
+router.get("/:id", isAuthenticated, asyncHandler(accountController.showAccountById));
 
 router.post("/login", isUnauthenticated, asyncHandler(loginController.login));
 router.post("/register", isUnauthenticated, asyncHandler(registerController.register));
