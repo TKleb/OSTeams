@@ -23,6 +23,10 @@ class PGConnector {
 			});
 	}
 
+	getSubjects() {
+		return this.executeStoredProcedure("get_subjects");
+	}
+
 	getUserById(id) {
 		return this.executeStoredProcedure("get_user_by_id", [id])
 			.then(getFirst);

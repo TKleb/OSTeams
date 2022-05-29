@@ -26,17 +26,6 @@ before( function(done) {
 });
 
 describe("Test subjects page", () => {
-	describe("POST /subjects", () => {
-		it("It should load all subjects.", function(done) {
-			authenticatedUser
-			.post("/subjects")
-			.end((error, res) => {
-				assert.match(res.text, /Subjects/);
-				done();
-			});
-		});
-	});
-
 	describe("GET /subjects", function(done) {
 		it("It should load the page", function(done) {
 			authenticatedUser
