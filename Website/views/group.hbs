@@ -77,7 +77,7 @@
 			</div>
 		{{/each}}
 		<div class="overlay"></div>
-		<div id="group-interaction-btns">
+		<div class="group-interaction-btns">
 			{{#if isVisitor}}
 				<div class="modal" id="application-modal">
 					<div class="modal-header">
@@ -94,7 +94,9 @@
 				<button data-modal-target="#application-modal" class="group-btn apply">Apply</button>
 			{{else}}
 				{{#if isOwner}}
-					<button data-modal-target="#delete-group-modal" id="delete-group-button" class="delete-group-button">Delete</button>
+					<form id="editGroup-form" method="get" action="/groups/edit/{{group.id}}"></form>
+					<button id="edit-group-btn" form="editGroup-form" class="group-btn">Edit</button>
+					<button data-modal-target="#delete-group-modal" id="delete-group-button" class="group-btn">Delete</button>
 					<div class="modal" id="delete-group-modal">
 						<div class="modal-header">
 							<div class="title">Delete Group</div>
@@ -108,7 +110,9 @@
 							</div>
 							<form id="delete-group-form" method="post" action="/groups/delete/{{group.id}}"></form>
 						</div>
+						<form id="delete-group-form" method="post" action="/groups/delete/{{group.id}}"></form>
 					</div>
+				</div>
 				{{else}}
 				<form id="application-form" method="post" action="/groups/leave/{{group.id}}">
 					<button id="leave-group-btn" class="group-btn">Leave</button>

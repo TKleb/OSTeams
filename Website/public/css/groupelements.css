@@ -33,6 +33,9 @@
 
 #group-description {
     grid-area: group-desc;
+    text-align: justify;
+    word-wrap: break-word;
+    padding: 10px;
     min-height: 20em;
     overflow: hidden;
     white-space: nowrap;
@@ -76,7 +79,7 @@
 .view-application,
 .kick-member {
     float: right;
-    margin-right: 1em;
+    margin-right: 10px;
 }
 
 #group-interaction-btns {
@@ -85,21 +88,32 @@
     justify-content: center;
 }
 
-#group-interaction-btns .group-btn {
+#delete-group-button,
+#confirm-delete-group-button {
+    background-color: rgb(223 19 46);
+    font-weight: bold;
+}
+
+#confirm-delete-group-button {
+    margin-left: 10px;
+}
+
+#delete-group-button:hover,
+#confirm-delete-group-button:hover {
+    background-color: rgb(241 46 72);
+}
+
+.group-interaction-btns .group-btn {
     height: 80%;
-    width: 150px;
-    margin: auto 0;
+    width: 35%;
     cursor: pointer;
+    margin: 0 10px;
     background-color: rgb(146 71 146);
 }
 
 #delete-group-button {
-    height: 80%;
-    width: 150px;
     margin: auto 0;
-    cursor: pointer;
     font-weight: bold;
-    color: black;
 }
 
 #group-interaction-btns .group-btn:hover {
@@ -132,4 +146,72 @@
 #delete-group-button:hover,
 #confirm-delete-group-button:hover {
     background-color: rgb(241 46 72);
+}
+
+/* ========================= Edit Group Page ========================= */
+.edit-group-container {
+    width: 65%;
+    margin: 0 auto;
+}
+
+#edit-group-form input {
+    display: block;
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#edit-group-form textarea {
+    display: block;
+    width: 100%;
+    height: 100px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    resize: vertical;
+}
+
+#edit-group-form label {
+    display: block;
+    width: 100%;
+    font-weight: bold;
+}
+
+.group-edit-interaction-btns {
+    height: 50px;
+    width: 30%;
+    float: left;
+}
+
+.group-edit-interaction-btns .group-btn {
+    font-size: 15px;
+    height: 46px;
+    width: 45%;
+    cursor: pointer;
+    background-color: rgb(146 71 146);
+    float: left;
+}
+
+.group-edit-interaction-btns .group-btn:hover {
+    cursor: pointer;
+    background-color: rgb(176 86 176);
+}
+
+.group-interaction-btns .group-btn:hover {
+    background-color: rgb(176 86 176);
+}
+
+.back-btn {
+    font-size: 15px;
+    height: 46px;
+    width: 45%;
+    cursor: pointer;
+    background-color: lightgrey;
+    float: left;
+    margin-left: 5px;
+}
+
+.back-btn:hover {
+    cursor: pointer;
+    background-color: grey;
 }

@@ -2,7 +2,15 @@ import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
 import { convertAndAddDate } from "../utils/date-convert.js";
-import { isNumeric, areNumeric, isApplyByDateValid } from "../utils/input-validation-util.js";
+import {
+	isNumeric,
+	areNumeric,
+	isApplyByDateValid,
+	isMaxMemberCountValid,
+	isGroupDescriptionValid,
+	isGroupNameValid,
+	inputValidationSettings,
+} from "../utils/input-validation-util.js";
 
 async function sendApplicationEmailToOwner(req, id, res) {
 	const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
@@ -98,6 +106,10 @@ class GroupsController {
 			success: req.flash("success"),
 			showAllGroups: true,
 			groups,
+			groupNameLength: inputValidationSettings.maxGroupNameLenght,
+			groupDescriptionLength: inputValidationSettings.maxGroupDescriptionLength,
+			minGroupMembers: inputValidationSettings.minMemberCount,
+			maxGroupMembers: inputValidationSettings.maxMemberCount,
 		});
 	}
 
@@ -137,6 +149,75 @@ class GroupsController {
 			applicants,
 			members,
 		});
+	}
+
+	async editGroupById(req, res) {
+		const { id } = req.params;
+
+		if (!isNumeric(id)) {
+			req.flash("error", "Missing fields");
+			return res.redirect("/");
+		}
+
+		const group = await pgConnector.getGroupById(id);
+		if (!group) {
+			req.flash("error", "Invalid GroupId");
+			return res.redirect("/");
+		}
+
+		const isOwner = req.session.userId === group.owner_id;
+		return res.render("editGroup", {
+			title: group.name,
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
+			group,
+			isOwner,
+			descriptionLength: inputValidationSettings.maxGroupDescriptionLength,
+			groupNameLength: inputValidationSettings.maxGroupNameLenght,
+			minMemberCount: inputValidationSettings.minMemberCount,
+			maxMemberCount: inputValidationSettings.maxMemberCount,
+		});
+	}
+
+	async updateGroup(req, res) {
+		const { id } = req.params;
+		const {
+			name,
+			description,
+			maxMemberCount,
+			applyByDate,
+		} = req.body;
+
+		if (!isGroupDescriptionValid(description)
+			|| !isNumeric(id)
+			|| !isMaxMemberCountValid(maxMemberCount)
+			|| !isApplyByDateValid(applyByDate)
+			|| !isGroupNameValid(name)
+		) {
+			req.flash("error", "Invalid input");
+			return res.redirect("/");
+		}
+
+		const group = await pgConnector.getGroupById(id);
+		if (group.owner_id !== req.session.userId) {
+			req.flash("error", "Insufficient permissions");
+			return res.redirect(req.get("referer"));
+		}
+		const options = [
+			group.id,
+			name,
+			group.owner_id,
+			group.subject_id,
+			description,
+			maxMemberCount,
+			applyByDate,
+			group.closed,
+		];
+
+		await pgConnector.editGroupById(options);
+		req.flash("success", "Saved successfully");
+		return res.redirect("/groups/".concat(id));
 	}
 
 	async closeApplication(req, res) {
@@ -220,12 +301,7 @@ class GroupsController {
 			return res.redirect(req.get("referer"));
 		}
 
-		if (
-			!isApplyByDateValid(applyByDate)
-			|| !isNumeric(maxMemberCount)
-			|| maxMemberCount > 99
-			|| maxMemberCount < 2
-		) {
+		if (!isApplyByDateValid(applyByDate) || !isMaxMemberCountValid(maxMemberCount)) {
 			req.flash("error", "Invalid input");
 			return res.redirect(req.get("referer"));
 		}

@@ -1,11 +1,11 @@
 import express from "express";
 import subjectsController from "../controller/subjects-controller.js";
 import groupsController from "../controller/groups-controller.js";
+import asyncHandler from "../middleware/asyncHandler.js";
 
 const router = express.Router();
 
-router.get("/", subjectsController.subjects);
-router.post("/", subjectsController.subjects);
-router.get("/:abbreviation", groupsController.showGroupsOfSubject);
-router.post("/:abbreviation", groupsController.addGroup);
+router.get("/", asyncHandler(subjectsController.index));
+router.get("/:abbreviation", asyncHandler(groupsController.showGroupsOfSubject));
+router.post("/:abbreviation", asyncHandler(groupsController.addGroup));
 export default router;
