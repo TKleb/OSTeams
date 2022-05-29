@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get("/", subjectsController.subjects);
 router.post("/", subjectsController.subjects);
-router.get("/:abbreviation", groupsController.showBySubjectAbbr);
-router.post("/:abbreviation", groupsController.insert);
+router.get("/:abbreviation", groupsController.showGroupsOfSubject);
+router.post("/:abbreviation", groupsController.addGroup);
 export default router;

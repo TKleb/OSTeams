@@ -2,6 +2,7 @@ import chai, {expect} from "chai";
 import chaiHttp from "chai-http";
 import server from "../index.js";
 import assert from "assert";
+import request from "supertest";
 
 chai.should();
 chai.use(chaiHttp);
@@ -40,14 +41,15 @@ describe("Test login page", () => {
 
 	describe("POST /login", () => {
 		it("It should log in a user", async() => {
-			const res = await chai.request(server)
+			const res = await request.agent(server)
 				.post("/account/login")
 				.type("form")
 				.send({
-					"email":"user1@verified.ch",
-					"password":"Test12345"
+					"email":"default.user@ost.ch",
+					"password":"password"
 				})
-			assert.equal(res.statusCode, 200);
+			assert.equal(res.statusCode, 302);
+			expect("Location", "/");
 		});
 	});
 });
