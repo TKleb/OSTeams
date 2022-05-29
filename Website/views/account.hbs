@@ -83,17 +83,19 @@
 			{{/if_eq}}
 		</div>
 		<div class="account-interaction">
-			{{#if edit}}
-				<form method="post" action="/account/wherever">
-					<button type="submit" class="account-edit" form="account-info-form" formaction="/account/wherever" class="center">Save</button>
-				</form>
-				<form action="/account">
-					<button type="submit" class="account-edit" class="center">Return</button>
-				</form>
-			{{else}}
-				<form method="get" action="/account/edit">
-					<button type="submit" class="account-edit" id="account-edit-btn" class="center">Edit</button>
-				</form>
+			{{#if isVisitor}}
+				{{#if edit}}
+					<form method="post" action="/account/wherever">
+						<button type="submit" class="account-edit" form="account-info-form" formaction="/account/wherever" class="center">Save</button>
+					</form>
+					<form action="/account">
+						<button type="submit" class="account-edit" class="center">Return</button>
+					</form>
+				{{else}}
+					<form method="get" action="/account/edit">
+						<button type="submit" class="account-edit" id="account-edit-btn" class="center">Edit</button>
+					</form>
+				{{/if}}
 			{{/if}}
 		</div>
 	{{else}}

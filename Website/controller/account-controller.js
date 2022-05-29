@@ -14,6 +14,16 @@ class AccountController {
 		});
 	}
 
+	async showSpecificUserInfo(req, res) {
+		const { id } = req.params;
+		const currentUserData = await pgConnector.executeStoredProcedure("get_user_by_id", id);
+		res.render("account", {
+			title: "Account",
+			edit: false,
+			user: currentUserData[0]
+		});
+	}
+
 	logout(req, res) {
 		req.session.destroy();
 		res.redirect("/");

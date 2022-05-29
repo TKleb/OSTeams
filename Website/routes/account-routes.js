@@ -7,6 +7,7 @@ import asyncHandler from "../middleware/asyncHandler.js";
 
 const router = express.Router();
 router.get("/", isAuthenticated, accountController.showUserInfo);
+router.get("/:id", isAuthenticated, accountController.showSpecificUserInfo);
 router.get("/edit", isAuthenticated, accountController.edit);
 router.get("/logout", isAuthenticated, accountController.logout);
 router.get("/login", isUnauthenticated, loginController.index);
