@@ -34,7 +34,7 @@ class PGConnector {
 	}
 
 	editUserById(options) {
-		return this.executeStoredProcedure("edit_user_by_id", [options]);
+		return this.executeStoredProcedure("edit_user_by_id", options);
 	}
 
 	getGroupById(id) {

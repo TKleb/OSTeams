@@ -48,7 +48,8 @@ class AccountController {
 			error: req.flash("error"),
 			success: req.flash("success"),
 			edit: true,
-			user: currentUser
+			user: currentUser,
+			isOwnProfile: true
 		});
 	}
 
@@ -75,7 +76,7 @@ class AccountController {
 		}
 
 		const options = [
-			req.session.id,
+			req.session.userId,
 			name,
 			surname,
 			info,
