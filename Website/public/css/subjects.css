@@ -46,22 +46,23 @@
     grid-area: info;
 }
 
-.group-members {
+.group-attributes {
     display: flex;
-    grid-area: members;
     justify-content: left;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.group-members {
+    grid-area: members;
 }
 
 .group-full {
     grid-area: full;
-    display: flex;
-    justify-content: left;
 }
 
 .group-apply-by {
     grid-area: apply;
-    display: flex;
-    justify-content: left;
 }
 
 .group-interaction {
