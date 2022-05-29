@@ -136,10 +136,10 @@ AS $$
         END IF;
 
         -- Ensure Token not older than 10 Minutes
-
         IF NOT EXISTS(
             SELECT 1 FROM unverified_users
-		    WHERE verification_code = p_verification_code AND (date_of_registration > CURRENT_TIMESTAMP - '10 M'::interval)
+            WHERE verification_code = p_verification_code
+                AND (date_of_registration > CURRENT_TIMESTAMP - '10 M'::interval)
         ) THEN
             DELETE FROM unverified_users WHERE verification_code = p_verification_code;
             RAISE EXCEPTION 'Verification token is older than 10 Minutes. Please register again.';
@@ -259,14 +259,14 @@ CREATE OR REPLACE FUNCTION do_remove_user_by_id(
     LANGUAGE plpgsql
     SECURITY DEFINER
 AS $$
-	DECLARE
-		count INT;
+    DECLARE
+        count INT;
     BEGIN
-		WITH deletedRows AS (
-			DELETE FROM users WHERE id = p_user_id RETURNING *
-		)
-		SELECT COUNT(*) FROM deletedRows INTO count;
-		RETURN 0 < count;
+        WITH deletedRows AS (
+            DELETE FROM users WHERE id = p_user_id RETURNING *
+        )
+        SELECT COUNT(*) FROM deletedRows INTO count;
+        RETURN 0 < count;
     END
 $$;
 
