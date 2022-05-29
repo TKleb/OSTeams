@@ -1,7 +1,7 @@
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
-import { convertAndAddDate } from "../utils/date-convert.js";
+import { timestampToDisplayString } from "../utils/date-convert.js";
 import {
 	isNumeric,
 	areNumeric,
@@ -63,6 +63,11 @@ async function attachOwnerAndMemberCount(groups) {
 	);
 }
 
+function attachDeadlineDisplay(group) {
+	group.deadlineDisplay = timestampToDisplayString(group.apply_by_date);
+	return group;
+}
+
 async function getApplicationsToGroupForDisplay(id) {
 	const applications = await pgConnector.getApplicationsToGroup(id);
 	const promises = applications.map((app) => pgConnector.getUserById(app.user_id));
@@ -78,7 +83,7 @@ class GroupsController {
 	async showGroupsOfUser(req, res) {
 		let groups = await pgConnector.getGroupsOfUserById(req.session.userId);
 		await attachOwnerAndMemberCount(groups);
-		groups = convertAndAddDate(groups);
+		groups = groups.map(attachDeadlineDisplay);
 		res.render("grouplist", {
 			title: "Your Groups",
 			hint: req.flash("hint"),
@@ -98,7 +103,7 @@ class GroupsController {
 
 		let groups = await getGroupsUserCanApplyTo(subject.id, req.session.userId);
 		await attachOwnerAndMemberCount(groups);
-		groups = convertAndAddDate(groups);
+		groups = groups.map(attachDeadlineDisplay);
 		return res.render("grouplist", {
 			title: "Groups of ".concat(abbreviation),
 			hint: req.flash("hint"),
@@ -123,11 +128,11 @@ class GroupsController {
 
 		let group = await pgConnector.getGroupById(groupId);
 		// eslint-disable-next-line prefer-destructuring
-		group = convertAndAddDate([group])[0];
 		if (!group) {
 			req.flash("error", "Invalid GroupId");
 			return res.redirect("/");
 		}
+		group = attachDeadlineDisplay(group);
 
 		const isOwner = req.session.userId === group.owner_id;
 		const [members, applicants] = await Promise.all([

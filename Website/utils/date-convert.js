@@ -1,16 +1,12 @@
-function convertAndAddDate(list) {
-	list.forEach((group) => {
-		const date = new Date(group.apply_by_date);
-		const dateOptions = {
-			day: "numeric",
-			month: "long",
-			year: "numeric"
-		};
-		group.convertedDate = date.toLocaleDateString("en-GB", dateOptions);
-	});
-	return list;
+function timestampToDisplayString(timestamp) {
+	const dateOptions = {
+		day: "numeric",
+		month: "long",
+		year: "numeric"
+	};
+	return new Date(timestamp).toLocaleDateString("en-GB", dateOptions);
 }
 
 export {
-	convertAndAddDate
+	timestampToDisplayString
 };
