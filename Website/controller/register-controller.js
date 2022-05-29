@@ -3,6 +3,7 @@ import randToken from "rand-token";
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
+import { isValidEmailAddress, emailVerificationRegex } from "../utils/input-validation-util.js";
 
 function sendVerificationEmail(verificationToken, email) {
 	const htmlBody = "<p>In order to use OSTeams, "
@@ -35,7 +36,11 @@ function hashPassword(password) {
 class RegisterController {
 	index(req, res) {
 		res.render("register", {
-			title: "register", hint: req.flash("hint"), error: req.flash("error"), success: req.flash("success"),
+			title: "register",
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
+			emailRegex: emailVerificationRegex,
 		});
 	}
 
@@ -44,6 +49,10 @@ class RegisterController {
 
 		if (!email || !password) {
 			return res.render("register", { error: "Please provide email and password." });
+		}
+
+		if (!isValidEmailAddress(email)) {
+			return res.render("register", { error: "E-Mail Address isn't an OST address." });
 		}
 
 		return pgConnector.isEmailInUse(email)
