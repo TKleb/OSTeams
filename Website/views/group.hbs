@@ -1,7 +1,9 @@
 {{#if group}}
 	<div class="group-head">
 		<div><h1>{{title}}</h1></div>
+		{{#if isVisitor}}
 		<div class="apply-by-date">Apply by: {{group.convertedDate}}</div>
+		{{/if}}
 	</div>
 	<div id="group-div">
 		<div class="description-title">
