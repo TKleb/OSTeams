@@ -28,9 +28,7 @@
 					</div>
 					<div class="account-info info">
 						<p class="title">Custom Info:</p>
-						<textarea class="info-input" name="info"
-							{{#if_eq user.custom_info ''}} placeholder="No Custom Info"
-							{{else}} value="{{user.custom_info}}" {{/if_eq}}></textarea>
+						<textarea class="info-input" name="info" placeholder="No Custom Info">{{user.custom_info}}</textarea>
 					</div>
 				</form>
 			{{else}}
@@ -48,14 +46,15 @@
 				</div>
 				<div class="account-fulltime info">
 					<p class="title">Occupation:</p>
-					{{#if_eq user.fulltime false}}
-						<p class="info-value">Part Time</p>
-					{{/if_eq}}
-					{{#if_eq user.fulltime null}}
-						<p class="info-value">No Info</p>
-					{{else}}
+					{{#if user.fulltime}}
 						<p class="info-value">Full Time</p>
-					{{/if_eq}}
+					{{else}}
+						{{#if_eq user.fulltime null}}
+							<p class="info-value">No Info</p>
+						{{else}}
+							<p class="info-value">Part Time</p>
+						{{/if_eq}}
+					{{/if}}
 				</div>
 				<div class="account-startyear info">
 					<p class="title">Start Year:</p>
