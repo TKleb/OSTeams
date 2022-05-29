@@ -8,30 +8,20 @@ import {
 
 class AccountController {
 	async index(req, res) {
-		const currentUser = await pgConnector.getUserByEmail(req.session.email);
-		res.render("account", {
-			title: "Account",
-			hint: req.flash("hint"),
-			error: req.flash("error"),
-			success: req.flash("success"),
-			edit: false,
-			user: currentUser,
-			isOwnProfile: true
-		});
+		return res.redirect(`/account/${req.session.userId}`);
 	}
 
 	async showSpecificUserInfo(req, res) {
 		const { id } = req.params;
 		const currentUserData = await pgConnector.getUserById(id);
-		const isOwnProfile = id === req.session.userId;
+		const isOwn = currentUserData.id === req.session.userId;
 		res.render("account", {
-			title: "Account",
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
 			edit: false,
 			user: currentUserData,
-			isOwnProfile
+			isOwnProfile: isOwn
 		});
 	}
 
@@ -86,7 +76,7 @@ class AccountController {
 
 		await pgConnector.editUserById(options);
 		req.flash("success", "Account details saved successfully");
-		return res.redirect("/account");
+		return res.redirect(`/account/${req.session.userId}`);
 	}
 }
 
