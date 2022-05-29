@@ -60,10 +60,6 @@ input[name="passwordConfirmation"] {
     background-color: rgb(148 145 145);
 }
 
-#forgot-password {
-    font-size: 13px;
-}
-
 a {
     text-decoration: none;
     font-family: Arial, sans-serif;
@@ -126,20 +122,4 @@ a:visited {
 #cancel-verification:hover {
     cursor: pointer;
     background-color: rgb(156 154 154);
-}
-
-/* ========================= Reset Password Page ========================= */
-#reset-password {
-    width: 40%;
-    height: 40px;
-    display: inline-block;
-    font-family: Arial, sans-serif;
-    font-size: 15px;
-    margin: 10px 0 20px;
-    background-color: rgb(146 71 146);
-}
-
-#reset-password:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
 }

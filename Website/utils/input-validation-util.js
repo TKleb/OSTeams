@@ -1,3 +1,9 @@
+const emailVerificationRegex = "^[A-z0-9.-]+@ost\\.ch$";
+
+function isValidEmailAddress(email) {
+	return new RegExp(emailVerificationRegex).test(email);
+}
+
 function isNumeric(val) {
 	return /^\d+$/.test(val);
 }
@@ -34,4 +40,6 @@ export {
 	isMaxMemberCountValid,
 	isGroupDescriptionValid,
 	isGroupNameValid,
+	isValidEmailAddress,
+	emailVerificationRegex,
 };
