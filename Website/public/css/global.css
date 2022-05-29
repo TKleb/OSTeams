@@ -32,6 +32,22 @@ h1 {
     margin: auto;
 }
 
+.ost-button {
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: rgb(146 71 146);
+}
+
+.ost-button:disabled {
+    background-color: #767676;
+    cursor: default;
+}
+
+.ost-button:hover {
+    background-color: rgb(176 86 176);
+}
+
 /* ========================= NOTIFICATION STYLING ========================= */
 .notice {
     background: #f9f9f9;
