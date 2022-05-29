@@ -41,7 +41,7 @@ class AccountController {
 	}
 
 	async edit(req, res) {
-		const currentUser =  await pgConnector.getUserByEmail(req.session.email);
+		const currentUser = await pgConnector.getUserByEmail(req.session.email);
 		res.render("account", {
 			title: "Edit",
 			hint: req.flash("hint"),
@@ -69,7 +69,7 @@ class AccountController {
 			req.flash("error", "Invalid input");
 			return res.redirect("/");
 		}
-		let isFulltime = undefined;
+		let isFulltime;
 		if (fulltime) {
 			isFulltime = fulltime === "true";
 		}
@@ -78,16 +78,14 @@ class AccountController {
 			req.session.id,
 			name,
 			surname,
-			group.subject_id,
-			description,
-			maxMemberCount,
-			applyByDate,
-			group.closed,
+			info,
+			isFulltime,
+			startYear,
 		];
-		await pgConnector.editUserById(options);
 
+		await pgConnector.editUserById(options);
 		req.flash("success", "Account details saved successfully");
-		res.redirect("/account")
+		return res.redirect("/account");
 	}
 }
 
