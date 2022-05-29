@@ -1,8 +1,8 @@
 <div class="account-container">
 	<div class="display-info" id="account-info">
 		<form method="post" class="display-info" id="account-info-form">
-			<div class="account-name info">
-				<p class="title">Name:</p>
+			<div class="account-name content-box">
+				<h3>Name:</h3>
 				<input type="text" class="info-input" name="surname" autocomplete="off" maxlength="{{surnameLength}}"
 					{{#if_eq user.surname ''}} placeholder="No Surname"
 					{{else}} value="{{user.surname}}" {{/if_eq}}>
@@ -10,8 +10,8 @@
 					{{#if_eq user.name ''}} placeholder="No Name"
 					{{else}} value="{{user.name}}" {{/if_eq}}>
 			</div>
-			<div class="account-fulltime info">
-				<p class="title">Occupation:</p>
+			<div class="account-fulltime content-box">
+				<h3>Occupation:</h3>
 				<input type="radio" id="parttime-radio" name="fulltime" class="info-input"
 					{{#if_eq user.fulltime false}} checked {{/if_eq}} value="false" >
 				<label for="parttime-radio">Part Time</label>
@@ -19,12 +19,12 @@
 					{{#if_eq user.fulltime true}} checked {{/if_eq}} value="true">
 				<label for="fulltime-radio">Full Time</label>
 			</div>
-			<div class="account-startyear info">
-				<p class="title">Start Year:</p>
+			<div class="account-startyear content-box">
+				<h3>Start Year:</h3>
 				<select data-old="{{user.start_year}}" id="date-dropdown" name="startYear"></select>
 			</div>
-			<div class="account-info info">
-				<p class="title">Custom Info:</p>
+			<div class="account-info content-box">
+				<h3>Custom Info:</h3>
 				<textarea class="info-input" name="info" placeholder="No Custom Info" maxlength="{{customInfoLength}}">{{user.custom_info}}</textarea>
 			</div>
 		</form>

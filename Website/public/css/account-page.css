@@ -3,8 +3,9 @@
     display: grid;
     height: 100%;
     grid-template-columns: 70% 30%;
-    grid-template-rows: 30% 70%;
-    margin-top: 50px;
+    grid-template-rows: 40% 60%;
+    width: 80%;
+    margin: auto;
 
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
@@ -16,6 +17,7 @@
 
 .display-info {
     grid-area: info;
+    width: auto;
 }
 
 .profile-picture {
@@ -49,7 +51,7 @@
 
 /* ========================= Default Page ========================= */
 .account-container .content-box {
-    width: 70%;
+    width: auto;
 }
 
 /* ========================= Edit Page ========================= */
