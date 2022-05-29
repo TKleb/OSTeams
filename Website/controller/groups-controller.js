@@ -1,6 +1,7 @@
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
+import { convertAndAddDate } from "../utils/date-convert.js";
 import { isNumeric, areNumeric, isApplyByDateValid } from "../utils/input-validation-util.js";
 
 async function sendApplicationEmailToOwner(req, id, res) {
@@ -58,8 +59,9 @@ const getApplicationsToGroupForDisplay = async (id) => {
 
 class GroupsController {
 	async showByUserId(req, res) {
-		const groupRows = await pgConnector.getGroupsOfUserById(req.session.userId);
+		let groupRows = await pgConnector.getGroupsOfUserById(req.session.userId);
 		await MembersByGroupId(groupRows);
+		groupRows = convertAndAddDate(groupRows);
 		res.render("grouplist", {
 			title: "Your Groups",
 			hint: req.flash("hint"),
@@ -78,6 +80,7 @@ class GroupsController {
 		}
 
 		let groupRows = await pgConnector.getGroupsBySubjectId(subjectRow[0].id);
+		groupRows = (convertAndAddDate(groupRows));
 		await MembersByGroupId(groupRows);
 		groupRows = await getIsApplicationPossiblePerGroup(groupRows, req);
 
