@@ -6,6 +6,7 @@ const inputValidationSettings = {
 	maxGroupDescriptionLength: 512,
 	maxPasswordLength: 30,
 	minPasswordLength: 5,
+	maxApplicationTextLength: 200,
 };
 
 function isEmailAddressValid(email) {
@@ -49,6 +50,10 @@ function isPasswordValid(password) {
 		&& password?.length >= inputValidationSettings.minPasswordLength;
 }
 
+function isApplicationTextValid(text) {
+	return text?.length <= inputValidationSettings.maxApplicationTextLength;
+}
+
 export {
 	isNumeric,
 	areNumeric,
@@ -58,5 +63,6 @@ export {
 	isGroupNameValid,
 	isEmailAddressValid,
 	isPasswordValid,
+	isApplicationTextValid,
 	inputValidationSettings,
 };
