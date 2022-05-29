@@ -43,6 +43,7 @@
 | Name | Parameter | Returns | Description |
 |---|---|---|---|
 |edit_user_by_email()|email, name, surname, password_hash, custom_info, fulltime, start_year, profile_picture_path| User[0..1] |updates a User where the Email Matches|
+|edit_user_by_id()|name, surname, custom_info, fulltime, start_year| User[0..1] |updates a User where the ID Matches|
 
 # Do Functions
 | Name | Parameter | Returns | Description |
