@@ -4,7 +4,7 @@
 		<p>Registration only works for students with an OST-Email-Address (john.doe@ost.ch).</p>
 		<form method="post" action="#" id="login-form">
 			<label for="id-email"></label><input type="text" name="email" id="id-email"
-				placeholder="Enter Email" pattern="[A-z0-9.-]+@ost.ch$" autocomplete="off">
+				placeholder="Enter Email" pattern={{emailRegex}} autocomplete="off">
 			<label for="id-password"></label><input type="password" name="password" id="id-password"
 				placeholder="Enter Password">
 			<label for="id-password"></label><input type="password" name="passwordConfirmation" id="id-passwordConfirmation"
