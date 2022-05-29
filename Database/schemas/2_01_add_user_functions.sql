@@ -135,6 +135,16 @@ AS $$
             RAISE EXCEPTION 'Verification token is not valid.';
         END IF;
 
+        -- Ensure Token not older than 10 Minutes
+
+        IF NOT EXISTS(
+            SELECT 1 FROM unverified_users
+		    WHERE verification_code = p_verification_code AND (date_of_registration > CURRENT_TIMESTAMP - '10 M'::interval)
+        ) THEN
+            DELETE FROM unverified_users WHERE verification_code = p_verification_code;
+            RAISE EXCEPTION 'Verification token is older than 10 Minutes. Please register again.';
+        END IF;
+
         -- Add user
         RETURN QUERY
         WITH unverified_user AS (
