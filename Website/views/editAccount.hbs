@@ -39,13 +39,13 @@
 	<div class="overlay"></div>
 	<div class="account-interaction">
 		<form method="post" action="/account/edit">
-			<button type="submit" class="account-edit" form="account-info-form" formaction="/account/edit" class="center">Save</button>
+			<button type="submit" class="account-edit ost-button" form="account-info-form" formaction="/account/edit" class="center">Save</button>
 		</form>
 		<form action="/account/{{user.id}}">
-			<button type="submit" class="account-edit" class="center">Return</button>
+			<button type="submit" class="account-edit ost-button" class="center">Return</button>
 		</form>
 		<br><br><br>
-		<button id="delete-account-button" data-modal-target="#delete-user-modal" class="account-edit delete-button" class="center">Delete</button>
+		<button id="delete-account-button" data-modal-target="#delete-user-modal" class="account-edit dangerous-button" class="center">Delete</button>
 		<div class="modal" id="delete-user-modal">
 			<div class="modal-header">
 				<div class="title">Delete User</div>

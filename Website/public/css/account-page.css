@@ -42,16 +42,9 @@
 }
 
 .account-edit {
-    width: 30%;
+    width: 35%;
     aspect-ratio: 2/1;
-    cursor: pointer;
-    background-color: rgb(146 71 146);
     margin-bottom: 5px;
-}
-
-.account-edit:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
 }
 
 /* ========================= Default Page ========================= */

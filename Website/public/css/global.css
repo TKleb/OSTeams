@@ -318,12 +318,3 @@ h1 {
     font-weight: bold;
     padding: 0 20px;
 }
-
-.delete-button {
-    background-color: rgb(223 19 46);
-    font-weight: bold;
-}
-
-.delete-button:hover {
-    background-color: rgb(241 46 72);
-}
