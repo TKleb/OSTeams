@@ -22,8 +22,9 @@ class AccountController {
 		}
 
 		const currentUserData = await pgConnector.getUserById(id);
-		const isOwnProfile = id == req.session.userId;
-		res.render("account", {
+		const radix = 10;
+		const isOwnProfile = parseInt(id, radix) === req.session.userId;
+		return res.render("account", {
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
