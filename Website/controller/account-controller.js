@@ -41,12 +41,11 @@ class AccountController {
 
 	async edit(req, res) {
 		const currentUser = await pgConnector.getUserByEmail(req.session.email);
-		res.render("account", {
+		res.render("editAccount", {
 			title: "Edit",
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
-			edit: true,
 			user: currentUser,
 			isOwnProfile: true,
 			surnameLength: inputValidationSettings.maxSurnameLength,
@@ -88,7 +87,18 @@ class AccountController {
 
 		await pgConnector.editUserById(options);
 		req.flash("success", "Account details saved successfully");
-		return res.redirect(`/account/${req.session.userId}`);
+		return res.redirect(`/account/edit/${req.session.userId}`);
+	}
+
+	async delete(req, res) {
+		const isGroupRemoved = await pgConnector.removeUser(req.session.userId);
+		if (!isGroupRemoved) {
+			req.flash("error", "Couldn't delete user");
+			return res.redirect("/");
+		}
+		req.flash("success", "Account successfully deleted");
+		req.session.destroy();
+		return res.redirect("/");
 	}
 }
 
