@@ -82,22 +82,9 @@
 }
 
 .group-interaction .grp-btn {
-    font-size: 15px;
     width: 80%;
     height: 2em;
-    cursor: pointer;
-    background-color: rgb(146 71 146);
     margin-bottom: 5px;
-}
-
-.group-interaction .grp-btn:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
-}
-
-.group-interaction .grp-btn:disabled {
-    background-color: #767676;
-    cursor: default;
 }
 
 #create-group-div {
@@ -105,15 +92,7 @@
 }
 
 #create-group-div .grp-btn {
-    font-size: 15px;
     height: 2em;
-    cursor: pointer;
-    background-color: rgb(146 71 146);
-}
-
-#create-group-div .grp-btn:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
 }
 
 .group-info .group-name {

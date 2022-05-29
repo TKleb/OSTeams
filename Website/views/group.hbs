@@ -51,7 +51,7 @@
 				{{#each applicants}}
 					<li>{{user_email}}
 						{{#if_and ../isOwner ../isNotFull}}
-							<button data-modal-target="#application-{{id}}-modal" class="grp-btn view-application">View</button>
+							<button data-modal-target="#application-{{id}}-modal" class="grp-btn ost-button view-application">View</button>
 						{{/if_and}}
 					</li>
 				{{/each}}
@@ -91,11 +91,11 @@
 						</form>
 					</div>
 				</div>
-				<button data-modal-target="#application-modal" class="group-btn apply">Apply</button>
+				<button data-modal-target="#application-modal" class="group-btn apply ost-button">Apply</button>
 			{{else}}
 				{{#if isOwner}}
 					<form id="editGroup-form" method="get" action="/groups/edit/{{group.id}}"></form>
-					<button id="edit-group-btn" form="editGroup-form" class="group-btn">Edit</button>
+					<button id="edit-group-btn" form="editGroup-form" class="group-btn ost-button">Edit</button>
 					<button data-modal-target="#delete-group-modal" id="delete-group-button" class="group-btn">Delete</button>
 					<div class="modal" id="delete-group-modal">
 						<div class="modal-header">

@@ -106,19 +106,12 @@
 .group-interaction-btns .group-btn {
     height: 80%;
     width: 35%;
-    cursor: pointer;
     margin: 0 10px;
-    background-color: rgb(146 71 146);
 }
 
 #delete-group-button {
     margin: auto 0;
     font-weight: bold;
-}
-
-#group-interaction-btns .group-btn:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
 }
 
 .form-buttons-delete {
@@ -187,18 +180,7 @@
     font-size: 15px;
     height: 46px;
     width: 45%;
-    cursor: pointer;
-    background-color: rgb(146 71 146);
     float: left;
-}
-
-.group-edit-interaction-btns .group-btn:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
-}
-
-.group-interaction-btns .group-btn:hover {
-    background-color: rgb(176 86 176);
 }
 
 .back-btn {
