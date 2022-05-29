@@ -3,7 +3,7 @@ import randToken from "rand-token";
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
-import { isValidEmailAddress, emailVerificationRegex } from "../utils/input-validation-util.js";
+import { isValidEmailAddress, inputValidationSettings } from "../utils/input-validation-util.js";
 
 function sendVerificationEmail(verificationToken, email) {
 	const htmlBody = "<p>In order to use OSTeams, "
@@ -40,7 +40,7 @@ class RegisterController {
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
-			emailRegex: emailVerificationRegex,
+			emailRegex: inputValidationSettings.emailVerificationRegex,
 		});
 	}
 

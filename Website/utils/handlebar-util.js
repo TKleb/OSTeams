@@ -4,7 +4,7 @@ const helpers = {
 			return opts.fn(this);
 		else
 			return opts.inverse(this);
-    },
+	},
 	'if_and': function (a, b, opts) {
 		if (a && b)
 			return opts.fn(this);
@@ -16,6 +16,9 @@ const helpers = {
 			return opts.fn(this);
 		else
 			return opts.inverse(this);
+	},
+	'timestampToDate': function(timestamp) {
+		return timestamp.toISOString().split("T")[0];
 	}
 }
 

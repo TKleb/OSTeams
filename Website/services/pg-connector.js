@@ -23,6 +23,10 @@ class PGConnector {
 			});
 	}
 
+	getSubjects() {
+		return this.executeStoredProcedure("get_subjects");
+	}
+
 	getUserById(id) {
 		return this.executeStoredProcedure("get_user_by_id", [id])
 			.then(getFirst);
@@ -72,6 +76,10 @@ class PGConnector {
 	addGroup(options) {
 		return this.executeStoredProcedure("add_group", options)
 			.then(getFirst);
+	}
+
+	editGroupById(options) {
+		return this.executeStoredProcedure("edit_group_by_id", options);
 	}
 
 	removeUserFromGroup(userId, groupId) {
