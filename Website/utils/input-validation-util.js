@@ -1,12 +1,14 @@
 const inputValidationSettings = {
-	emailVerificationRegex: "^[A-z0-9.-]+@ost\\.ch$",
+	emailVerificationRegex: "^[A-z0-9.-]{1,33}@ost\\.ch$",
 	minMemberCount: 2,
 	maxMemberCount: 99,
 	maxGroupNameLenght: 50,
 	maxGroupDescriptionLength: 512,
+	maxPasswordLength: 30,
+	minPasswordLength: 5,
 };
 
-function isValidEmailAddress(email) {
+function isEmailAddressValid(email) {
 	return new RegExp(inputValidationSettings.emailVerificationRegex)
 		.test(email);
 }
@@ -42,6 +44,11 @@ function isGroupNameValid(name) {
 	return name?.length <= inputValidationSettings.maxGroupNameLenght;
 }
 
+function isPasswordValid(password) {
+	return password?.length <= inputValidationSettings.maxPasswordLength
+		&& password?.length >= inputValidationSettings.minPasswordLength;
+}
+
 export {
 	isNumeric,
 	areNumeric,
@@ -49,6 +56,7 @@ export {
 	isMaxMemberCountValid,
 	isGroupDescriptionValid,
 	isGroupNameValid,
-	isValidEmailAddress,
+	isEmailAddressValid,
+	isPasswordValid,
 	inputValidationSettings,
 };
