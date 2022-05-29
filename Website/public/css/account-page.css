@@ -48,26 +48,8 @@
 }
 
 /* ========================= Default Page ========================= */
-.info {
-    margin-bottom: 10px;
+.account-container .content-box {
     width: 70%;
-    border: 2px solid rgb(170 170 170);
-    background-color: #fefefe;
-    border-radius: 5px;
-    box-shadow: 0 0 3px 2px #ccc;
-    padding: 10px;
-}
-
-.info .title {
-    margin-bottom: 5px;
-    margin-top: 2px;
-    font-weight: bold;
-}
-
-.info .info-value {
-    margin-bottom: 5px;
-    margin-top: 2px;
-    word-wrap: break-word;
 }
 
 /* ========================= Edit Page ========================= */

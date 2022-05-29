@@ -1,44 +1,44 @@
 <div class="account-container">
 	{{#if user}}
 		<div class="display-info" id="account-info">
-			<div class="account-name info">
-				<p class="title">Name:</p>
+			<div class="account-name content-box">
+				<h3>Name:</h3>
 				{{#if_eq user.surname ''}}
-					<p class="info-value">No Name Saved</p>
+					<p>No Name Saved</p>
 				{{else}}
-					<p class="info-value">{{user.surname}} {{user.name}}</p>
+					<p>{{user.surname}} {{user.name}}</p>
 				{{/if_eq}}
 			</div>
-			<div class="account-email info">
-				<p class="title">Email:</p>
-				<p class="info-value">{{user.email}}</p>
+			<div class="account-email content-box">
+				<h3>Email:</h3>
+				<p>{{user.email}}</p>
 			</div>
-			<div class="account-fulltime info">
-				<p class="title">Occupation:</p>
+			<div class="account-fulltime content-box">
+				<h3>Occupation:</h3>
 				{{#if user.fulltime}}
-					<p class="info-value">Full Time</p>
+					<p>Full Time</p>
 				{{else}}
 					{{#if_eq user.fulltime null}}
-						<p class="info-value">No Info</p>
+						<p>No Info</p>
 					{{else}}
-						<p class="info-value">Part Time</p>
+						<p>Part Time</p>
 					{{/if_eq}}
 				{{/if}}
 			</div>
-			<div class="account-startyear info">
-				<p class="title">Start Year:</p>
+			<div class="account-startyear content-box">
+				<h3>Start Year:</p>
 				{{#if_eq user.start_year null}}
-					<p class="info-value">Not defined</p>
+					<p>Not defined</p>
 				{{else}}
-					<p class="info-value">{{user.start_year}}</p>
+					<p>{{user.start_year}}</p>
 				{{/if_eq}}
 			</div>
-			<div class="account-info info">
-				<p class="title">Info:</p>
+			<div class="account-info content-box">
+				<h3>Info:</p>
 				{{#if_eq user.custom_info ''}}
-					<p class="info-value">We know nothing about this user.</p>
+					<p>We know nothing about this user.</p>
 				{{else}}
-					<p class="info-value">{{user.custom_info}}</p>
+					<p>{{user.custom_info}}</p>
 				{{/if_eq}}
 			</div>
 		</div>
