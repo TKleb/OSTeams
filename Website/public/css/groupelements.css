@@ -88,19 +88,8 @@
     justify-content: center;
 }
 
-#delete-group-button,
-#confirm-delete-group-button {
-    background-color: rgb(223 19 46);
-    font-weight: bold;
-}
-
 #confirm-delete-group-button {
     margin-left: 10px;
-}
-
-#delete-group-button:hover,
-#confirm-delete-group-button:hover {
-    background-color: rgb(241 46 72);
 }
 
 .group-interaction-btns .group-btn {
@@ -111,7 +100,6 @@
 
 #delete-group-button {
     margin: auto 0;
-    font-weight: bold;
 }
 
 .form-buttons-delete {
@@ -124,21 +112,10 @@
     display: inline-block;
     width: 40%;
     height: 30px;
-    cursor: pointer;
 }
 
 #confirm-delete-group-button {
     margin-left: 10px;
-}
-
-#delete-group-button,
-#confirm-delete-group-button {
-    background-color: rgb(223 19 46);
-}
-
-#delete-group-button:hover,
-#confirm-delete-group-button:hover {
-    background-color: rgb(241 46 72);
 }
 
 /* ========================= Edit Group Page ========================= */

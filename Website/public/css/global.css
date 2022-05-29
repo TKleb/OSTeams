@@ -32,6 +32,7 @@ h1 {
     margin: auto;
 }
 
+/* ======================== GENERAL PURPOSE BUTTONS ======================== */
 .ost-button {
     font-size: 15px;
     cursor: pointer;
@@ -45,6 +46,22 @@ h1 {
 
 .ost-button:hover {
     background-color: rgb(176 86 176);
+}
+
+.dangerous-button {
+    font-size: 15px;
+    cursor: pointer;
+    background-color: rgb(223 19 46);
+    font-weight: bold;
+}
+
+.dangerous-button:disabled {
+    background-color: #767676;
+    cursor: default;
+}
+
+.dangerous-button:hover {
+    background-color: rgb(241 46 72);
 }
 
 /* ========================= NOTIFICATION STYLING ========================= */

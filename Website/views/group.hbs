@@ -32,7 +32,7 @@
 										<div>Are you sure you want to remove <b>{{email}}</b> from your group?</div>
 										<div class="form-buttons-delete">
 											<button id="cancel-kick-member-button" class="delete-modal-button">Cancel</button>
-											<button type="submit" form="kick-member-form" id="confirm-delete-group-button" class="delete-modal-button">Kick Member</button>
+											<button type="submit" form="kick-member-form" id="confirm-delete-group-button" class="delete-modal-button dangerous-button">Kick Member</button>
 										</div>
 										<form id="kick-member-form" method="post" action="/groups/kickOut/{{id}}/{{../group.id}}"></form>
 									</div>
@@ -96,7 +96,7 @@
 				{{#if isOwner}}
 					<form id="editGroup-form" method="get" action="/groups/edit/{{group.id}}"></form>
 					<button id="edit-group-btn" form="editGroup-form" class="group-btn ost-button">Edit</button>
-					<button data-modal-target="#delete-group-modal" id="delete-group-button" class="group-btn">Delete</button>
+					<button data-modal-target="#delete-group-modal" id="delete-group-button" class="group-btn dangerous-button">Delete</button>
 					<div class="modal" id="delete-group-modal">
 						<div class="modal-header">
 							<div class="title">Delete Group</div>
@@ -106,7 +106,7 @@
 							<div>Are you sure you want to delete the group <b>{{title}}</b>?</div>
 							<div class="form-buttons-delete">
 								<button id="cancel-delete-group-button" class="delete-modal-button">Cancel</button>
-								<button type="submit" form="delete-group-form" id="confirm-delete-group-button" class="delete-modal-button">Delete</button>
+								<button type="submit" form="delete-group-form" id="confirm-delete-group-button" class="delete-modal-button dangerous-button">Delete</button>
 							</div>
 							<form id="delete-group-form" method="post" action="/groups/delete/{{group.id}}"></form>
 						</div>
