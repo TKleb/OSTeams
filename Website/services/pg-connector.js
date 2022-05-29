@@ -74,6 +74,10 @@ class PGConnector {
 			.then(getFirst);
 	}
 
+	editGroupById(options) {
+		return this.executeStoredProcedure("edit_group_by_id", options);
+	}
+
 	removeUserFromGroup(userId, groupId) {
 		return this.executeStoredProcedure("do_remove_user_from_group", [userId, groupId]);
 	}
