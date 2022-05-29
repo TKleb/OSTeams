@@ -67,7 +67,8 @@ $user_tests$ BEGIN
     ASSERT 1 = COUNT(*) FROM add_unverified_user('Unverified2', 'User2', 'user1@verified.ch', '545', 'verCode1'),
         'add_unverified_user failed';
 
-    ASSERT is_email_in_use('user1@verified.ch'),
+    -- Unverified users do not reserve email as they can be overwritten
+    ASSERT NOT is_email_in_use('user1@verified.ch'),
         'is_email_in_use failed';
 
     ASSERT (SELECT COUNT(*) FROM unverified_users) = COUNT(*) FROM get_unverified_users(),

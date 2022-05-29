@@ -96,6 +96,12 @@ AS $$
             RAISE EXCEPTION 'Email already in use.';
         END IF;
 
+        -- Delete unverified user (if exists) with same email address.
+        -- Reason: if something goes wrong after an unverified user is added,
+        -- the user should be able to try signing up again.
+        DELETE FROM unverified_users
+            WHERE email = p_email;
+
         RETURN QUERY
         INSERT INTO unverified_users (
             name,
@@ -177,7 +183,7 @@ $$;
 
 GRANT ALL ON FUNCTION do_verify_user TO backend;
 
--- Add function to check if email is in use by a user or an unverified user
+-- Add function to check if email is in use by a user
 CREATE OR REPLACE FUNCTION is_email_in_use(
     p_email VARCHAR
 )
@@ -188,11 +194,6 @@ AS $$
     BEGIN
         RETURN EXISTS(
             SELECT 1 FROM users
-            WHERE email = LOWER(p_email)
-        )
-        OR
-        EXISTS(
-            SELECT 1 FROM unverified_users
             WHERE email = LOWER(p_email)
         );
     END
