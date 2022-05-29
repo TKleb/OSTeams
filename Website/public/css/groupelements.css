@@ -84,14 +84,6 @@
 
 .group-interaction-buttons-area {
     grid-area: interactions;
-    display: flex;
-    justify-content: center;
-}
-
-.group-interaction-buttons-area button {
-    margin: auto;
-    height: 80%;
-    width: 35%;
 }
 
 #confirm-delete-group-button {
@@ -108,10 +100,6 @@
     display: inline-block;
     width: 40%;
     height: 30px;
-}
-
-#confirm-delete-group-button {
-    margin-left: 10px;
 }
 
 /* ========================= Edit Group Page ========================= */
@@ -145,28 +133,23 @@
 
 .group-edit-interaction-btns {
     height: 50px;
-    width: 30%;
-    float: left;
+    width: 100%;
 }
 
 .group-edit-interaction-btns .group-btn {
     font-size: 15px;
     height: 46px;
-    width: 45%;
-    float: left;
+    width: 35%;
 }
 
 .back-btn {
     font-size: 15px;
     height: 46px;
     width: 45%;
-    cursor: pointer;
-    background-color: lightgrey;
     float: left;
     margin-left: 5px;
 }
 
-.back-btn:hover {
-    cursor: pointer;
-    background-color: grey;
+.modal-body #group-application-description {
+    width: 100%;
 }

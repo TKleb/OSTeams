@@ -69,29 +69,12 @@ a:visited {
 }
 
 /* ========================= Registration Page ========================= */
-#register-buttons {
-    display: inline-flex;
+#submission-buttons-div {
+    width: 100%;
 }
 
-#verify-button {
+#submission-buttons-div * {
     height: 40px;
-    margin: 10px 10px 0 0;
-}
-
-#cancel-verification {
-    text-align: center;
-    width: 30%;
-    height: 36px;
+    margin: auto;
     font-size: 15px;
-    margin: 10px;
-    background-color: rgb(125 123 123);
-    border-top: 2px solid #767676;
-    border-right: 2px solid #212121;
-    border-bottom: 2px solid #212121;
-    border-left: 2px solid #767676;
-}
-
-#cancel-verification:hover {
-    cursor: pointer;
-    background-color: rgb(156 154 154);
 }
