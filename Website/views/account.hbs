@@ -42,19 +42,18 @@
 				{{/if_eq}}
 			</div>
 		</div>
-		<div class="profile-picture">
-			{{#if_eq user.profile_picture_path null}}
-				<img src="/images/default-pic.jpg">
-			{{else}}
-				<img src="{{profile_picture_path}}">
-			{{/if_eq}}
-		</div>
-		{{#if isOwnProfile}}
-			<div class="account-interaction">
-				<form method="get" action="/account/edit">
-					<button type="submit" class="account-edit ost-button" id="account-edit-btn" class="center">Edit</button>
-				</form>
+		<div class="account-interaction">
+			<div class="profile-picture">
+				{{#if_eq user.profile_picture_path null}}
+					<img src="/images/default-pic.jpg">
+				{{else}}
+					<img src="{{profile_picture_path}}">
+				{{/if_eq}}
 			</div>
+		{{#if isOwnProfile}}
+			<form method="get" action="/account/edit">
+				<button type="submit" class="account-edit-button ost-button" id="account-edit-btn" class="center">Edit</button>
+			</form>
 		{{/if}}
 	{{else}}
 		<h3>ERROR</h3>

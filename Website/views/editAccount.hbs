@@ -29,23 +29,23 @@
 			</div>
 		</form>
 	</div>
-	<div class="profile-picture">
-		{{#if_eq user.profile_picture_path null}}
-			<img src="/images/default-pic.jpg">
-		{{else}}
-			<img src="{{profile_picture_path}}">
-		{{/if_eq}}
-	</div>
-	<div class="overlay"></div>
 	<div class="account-interaction">
+		<div class="profile-picture">
+			{{#if_eq user.profile_picture_path null}}
+				<img src="/images/default-pic.jpg">
+			{{else}}
+				<img src="{{profile_picture_path}}">
+			{{/if_eq}}
+		</div>
+	<div class="overlay"></div>
 		<form method="post" action="/account/edit">
-			<button type="submit" class="account-edit ost-button" form="account-info-form" formaction="/account/edit" class="center">Save</button>
+			<button type="submit" class="account-edit-button ost-button" form="account-info-form" formaction="/account/edit" class="center">Save</button>
 		</form>
 		<form action="/account/{{user.id}}">
-			<button type="submit" class="account-edit ost-button" class="center">Return</button>
+			<button type="submit" class="account-edit-button ost-button" class="center">Back</button>
 		</form>
 		<br><br><br>
-		<button id="delete-account-button" data-modal-target="#delete-user-modal" class="account-edit dangerous-button" class="center">Delete</button>
+		<button id="delete-account-button" data-modal-target="#delete-user-modal" class="account-edit-button dangerous-button" class="center">Delete</button>
 		<div class="modal" id="delete-user-modal">
 			<div class="modal-header">
 				<div class="title">Delete User</div>
@@ -53,9 +53,9 @@
 			</div>
 			<div class="modal-body">
 				<div>Are you sure you want to delete your Account?</div>
-				<div class="form-buttons-delete">
-					<button id="cancel-delete-account-button" class="delete-modal-button">Cancel</button>
-					<button type="submit" form="delete-account-form" id="confirm-delete-group-button" class="delete-modal-button">Delete</button>
+				<div class="form-buttons-delete evenly-spaced-button-div">
+					<button id="cancel-delete-account-button" class="delete-modal-button cancel-button">Cancel</button>
+					<button type="submit" form="delete-account-form" id="confirm-delete-group-button" class="delete-modal-button dangerous-button">Delete</button>
 				</div>
 				<form id="delete-account-form" method="post" action="/account/delete"></form>
 			</div>
