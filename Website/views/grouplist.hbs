@@ -39,11 +39,14 @@
 			<h3 class="content-title">{{name}}</h3>
 			<p class="group-description">{{description}}</p>
 		</div>
-		<div class="group-members center">
-			<p class="group-owner">{{owner}}</p>
+		<div class="group-members">
+			<p class="group-owner"><i class="material-icons icon">email</i> {{owner}}</p>
 		</div>
-		<div class="group-full center">
-			<p>{{current_member_count}}/{{max_member_count}} Members</p>
+		<div class="group-full">
+			<p><i class="material-icons icon">group</i> {{current_member_count}} / {{max_member_count}}</p>
+		</div>
+		<div class="group-apply-by">
+			<p><i class="material-icons icon">event_note</i> {{convertedDate}}</p>
 		</div>
 	</article>
 {{/each}}

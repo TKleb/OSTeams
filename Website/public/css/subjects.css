@@ -19,18 +19,23 @@
 .group {
     display: grid;
     grid-template-columns: 70% 30%;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 30% 30% 30%;
 
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
     grid-template-areas:
         "info members"
+        "info apply"
         "info full";
     /* stylelint-enable */
 
-    height: 3.5em;
+    height: 9em;
     margin-bottom: 10px;
     cursor: pointer;
+}
+
+.group p {
+    font-size: 18px;
 }
 
 .group:not(.no-hover):hover {
@@ -41,23 +46,22 @@
     grid-area: info;
 }
 
-.group-description {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
 .group-members {
-    display: table-cell;
+    display: flex;
     grid-area: members;
-    text-align: center;
+    justify-content: left;
 }
 
 .group-full {
-    display: table-cell;
     grid-area: full;
-    padding: 5px;
-    text-align: center;
+    display: flex;
+    justify-content: left;
+}
+
+.group-apply-by {
+    grid-area: apply;
+    display: flex;
+    justify-content: left;
 }
 
 .group-interaction {
@@ -109,4 +113,26 @@
 #create-group-div .grp-btn:hover {
     cursor: pointer;
     background-color: rgb(176 86 176);
+}
+
+.group-info .group-name {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.group-info .group-description {
+    margin-top: 0;
+    max-width: 80%;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+           line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.group-details > i {
+    vertical-align: middle;
 }
