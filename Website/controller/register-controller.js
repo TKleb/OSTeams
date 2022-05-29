@@ -12,16 +12,6 @@ function sendVerificationEmail(verificationToken, email) {
 	return mailer.SendMail(email, "Email verification - OSTeams", htmlBody);
 }
 
-function addUnverifiedUserToDB(email, encryptedPassword, verificationToken) {
-	return pgConnector.executeStoredProcedure("add_unverified_user", [
-		"",
-		"",
-		email.toLowerCase(),
-		encryptedPassword,
-		verificationToken,
-	]);
-}
-
 function generateToken() {
 	const tokenLength = 50;
 	const verificationToken = randToken.generate(tokenLength);
@@ -72,7 +62,7 @@ class RegisterController {
 
 		const encryptedPassword = hashPassword(password);
 		const verificationToken = generateToken();
-		await addUnverifiedUserToDB(email, encryptedPassword, verificationToken);
+		await pgConnector.addUnverifiedUser(email, encryptedPassword, verificationToken);
 		const response = await sendVerificationEmail(verificationToken, email);
 		return res.render("login", { hint: response });
 	}
@@ -84,7 +74,7 @@ class RegisterController {
 			return res.send("Invalid token");
 		}
 
-		await pgConnector.executeStoredProcedure("do_verify_user", [verificationToken]);
+		await pgConnector.verifyUser(verificationToken);
 		return res.render("index", { hint: "Email verified successfully" });
 	}
 }
@@ -93,6 +83,5 @@ export default new RegisterController();
 export {
 	hashPassword,
 	generateToken,
-	addUnverifiedUserToDB,
 	sendVerificationEmail,
 };
