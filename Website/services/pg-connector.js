@@ -23,6 +23,16 @@ class PGConnector {
 			});
 	}
 
+	addUnverifiedUser(email, hashedPassword, verificationToken) {
+		return this.executeStoredProcedure("add_unverified_user", [
+			"",
+			"",
+			email.toLowerCase(),
+			hashedPassword,
+			verificationToken,
+		]);
+	}
+
 	getSubjects() {
 		return this.executeStoredProcedure("get_subjects");
 	}
@@ -84,6 +94,11 @@ class PGConnector {
 
 	removeUserFromGroup(userId, groupId) {
 		return this.executeStoredProcedure("do_remove_user_from_group", [userId, groupId]);
+	}
+
+	verifyUser(verificationToken) {
+		return this.executeStoredProcedure("do_verify_user", [verificationToken])
+			.then(getFirst);
 	}
 
 	closeApplication(applicationId, isAccepted) {

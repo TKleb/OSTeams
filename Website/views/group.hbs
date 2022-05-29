@@ -86,7 +86,7 @@
 					</div>
 					<div class="modal-body">
 						<form id="application-form" method="post" action="/groups/applyTo/{{group.id}}">
-							<textarea id="application-text" name="description" maxlength="200" required placeholder="add a brief summary"></textarea>
+							<textarea id="application-text" name="description" maxlength="{{applicationLength}}" required placeholder="add a brief summary"></textarea>
 							<button type="submit" class="submit-btn">Submit</button>
 						</form>
 					</div>

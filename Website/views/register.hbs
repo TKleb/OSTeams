@@ -6,9 +6,9 @@
 			<label for="id-email"></label><input type="text" name="email" id="id-email"
 				placeholder="Enter Email" pattern={{emailRegex}} autocomplete="off">
 			<label for="id-password"></label><input type="password" name="password" id="id-password"
-				placeholder="Enter Password">
+				placeholder="Enter Password" maxlength="{{maxPasswordLength}}" minlength="{{minPasswordLength}}">
 			<label for="id-password"></label><input type="password" name="passwordConfirmation" id="id-passwordConfirmation"
-				placeholder="Confirm Password">
+				placeholder="Confirm Password" maxlength="{{maxPasswordLength}}" minlength="{{minPasswordLength}}">
 		</form>
 		<div id="submission-buttons-div" class="evenly-spaced-button-div">
 			<button id="verify-button" class="ost-button" form="login-form" type="submit">Send Verification Email</button>

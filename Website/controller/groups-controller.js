@@ -10,6 +10,7 @@ import {
 	isGroupDescriptionValid,
 	isGroupNameValid,
 	inputValidationSettings,
+	isApplicationTextValid,
 } from "../utils/input-validation-util.js";
 
 async function sendApplicationEmailToOwner(req, id, res) {
@@ -153,6 +154,7 @@ class GroupsController {
 			isVisitor,
 			applicants,
 			members,
+			applicationLength: inputValidationSettings.maxApplicationTextLength,
 		});
 	}
 
@@ -365,8 +367,8 @@ class GroupsController {
 		const { description } = req.body;
 		const { userId } = req.session;
 
-		if (!isNumeric(groupId) || !description) {
-			req.flash("error", "Invalid paramers");
+		if (!isNumeric(groupId) || !isApplicationTextValid(description)) {
+			req.flash("error", "Invalid parameters");
 			return res.redirect("/");
 		}
 
