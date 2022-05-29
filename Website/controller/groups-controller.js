@@ -111,7 +111,6 @@ class GroupsController {
 		let group = await pgConnector.getGroupById(id);
 		// eslint-disable-next-line prefer-destructuring
 		group = convertAndAddDate([group])[0];
-		console.log(group);
 		if (!group) {
 			req.flash("error", "Invalid GroupId");
 			return res.redirect("/");
