@@ -18,7 +18,7 @@
 				<label for="applyByDate">
 					Apply-By Date:
 				</label>
-				<input name="applyByDate" type="date" value="{{timestampToDate group.apply_by_date}}" required>
+				<input name="applyByDate" type="date" id="edit-group-applydate" value="{{timestampToDate group.apply_by_date}}" required>
 				<div class="overlay"></div>
 			</form>
 			<form id="cancel-group-edit" method="get" action="/groups/{{group.id}}"></form>
@@ -27,6 +27,7 @@
 				<button form="cancel-group-edit" class="back-btn">Cancel</button>
 			</div>
 		</div>
+		<script type="module" src="/js/edit-group-script.js" defer></script>
 	{{else}}
 		<h1>You're not allowed to edit this group.</h1>
 	{{/if}}
