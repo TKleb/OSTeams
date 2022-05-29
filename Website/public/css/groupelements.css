@@ -82,24 +82,20 @@
     margin-right: 10px;
 }
 
-#group-interaction-btns {
+.group-interaction-buttons-area {
     grid-area: interactions;
     display: flex;
     justify-content: center;
 }
 
-#confirm-delete-group-button {
-    margin-left: 10px;
-}
-
-.group-interaction-btns .group-btn {
+.group-interaction-buttons-area button {
+    margin: auto;
     height: 80%;
     width: 35%;
-    margin: 0 10px;
 }
 
-#delete-group-button {
-    margin: auto 0;
+#confirm-delete-group-button {
+    margin-left: 10px;
 }
 
 .form-buttons-delete {
