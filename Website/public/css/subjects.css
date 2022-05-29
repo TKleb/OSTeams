@@ -127,9 +127,11 @@
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
+    /* stylelint-disable */
     display: -webkit-box;
+    /* stylelint-enable */
     -webkit-line-clamp: 2; /* number of lines to show */
-           line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 

@@ -1,4 +1,16 @@
 /* ========================= Group Information ========================= */
+.group-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.apply-by-date {
+    line-height: 52px;
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(146 71 146);
+}
+
 #group-div {
     display: grid;
     height: 100%;
