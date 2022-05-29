@@ -1,7 +1,7 @@
 /* ========================= GENERAL ========================= */
 em {
     font: inherit;
-    font-weight: 700;
+    font-weight: bold;
 }
 
 * {
@@ -17,8 +17,83 @@ body {
     margin: 0;
 }
 
+ul {
+    list-style-type: none;
+    padding: unset;
+    margin: unset;
+}
+
+h1 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
 .center {
     margin: auto;
+}
+
+.evenly-spaced-button-div {
+    display: flex;
+    justify-content: center;
+}
+
+.evenly-spaced-button-div button,
+.evenly-spaced-button-div a {
+    margin: auto;
+    height: 80%;
+    width: 35%;
+}
+
+/* ======================== GENERAL PURPOSE BUTTONS ======================== */
+.ost-button {
+    font-size: 15px;
+    cursor: pointer;
+    background-color: rgb(146 71 146);
+}
+
+.ost-button:disabled {
+    background-color: #767676;
+    cursor: default;
+}
+
+.ost-button:hover {
+    background-color: rgb(176 86 176);
+}
+
+.dangerous-button {
+    font-size: 15px;
+    cursor: pointer;
+    background-color: rgb(223 19 46);
+    font-weight: bold;
+}
+
+.dangerous-button:disabled {
+    background-color: #767676;
+    cursor: default;
+}
+
+.dangerous-button:hover {
+    background-color: rgb(241 46 72);
+}
+
+.cancel-button {
+    font-size: 15px;
+    cursor: pointer;
+    background-color: lightgrey;
+    font-weight: bold;
+    border-top: 2px solid #767676;
+    border-left: 2px solid #767676;
+    border-right: 2px solid #212121;
+    border-bottom: 2px solid #212121;
+}
+
+.cancel-button:disabled {
+    background-color: #767676;
+    cursor: default;
+}
+
+.cancel-button:hover {
+    background-color: grey;
 }
 
 /* ========================= NOTIFICATION STYLING ========================= */
@@ -66,18 +141,10 @@ body {
     display: inline-block;
     padding: 10px;
     margin: 0.2em auto auto;
-}
-
-.control-button:link {
-    text-decoration: none;
-}
-
-.control-button:visited {
     text-decoration: none;
 }
 
 .control-button:hover {
-    text-decoration: none;
     background-color: rgb(184 102 184);
 }
 
@@ -90,7 +157,7 @@ body {
 .top {
     width: 100%;
     z-index: 0;
-    height: 250px;
+    height: 180px;
     background-image: url("../images/background.jpg");
     background-position: center;
     background-repeat: no-repeat;
@@ -98,11 +165,36 @@ body {
 }
 
 #container {
+    display: grid;
+    grid-template-columns: auto;
     position: relative;
     width: 60%;
-    height: 580px;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: 10px;
     margin: 0 auto auto;
+}
+
+.content-box {
+    text-align: justify;
+    padding: 15px;
+    border: 2px solid rgb(170 170 170);
+    background-color: #fefefe;
+    border-radius: 5px;
+    box-shadow: 0 0 3px 2px #ccc;
+    margin: 5px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.content-box h3 {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.content-box p {
+    font-weight: normal;
+    margin: 5px 0;
 }
 
 /* ========================= SEARCHBAR ========================= */
@@ -110,7 +202,7 @@ body {
     width: 100%;
     position: relative;
     display: flex;
-    margin-bottom: 20px;
+    margin: 5px;
 }
 
 #searchbar {
@@ -129,7 +221,6 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    transition: 200ms ease-in-out;
     border: 1px solid black;
     border-radius: 10px;
     width: 500px;
@@ -191,13 +282,10 @@ body {
     margin: 10px;
 }
 
-.modal-body #application-text,
-.modal-body #create-group-description,
-.modal-body #group-application-description {
+.modal-body .textarea {
     resize: none;
     margin-top: 10px;
     font-size: 15px;
-    font-family: Arial, sans-serif;
     width: 100%;
     height: 5em;
     border: 1px solid black;

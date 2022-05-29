@@ -1,6 +1,7 @@
 import mailer from "../services/mailer.js";
 import pgConnector from "../services/pg-connector.js";
 import websiteConfig from "../config/website.config.js";
+import { timestampToDisplayString } from "../utils/date-convert.js";
 import {
 	isNumeric,
 	areNumeric,
@@ -62,6 +63,11 @@ async function attachOwnerAndMemberCount(groups) {
 	);
 }
 
+function attachDeadlineDisplay(group) {
+	group.deadlineDisplay = timestampToDisplayString(group.apply_by_date);
+	return group;
+}
+
 async function getApplicationsToGroupForDisplay(id) {
 	const applications = await pgConnector.getApplicationsToGroup(id);
 	const promises = applications.map((app) => pgConnector.getUserById(app.user_id));
@@ -75,8 +81,9 @@ async function getApplicationsToGroupForDisplay(id) {
 
 class GroupsController {
 	async showGroupsOfUser(req, res) {
-		const groups = await pgConnector.getGroupsOfUserById(req.session.userId);
+		let groups = await pgConnector.getGroupsOfUserById(req.session.userId);
 		await attachOwnerAndMemberCount(groups);
+		groups = groups.map(attachDeadlineDisplay);
 		res.render("grouplist", {
 			title: "Your Groups",
 			hint: req.flash("hint"),
@@ -94,9 +101,9 @@ class GroupsController {
 			return res.send("Invalid subject");
 		}
 
-		const groups = await getGroupsUserCanApplyTo(subject.id, req.session.userId);
+		let groups = await getGroupsUserCanApplyTo(subject.id, req.session.userId);
 		await attachOwnerAndMemberCount(groups);
-
+		groups = groups.map(attachDeadlineDisplay);
 		return res.render("grouplist", {
 			title: "Groups of ".concat(abbreviation),
 			hint: req.flash("hint"),
@@ -119,11 +126,13 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		const group = await pgConnector.getGroupById(groupId);
+		let group = await pgConnector.getGroupById(groupId);
+		// eslint-disable-next-line prefer-destructuring
 		if (!group) {
 			req.flash("error", "Invalid GroupId");
 			return res.redirect("/");
 		}
+		group = attachDeadlineDisplay(group);
 
 		const isOwner = req.session.userId === group.owner_id;
 		const [members, applicants] = await Promise.all([

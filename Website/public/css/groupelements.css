@@ -1,9 +1,21 @@
 /* ========================= Group Information ========================= */
+.group-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.apply-by-date {
+    line-height: 52px;
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(146 71 146);
+}
+
 #group-div {
     display: grid;
     height: 100%;
-    grid-template-columns: 60% 35%;
-    grid-template-rows: 3% 25% 3% 25% 10%;
+    grid-template-columns: 60% 38%;
+    grid-template-rows: 3% 30% 3% 30% 10%;
 
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
@@ -24,30 +36,18 @@
     text-align: justify;
     word-wrap: break-word;
     padding: 10px;
-    border: 2px solid rgb(170 170 170);
-    background-color: #fefefe;
-    border-radius: 5px;
-    box-shadow: 0 0 3px 2px #ccc;
+    min-height: 20em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-#groupmember-list {
+#group-member-list {
     grid-area: group-members;
-    border: 2px solid rgb(170 170 170);
-    background-color: #fefefe;
-    border-radius: 5px;
-    box-shadow: 0 0 3px 2px #ccc;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
-#group-applications {
+#group-application-list {
     grid-area: group-appli;
-    border: 2px solid rgb(170 170 170);
-    background-color: #fefefe;
-    border-radius: 5px;
-    box-shadow: 0 0 3px 2px #ccc;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 
 #additional-group-settings {
@@ -76,45 +76,18 @@
     grid-area: mem-title;
 }
 
-#groupmember-list ul,
-#group-applications ul {
-    list-style-type: none;
-    padding-inline-start: 10px;
-}
-
 .view-application,
 .kick-member {
     float: right;
     margin-right: 10px;
 }
 
-#group-interaction-btns {
+.group-interaction-buttons-area {
     grid-area: interactions;
-    display: flex;
-    justify-content: center;
-}
-
-#delete-group-button,
-#confirm-delete-group-button {
-    background-color: rgb(223 19 46);
-    font-weight: bold;
 }
 
 #confirm-delete-group-button {
     margin-left: 10px;
-}
-
-#delete-group-button:hover,
-#confirm-delete-group-button:hover {
-    background-color: rgb(241 46 72);
-}
-
-.group-interaction-btns .group-btn {
-    height: 80%;
-    width: 35%;
-    cursor: pointer;
-    margin: 0 10px;
-    background-color: rgb(146 71 146);
 }
 
 .form-buttons-delete {
@@ -127,12 +100,11 @@
     display: inline-block;
     width: 40%;
     height: 30px;
-    cursor: pointer;
 }
 
 /* ========================= Edit Group Page ========================= */
 .edit-group-container {
-    width: 65%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -161,39 +133,23 @@
 
 .group-edit-interaction-btns {
     height: 50px;
-    width: 30%;
-    float: left;
+    width: 100%;
 }
 
 .group-edit-interaction-btns .group-btn {
     font-size: 15px;
     height: 46px;
-    width: 45%;
-    cursor: pointer;
-    background-color: rgb(146 71 146);
-    float: left;
-}
-
-.group-edit-interaction-btns .group-btn:hover {
-    cursor: pointer;
-    background-color: rgb(176 86 176);
-}
-
-.group-interaction-btns .group-btn:hover {
-    background-color: rgb(176 86 176);
+    width: 35%;
 }
 
 .back-btn {
     font-size: 15px;
     height: 46px;
     width: 45%;
-    cursor: pointer;
-    background-color: lightgrey;
     float: left;
     margin-left: 5px;
 }
 
-.back-btn:hover {
-    cursor: pointer;
-    background-color: grey;
+.modal-body #group-application-description {
+    width: 100%;
 }

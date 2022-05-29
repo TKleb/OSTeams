@@ -4,4 +4,4 @@ const nameField = document.getElementsByClassName("subject-name");
 const searchBar = document.getElementById("searchbar");
 const elements = document.getElementsByClassName("subject");
 
-searchBar.addEventListener("keyup", searchElements(nameField, searchBar, elements));
+searchBar.addEventListener("keyup", searchElements(searchBar, elements, nameField));

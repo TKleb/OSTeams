@@ -1,11 +1,11 @@
 <h1>{{title}}</h1>
 {{#if showAllGroups}}
 	<div id="create-group-div">
-		<button data-modal-target="#create-group-modal" class="grp-btn create-group">Create Group</button>
+		<button data-modal-target="#create-group-modal" class="grp-btn ost-button create-group">Create Group</button>
 	</div>
 {{/if}}
 	<div class="search">
-		<input id="searchbar" autocomplete="off" type="text" name="search" placeholder="Search For Group Name...">
+		<input id="searchbar" autocomplete="off" type="text" name="search" placeholder="Search For Group Name or Owner Email...">
 	</div>
 {{#if showAllGroups}}
 	<div class="modal" id="create-group-modal">
@@ -34,16 +34,19 @@
 {{/if}}
 <div class="overlay"></div>
 {{#each groups}}
-	<article onclick="location.href='/groups/{{id}}'" class="group">
+	<article onclick="location.href='/groups/{{id}}'" class="content-box group">
 		<div class="group-info">
-			<p class="group-name">{{name}}</p>
-			{{description}}
+			<h3 class="content-title">{{name}}</h3>
+			<p class="group-description">{{description}}</p>
 		</div>
-		<div class="group-members">
-			<p>{{owner}}</p>
+		<div class="group-members group-attributes">
+			<p class="group-owner group-details"><i class="material-icons icon">email</i> {{owner}}</p>
 		</div>
-		<div class="group-full">
-			<p>{{current_member_count}}/{{max_member_count}} Members</p>
+		<div class="group-full group-attributes">
+			<p class="group-details"><i class="material-icons icon">group</i> {{current_member_count}} / {{max_member_count}}</p>
+		</div>
+		<div class="group-apply-by group-attributes">
+			<p class="group-details"><i class="material-icons icon">event_note</i> {{deadlineDisplay}}</p>
 		</div>
 	</article>
 {{/each}}
