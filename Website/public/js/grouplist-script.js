@@ -1,6 +1,6 @@
 import { searchElements } from "./search-script.js";
 
-const nameField = document.getElementsByClassName("group-name");
+const nameField = document.getElementsByClassName("content-title");
 const ownerEmail = document.getElementsByClassName("group-owner");
 const searchBar = document.getElementById("searchbar");
 const elements = document.getElementsByClassName("group");

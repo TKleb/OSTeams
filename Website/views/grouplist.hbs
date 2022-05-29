@@ -34,15 +34,15 @@
 {{/if}}
 <div class="overlay"></div>
 {{#each groups}}
-	<article onclick="location.href='/groups/{{id}}'" class="group">
+	<article onclick="location.href='/groups/{{id}}'" class="content-box group">
 		<div class="group-info">
-			<p class="group-name">{{name}}</p>
-			<p class="group-desc">{{description}}</p>
+			<h3 class="content-title">{{name}}</h3>
+			<p class="group-description">{{description}}</p>
 		</div>
-		<div class="group-members">
+		<div class="group-members center">
 			<p class="group-owner">{{owner}}</p>
 		</div>
-		<div class="group-full">
+		<div class="group-full center">
 			<p>{{current_member_count}}/{{max_member_count}} Members</p>
 		</div>
 	</article>

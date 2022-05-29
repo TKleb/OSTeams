@@ -64,8 +64,8 @@ class PGConnector {
 		return this.executeStoredProcedure("add_group", options);
 	}
 
-	removeUserFromGroup(sessionId, id) {
-		return this.executeStoredProcedure("do_remove_user_from_group", [sessionId, id]);
+	removeUserFromGroup(userId, groupId) {
+		return this.executeStoredProcedure("do_remove_user_from_group", [userId, groupId]);
 	}
 
 	closeApplication(applicationId, isAccepted) {
