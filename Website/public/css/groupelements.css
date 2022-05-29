@@ -82,7 +82,13 @@
     padding-inline-start: 10px;
 }
 
-.group-interaction-btns {
+.view-application,
+.kick-member {
+    float: right;
+    margin-right: 10px;
+}
+
+#group-interaction-btns {
     grid-area: interactions;
     display: flex;
     justify-content: center;
@@ -156,7 +162,7 @@
 .group-edit-interaction-btns {
     height: 50px;
     width: 30%;
-    float: right;
+    float: left;
 }
 
 .group-edit-interaction-btns .group-btn {
@@ -165,7 +171,7 @@
     width: 45%;
     cursor: pointer;
     background-color: rgb(146 71 146);
-    float: right;
+    float: left;
 }
 
 .group-edit-interaction-btns .group-btn:hover {
@@ -184,6 +190,7 @@
     cursor: pointer;
     background-color: lightgrey;
     float: left;
+    margin-left: 5px;
 }
 
 .back-btn:hover {
