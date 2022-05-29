@@ -82,20 +82,22 @@
 				<img src="{{profile_picture_path}}">
 			{{/if_eq}}
 		</div>
-		<div class="account-interaction">
-			{{#if edit}}
-				<form method="post" action="/account/update">
-					<button type="submit" class="account-edit" form="account-info-form" formaction="/account/update" class="center">Save</button>
-				</form>
-				<form action="/account">
-					<button type="submit" class="account-edit" class="center">Return</button>
-				</form>
-			{{else}}
-				<form method="get" action="/account/edit">
-					<button type="submit" class="account-edit" id="account-edit-btn" class="center">Edit</button>
-				</form>
-			{{/if}}
-		</div>
+		{{#if isOwnProfile}}
+			<div class="account-interaction">
+				{{#if edit}}
+					<form method="post" action="/account/update">
+						<button type="submit" class="account-edit" form="account-info-form" formaction="/account/update" class="center">Save</button>
+					</form>
+					<form action="/account">
+						<button type="submit" class="account-edit" class="center">Return</button>
+					</form>
+				{{else}}
+					<form method="get" action="/account/edit">
+						<button type="submit" class="account-edit" id="account-edit-btn" class="center">Edit</button>
+					</form>
+				{{/if}}
+			</div>
+		{{/if}}
 	{{else}}
 		<h3>ERROR</h3>
 	{{/if}}

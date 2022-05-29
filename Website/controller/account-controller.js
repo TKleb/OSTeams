@@ -15,7 +15,23 @@ class AccountController {
 			error: req.flash("error"),
 			success: req.flash("success"),
 			edit: false,
-			user: currentUser
+			user: currentUser,
+			isOwnProfile: true
+		});
+	}
+
+	async showSpecificUserInfo(req, res) {
+		const { id } = req.params;
+		const currentUserData = await pgConnector.getUserById(id);
+		const isOwnProfile = id === req.session.userId;
+		res.render("account", {
+			title: "Account",
+			hint: req.flash("hint"),
+			error: req.flash("error"),
+			success: req.flash("success"),
+			edit: false,
+			user: currentUserData,
+			isOwnProfile
 		});
 	}
 
@@ -27,7 +43,7 @@ class AccountController {
 	async edit(req, res) {
 		const currentUser =  await pgConnector.getUserByEmail(req.session.email);
 		res.render("account", {
-			title: "edit",
+			title: "Edit",
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),

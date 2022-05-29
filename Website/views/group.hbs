@@ -14,7 +14,10 @@
 			{{group.owner}}
 			<ul>
 				{{#each members}}
-					<li>{{email}}
+					<li>
+						<a href="/account/{{id}}">
+							{{email}}
+						</a>
 						{{#if ../isOwner}}
 							{{#if_memberIsNotGroupOwner id ../group}}
 								<button data-modal-target="#kickMember-{{id}}-modal" id="kick-member-button" class="kick-member">X</button>

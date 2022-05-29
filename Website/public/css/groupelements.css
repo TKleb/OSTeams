@@ -40,6 +40,15 @@
     overflow-y: auto;
 }
 
+#groupmember-list a {
+    color: black;
+}
+
+#groupmember-list a:hover {
+    color: black;
+    text-decoration: underline;
+}
+
 #group-applications {
     grid-area: group-appli;
     border: 2px solid rgb(170 170 170);
