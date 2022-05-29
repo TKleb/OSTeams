@@ -28,6 +28,10 @@ h1 {
     margin-bottom: 5px;
 }
 
+a {
+    color: black;
+}
+
 .center {
     margin: auto;
 }
