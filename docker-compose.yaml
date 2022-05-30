@@ -29,6 +29,10 @@ services:
       - DB_PORT=${DB_PORT:-5432}
       - DB_BACKEND_USER=${DB_BACKEND_USER:-backend}
       - DB_BACKEND_PASSWORD=${DB_BACKEND_PASSWORD:-password}
+
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD:-)L%&3Lm>7u;pDN<S}
+      - EMAIL_SERVICE=${EMAIL_SERVICE:-Hotmail}
+      - EMAIL_ADDRESS=${EMAIL_ADDRESS:-osteams@hotmail.com}
     restart: "no"
     extends:
       file: ./Website/docker-compose.web.yaml
