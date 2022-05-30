@@ -1,2 +1,0 @@
-CREATE USER backend WITH PASSWORD 'password';
-GRANT ALL PRIVILEGES ON DATABASE osteams TO admin;
