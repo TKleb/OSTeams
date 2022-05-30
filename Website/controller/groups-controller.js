@@ -86,7 +86,7 @@ class GroupsController {
 		await attachOwnerAndMemberCount(groups);
 		groups = groups.map(attachDeadlineDisplay);
 		res.render("grouplist", {
-			title: "Your Groups",
+			title: "My Groups",
 			hint: req.flash("hint"),
 			error: req.flash("error"),
 			success: req.flash("success"),
