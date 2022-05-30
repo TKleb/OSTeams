@@ -98,10 +98,12 @@
     text-align: justify;
 
     /* Ellipsis after 2 lines */
+    /* stylelint-disable */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     line-clamp: 2;
    -webkit-box-orient: vertical;
+   /* stylelint-enable */
 }
 
 .group-details > i {
