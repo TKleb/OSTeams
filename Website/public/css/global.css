@@ -48,6 +48,7 @@ a {
     font-size: 15px;
     cursor: pointer;
     background-color: rgb(146 71 146);
+    font-weight: bold;
 }
 
 .ost-button:disabled {
