@@ -31,7 +31,7 @@
     row-gap: 10px;
 }
 
-#group-description {
+.group-description-full {
     grid-area: group-desc;
     text-align: justify;
     word-wrap: break-word;
