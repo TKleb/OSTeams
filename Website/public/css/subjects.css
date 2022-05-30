@@ -19,8 +19,9 @@
 /* ========================= GroupList Page ========================= */
 .group {
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 65% 30%;
     grid-template-rows: 30% 30% 30%;
+    column-gap: 5%;
 
     /* Strange interaction with linter and grid template */
     /* stylelint-disable */
@@ -30,7 +31,7 @@
         "info full";
     /* stylelint-enable */
 
-    height: 9em;
+    height: 6em;
     margin-bottom: 10px;
     cursor: pointer;
 }
@@ -89,13 +90,18 @@
 }
 
 .group-info .group-description-short {
-    max-width: 90%;
+    width: 100%;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
     grid-area: group-desc;
     text-align: justify;
+
+    /* Ellipsis after 2 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+   -webkit-box-orient: vertical;
 }
 
 .group-details > i {
