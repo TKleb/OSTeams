@@ -4,7 +4,7 @@
 			<div class="account-name content-box">
 				<h3>Name:</h3>
 				{{#if_eq user.surname ''}}
-					<p>No Name Saved</p>
+					<p>No Info</p>
 				{{else}}
 					<p>{{user.surname}} {{user.name}}</p>
 				{{/if_eq}}
@@ -28,7 +28,7 @@
 			<div class="account-startyear content-box">
 				<h3>Start Year:</p>
 				{{#if_eq user.start_year null}}
-					<p>Not defined</p>
+					<p>No Info</p>
 				{{else}}
 					<p>{{user.start_year}}</p>
 				{{/if_eq}}
@@ -36,7 +36,7 @@
 			<div class="account-info content-box">
 				<h3>Custom Info:</p>
 				{{#if_eq user.custom_info ''}}
-					<p>We know nothing about this user.</p>
+					<p>No Info</p>
 				{{else}}
 					<p>{{user.custom_info}}</p>
 				{{/if_eq}}
