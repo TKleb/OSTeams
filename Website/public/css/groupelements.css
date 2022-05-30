@@ -134,16 +134,13 @@
 }
 
 .group-edit-interaction-btns .group-btn {
-    font-size: 15px;
     height: 46px;
     width: 35%;
 }
 
 .back-btn {
-    font-size: 15px;
     height: 46px;
     width: 45%;
-    float: left;
     margin-left: 5px;
 }
 
