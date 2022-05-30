@@ -9,9 +9,10 @@
     transform: scale(1.02);
 }
 
-.subject-description {
-    flex: 1;
-    display: flex;
+.subject-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     height: 100%;
 }
 

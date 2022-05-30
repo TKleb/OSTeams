@@ -5,14 +5,7 @@
 
 {{#each subjects}}
 		<article class="subject content-box" onclick="location.href='/subjects/{{abbreviation}}'">
-			<div class="subject-description">
-				<a class="link">
-					<h3 class="subject-name">
-						<em class="abbreviation">{{abbreviation}}</em>
-						{{name}}
-					</h3>
-				</a>
-			</div>
+			<h3 class="subject-name">{{abbreviation}} {{name}}</h3>
 		</article>
 {{/each}}
 <script type="module" src="/js/subjects-script.js" defer></script>
