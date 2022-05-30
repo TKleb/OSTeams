@@ -281,7 +281,7 @@ a {
     margin: 10px;
 }
 
-.modal-body .textarea {
+.modal-body textarea {
     resize: none;
     margin-top: 10px;
     font-size: 15px;
