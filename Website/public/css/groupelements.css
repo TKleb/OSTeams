@@ -76,7 +76,10 @@
 .view-application,
 .kick-member {
     float: right;
-    margin-right: 10px;
+    margin: 1px;
+    font-size: 10px;
+    height: unset;
+    width: 50px;
 }
 
 .group-interaction-buttons-area {
@@ -129,19 +132,11 @@
 }
 
 .group-edit-interaction-btns {
-    height: 50px;
     width: 100%;
 }
 
 .group-edit-interaction-btns .group-btn {
-    height: 46px;
     width: 35%;
-}
-
-.back-btn {
-    height: 46px;
-    width: 45%;
-    margin-left: 5px;
 }
 
 .modal-body #group-application-description {

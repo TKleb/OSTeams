@@ -36,15 +36,15 @@ a {
     justify-content: center;
 }
 
-.evenly-spaced-button-div button,
-.evenly-spaced-button-div a {
+.evenly-spaced-button-div > button,
+.evenly-spaced-button-div > a {
     margin: auto;
-    height: 80%;
     width: 35%;
 }
 
 /* ======================== GENERAL PURPOSE BUTTONS ======================== */
 .ost-button {
+    height: 40px;
     font-size: 15px;
     cursor: pointer;
     background-color: rgb(146 71 146);
@@ -60,6 +60,7 @@ a {
 }
 
 .dangerous-button {
+    height: 40px;
     font-size: 15px;
     cursor: pointer;
     background-color: rgb(223 19 46);
@@ -76,6 +77,7 @@ a {
 }
 
 .cancel-button {
+    height: 40px;
     font-size: 15px;
     cursor: pointer;
     background-color: lightgrey;
@@ -254,6 +256,7 @@ a {
     background: none;
     font-size: 1.25rem;
     font-weight: bold;
+    float: right;
 }
 
 .modal-body {

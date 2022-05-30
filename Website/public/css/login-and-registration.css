@@ -26,7 +26,6 @@ input[name="passwordConfirmation"] {
 
 #login-button {
     width: 100%;
-    height: 40px;
     display: block;
     margin: 10px 0 20px;
 }
@@ -71,10 +70,4 @@ a:visited {
 /* ========================= Registration Page ========================= */
 #submission-buttons-div {
     width: 100%;
-}
-
-#submission-buttons-div * {
-    height: 40px;
-    margin: auto;
-    font-size: 15px;
 }
