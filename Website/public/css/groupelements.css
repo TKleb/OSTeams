@@ -35,11 +35,8 @@
     grid-area: group-desc;
     text-align: justify;
     word-wrap: break-word;
-    padding: 10px;
     min-height: 20em;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    overflow-x: hidden;
 }
 
 #group-member-list {
