@@ -33,6 +33,8 @@ services:
       - EMAIL_PASSWORD=${EMAIL_PASSWORD:-)L%&3Lm>7u;pDN<S}
       - EMAIL_SERVICE=${EMAIL_SERVICE:-Hotmail}
       - EMAIL_ADDRESS=${EMAIL_ADDRESS:-osteams@hotmail.com}
+
+      - DOMAIN=${DOMAIN:-localhost}
     restart: "no"
     extends:
       file: ./Website/docker-compose.web.yaml

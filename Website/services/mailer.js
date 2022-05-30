@@ -20,9 +20,7 @@ class Mailer {
 			html,
 		};
 
-		return this.mail.sendMail(mailOptions)
-			.then(() => "Email sent successfully")
-			.catch((err) => "There was an error sending your email: ".concat(err));
+		return this.mail.sendMail(mailOptions);
 	}
 }
 
