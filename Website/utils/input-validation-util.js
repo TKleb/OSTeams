@@ -7,6 +7,9 @@ const inputValidationSettings = {
 	maxPasswordLength: 30,
 	minPasswordLength: 5,
 	maxApplicationTextLength: 200,
+	maxNameLength: 30,
+	maxSurnameLength: 30,
+	maxCustomInfoLength: 512,
 };
 
 function isEmailAddressValid(email) {
@@ -45,6 +48,22 @@ function isGroupNameValid(name) {
 	return name?.length <= inputValidationSettings.maxGroupNameLenght;
 }
 
+function isSurnameValid(surname) {
+	return surname.length <= inputValidationSettings.maxSurnameLength;
+}
+
+function isNameValid(name) {
+	return name.length <= inputValidationSettings.maxNameLength;
+}
+
+function isStartYearValid(year) {
+	return isNumeric(year);
+}
+
+function isCustomInfoValid(info) {
+	return info.length <= inputValidationSettings.maxCustomInfoLength;
+}
+
 function isPasswordValid(password) {
 	return password?.length <= inputValidationSettings.maxPasswordLength
 		&& password?.length >= inputValidationSettings.minPasswordLength;
@@ -64,5 +83,9 @@ export {
 	isEmailAddressValid,
 	isPasswordValid,
 	isApplicationTextValid,
+	isSurnameValid,
+	isNameValid,
+	isStartYearValid,
+	isCustomInfoValid,
 	inputValidationSettings,
 };

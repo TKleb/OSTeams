@@ -1,1 +1,66 @@
-<h1>Edit Account</h1>
+<div class="account-container">
+	<div class="display-info" id="account-info">
+		<form method="post" class="display-info" id="account-info-form">
+			<div class="account-name content-box">
+				<h3>Name:</h3>
+				<input type="text" class="info-input" name="surname" autocomplete="off" maxlength="{{surnameLength}}"
+					{{#if_eq user.surname ''}} placeholder="No Surname"
+					{{else}} value="{{user.surname}}" {{/if_eq}}>
+				<input type="text" class="info-input" name="name" autocomplete="off" maxlength="{{nameLength}}"
+					{{#if_eq user.name ''}} placeholder="No Name"
+					{{else}} value="{{user.name}}" {{/if_eq}}>
+			</div>
+			<div class="account-fulltime content-box">
+				<h3>Occupation:</h3>
+				<input type="radio" id="parttime-radio" name="fulltime" class="info-input"
+					{{#if_eq user.fulltime false}} checked {{/if_eq}} value="false" >
+				<label for="parttime-radio">Part Time</label>
+				<input type="radio" id="fulltime-radio" name="fulltime" class="info-input"
+					{{#if_eq user.fulltime true}} checked {{/if_eq}} value="true">
+				<label for="fulltime-radio">Full Time</label>
+			</div>
+			<div class="account-startyear content-box">
+				<h3>Start Year:</h3>
+				<select data-old="{{user.start_year}}" id="date-dropdown" name="startYear"></select>
+			</div>
+			<div class="account-info content-box">
+				<h3>Custom Info:</h3>
+				<textarea class="info-input" name="info" placeholder="No Custom Info" maxlength="{{customInfoLength}}">{{user.custom_info}}</textarea>
+			</div>
+		</form>
+	</div>
+	<div class="account-interaction">
+		<div class="profile-picture">
+			{{#if_eq user.profile_picture_path null}}
+				<img src="/images/default-pic.jpg">
+			{{else}}
+				<img src="{{profile_picture_path}}">
+			{{/if_eq}}
+		</div>
+	<div class="overlay"></div>
+		<form method="post" action="/account/edit">
+			<button type="submit" class="account-edit-button ost-button" form="account-info-form" formaction="/account/edit" class="center">Save</button>
+		</form>
+		<form action="/account/{{user.id}}">
+			<button type="submit" class="account-edit-button ost-button" class="center">Back</button>
+		</form>
+		<br><br><br>
+		<button id="delete-account-button" data-modal-target="#delete-user-modal" class="account-edit-button dangerous-button" class="center">Delete</button>
+		<div class="modal" id="delete-user-modal">
+			<div class="modal-header">
+				<div class="title">Delete User</div>
+				<button data-close-button class="close-button">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div>Are you sure you want to delete your account?</div>
+				<div class="form-buttons-delete evenly-spaced-button-div">
+					<button id="cancel-delete-account-button" class="delete-modal-button cancel-button">Cancel</button>
+					<button type="submit" form="delete-account-form" id="confirm-delete-group-button" class="delete-modal-button dangerous-button">Delete</button>
+				</div>
+				<form id="delete-account-form" method="post" action="/account/delete"></form>
+			</div>
+			<form id="delete-account-form" method="post" action="/account/delete"></form>
+		</div>
+	</div>
+</div>
+<script type="module" src="/js/account-script.js" defer></script>

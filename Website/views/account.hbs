@@ -1,2 +1,61 @@
-<h1>Account</h1>
-<a href="/">Home</a>
+<div class="account-container">
+	{{#if user}}
+		<div class="display-info" id="account-info">
+			<div class="account-name content-box">
+				<h3>Name:</h3>
+				{{#if_eq user.surname ''}}
+					<p>No Name Saved</p>
+				{{else}}
+					<p>{{user.surname}} {{user.name}}</p>
+				{{/if_eq}}
+			</div>
+			<div class="account-email content-box">
+				<h3>Email:</h3>
+				<p>{{user.email}}</p>
+			</div>
+			<div class="account-fulltime content-box">
+				<h3>Occupation:</h3>
+				{{#if user.fulltime}}
+					<p>Full Time</p>
+				{{else}}
+					{{#if_eq user.fulltime null}}
+						<p>No Info</p>
+					{{else}}
+						<p>Part Time</p>
+					{{/if_eq}}
+				{{/if}}
+			</div>
+			<div class="account-startyear content-box">
+				<h3>Start Year:</p>
+				{{#if_eq user.start_year null}}
+					<p>Not defined</p>
+				{{else}}
+					<p>{{user.start_year}}</p>
+				{{/if_eq}}
+			</div>
+			<div class="account-info content-box">
+				<h3>Custom Info:</p>
+				{{#if_eq user.custom_info ''}}
+					<p>We know nothing about this user.</p>
+				{{else}}
+					<p>{{user.custom_info}}</p>
+				{{/if_eq}}
+			</div>
+		</div>
+		<div class="account-interaction">
+			<div class="profile-picture">
+				{{#if_eq user.profile_picture_path null}}
+					<img src="/images/default-pic.jpg">
+				{{else}}
+					<img src="{{profile_picture_path}}">
+				{{/if_eq}}
+			</div>
+		{{#if isOwnProfile}}
+			<form method="get" action="/account/edit">
+				<button type="submit" class="account-edit-button ost-button" id="account-edit-btn" class="center">Edit</button>
+			</form>
+		{{/if}}
+	{{else}}
+		<h3>ERROR</h3>
+	{{/if}}
+</div>

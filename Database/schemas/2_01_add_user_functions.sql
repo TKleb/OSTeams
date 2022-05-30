@@ -35,12 +35,9 @@ CREATE OR REPLACE FUNCTION edit_user_by_id(
     p_id INT,
     p_name VARCHAR,
     p_surname VARCHAR,
-    p_email VARCHAR,
-    p_password_hash VARCHAR,
     p_custom_info VARCHAR,
     p_fulltime BOOLEAN,
-    p_start_year INT,
-    p_profile_picture_path VARCHAR
+    p_start_year INT
 )
     RETURNS SETOF users
     LANGUAGE plpgsql
@@ -51,12 +48,9 @@ AS $$
         UPDATE users
         SET name = p_name,
             surname = p_surname,
-            email = p_email,
-            password_hash = p_password_hash,
             custom_info = p_custom_info,
             fulltime = p_fulltime,
-            start_year = p_start_year,
-            profile_picture_path = p_profile_picture_path
+            start_year = p_start_year
         WHERE users.id = p_id
         RETURNING *;
     END

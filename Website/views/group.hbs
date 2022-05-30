@@ -12,14 +12,17 @@
 		<div class="members-title">
 			Members
 		</div>
-		<div id="group-description" class="content-box">
+		<div id="group-description-full" class="content-box group-description-full">
 			{{group.description}}
 		</div>
 		<div id="group-member-list" class="content-box">
 			{{group.owner}}
 			<ul>
 				{{#each members}}
-					<li>{{email}}
+					<li>
+						<a href="/account/{{id}}">
+							{{email}}
+						</a>
 						{{#if ../isOwner}}
 							{{#if_memberIsNotGroupOwner id ../group}}
 								<button data-modal-target="#kickMember-{{id}}-modal" id="kick-member-button" class="kick-member">X</button>
@@ -30,9 +33,9 @@
 									</div>
 									<div class="modal-body">
 										<div>Are you sure you want to remove <b>{{email}}</b> from your group?</div>
-										<div class="form-buttons-delete">
+										<div class="form-buttons-delete evenly-spaced-button-div">
 											<button id="cancel-kick-member-button" class="delete-modal-button">Cancel</button>
-											<button type="submit" form="kick-member-form" id="confirm-delete-group-button" class="delete-modal-button dangerous-button">Kick Member</button>
+											<button type="submit" form="kick-member-form" id="confirm-delete-group-button" class="delete-modal-button dangerous-button">Kick out Member</button>
 										</div>
 										<form id="kick-member-form" method="post" action="/groups/kickOut/{{id}}/{{../group.id}}"></form>
 									</div>
@@ -49,7 +52,10 @@
 		<div id="group-application-list" class="content-box">
 			<ul>
 				{{#each applicants}}
-					<li>{{user_email}}
+					<li>
+						<a href="/account/{{user_id}}">
+							{{user_email}}
+						</a>
 						{{#if_and ../isOwner ../isNotFull}}
 							<button data-modal-target="#application-{{id}}-modal" class="grp-btn ost-button view-application">View</button>
 						{{/if_and}}
@@ -104,7 +110,7 @@
 						</div>
 						<div class="modal-body">
 							<div>Are you sure you want to delete the group <b>{{title}}</b>?</div>
-							<div class="form-buttons-delete">
+							<div class="form-buttons-delete evenly-spaced-button-div">
 								<button id="cancel-delete-group-button" class="delete-modal-button">Cancel</button>
 								<button type="submit" form="delete-group-form" id="confirm-delete-group-button" class="delete-modal-button dangerous-button">Delete</button>
 							</div>
