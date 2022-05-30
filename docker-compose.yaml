@@ -75,6 +75,12 @@ services:
       context: ./Cron
       dockerfile: dockerfile
       target: cron
+      args:
+        - DB_ADMIN_USER=${DB_ADMIN_USER:-admin}
+        - DB_ADMIN_PASSWORD=${DB_ADMIN_PASSWORD:-password}
+        - DB_DATABASE=${DB_DATABASE:-osteams}
+        - DB_PORT=${DB_PORT:-5432}
+        - DB_DNS_NAME=${DB_DNS_NAME:-database}
     command: crond -f -l 8
     depends_on:
       - db

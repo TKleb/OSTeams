@@ -1,7 +1,12 @@
 FROM postgres:14-alpine3.15 AS cron
 
+ARG DB_DNS_NAME DB_PORT DB_DATABASE DB_ADMIN_USER DB_ADMIN_PASSWORD
+
 WORKDIR /root/
-RUN apk add busybox-initscripts
-COPY ./cron_tasks_folder/ .
+# Add .pgpass file with valid login data for database
+RUN apk add busybox-initscripts && \
+  touch .pgpass && \
+  echo "$DB_DNS_NAME:$DB_PORT:$DB_DATABASE:$DB_ADMIN_USER:$DB_ADMIN_PASSWORD" > .pgpass
+
 RUN chmod 600 .pgpass
 RUN echo "0 */8 * * * pg_dump -h database -U admin osteams >> /var/opt/\$(date +"%Y-%m-%d-%H-%M-%S").sql" >> /etc/crontabs/root
