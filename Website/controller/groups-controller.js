@@ -83,7 +83,7 @@ class GroupsController {
 		let groups = await pgConnector.getGroupsOfUserById(req.session.userId);
 		await attachOwnerAndMemberCount(groups);
 		groups = groups.map(attachDeadlineDisplay);
-		res.render("grouplist", {
+		return res.render("grouplist", {
 			title: "My Groups",
 			hint: req.flash("hint"),
 			error: req.flash("error"),
@@ -405,4 +405,5 @@ export default new GroupsController();
 export {
 	attachDeadlineDisplay,
 	getApplicationsToGroupForDisplay,
+	userLeaveGroup,
 };

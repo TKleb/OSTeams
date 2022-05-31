@@ -35,4 +35,15 @@ describe("Test subjects page", () => {
 				});
 		});
 	});
+
+	describe("GET /subjects/CN1", () => {
+		it("It should Load the page.", async () => {
+			authenticatedUser
+				.get("/subjects/CN1")
+				.end((err, res) => {
+					assert.equal(res.statusCode, 200);
+					expect("Location", "/subjects/CN1");
+				});
+		});
+	});
 });
