@@ -155,7 +155,7 @@ describe("Test groups page", () => {
 	});
 
 	describe("Apply to Group", () => {
-		it("It should close application", function (done){
+		it("It should apply to group", function (done){
 			const req = {
 				session: authenticatedUser,
 				params: {id: {groupId: 9}},
@@ -172,6 +172,24 @@ describe("Test groups page", () => {
 				done();
 			}};
 			GroupsController.applyToGroup(req, res);
+		});
+	});
+
+	describe("Delete Group", () => {
+		it("It should delete group", function (done){
+			const req = {
+				session: authenticatedUser,
+				params: {id: 11},
+				flash: (status) => {
+					if (status === "success"){
+						done();
+					}
+				},
+			};
+			const res = {redirect: () => {
+				done();
+			}};
+			GroupsController.deleteGroup(req, res);
 		});
 	});
 
