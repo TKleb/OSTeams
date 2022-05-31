@@ -4,7 +4,7 @@ function generateDisplayName() {
 	if (!domain || domain === "localhost") {
 		return "http://localhost:3001";
 	}
-	return "https://" + domain;
+	return "https://".concat(domain);
 }
 
 export default {
