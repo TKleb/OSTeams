@@ -168,42 +168,4 @@ describe("Test account page", () => {
 			AccountController.update(req, res);
 		});
 	});
-
-	// describe("Test delete", () => {
-	// 	it("It should redirect to homepage", (done) => {
-	// 		const req = {
-	// 			session: { userId: 12 },
-	// 			flash: (type, msg) => {
-	// 				assert.equal(type, "success");
-	// 			},
-	// 		};
-
-	// 		const res = {
-	// 			redirect: (url) => {
-	// 				assert.equal(url, "/");
-	// 				done();
-	// 			},
-	// 		};
-
-	// 		AccountController.delete(req, res);
-	// 	});
-
-	// 	it("It should display an error", (done) => {
-	// 		const req = {
-	// 			session: { userId: -1 },
-	// 			flash: (type, msg) => {
-	// 				assert.equal(type, "error");
-	// 			},
-	// 		};
-
-	// 		const res = {
-	// 			redirect: (url) => {
-	// 				assert.equal(url, "/");
-	// 				done();
-	// 			},
-	// 		};
-
-	// 		AccountController.delete(req, res);
-	// 	});
-	// });
 });
