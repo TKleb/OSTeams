@@ -3,6 +3,7 @@ import chaiHttp from "chai-http";
 import server from "../index.js";
 import assert from "assert";
 import request from "supertest";
+import {attachDeadlineDisplay, getApplicationsToGroupForDisplay} from "../controller/groups-controller.js";
 
 chai.should();
 chai.use(chaiHttp);
@@ -14,15 +15,14 @@ const userCredentials = {
 
 var authenticatedUser = request.agent(server);
 
-before( function(done) {
+before( async () => {
 	authenticatedUser
 	.post("/account/login")
 	.type("form")
 	.send(userCredentials)
-	.end(function(err, response) {
+	.end((err, res) => {
 		expect('Location', '/');
-		done();
-	})
+	});
 });
 
 describe("Test groups page", () => {
@@ -31,6 +31,27 @@ describe("Test groups page", () => {
 			const res = await chai.request(server)
 				.get("/groups");
 			assert.equal(res.statusCode, 200);
+		});
+	});
+
+	describe("attachDeadlineDisplay", () => {
+		it("It should attach Deadline to Group", async () => {
+			const group = {
+				id: '123',
+				owner_id: '9999',
+				name: 'Test Group',
+				description: 'Test Group',
+				apply_by_date: '2022-07-11'};
+			const groupWithDeadline = attachDeadlineDisplay(group);
+			assert.equal(groupWithDeadline.deadlineDisplay, '11 July 2022');
+		});
+	});
+
+	describe("getApplicationsToGroupForDisplay", () => {
+		it("It should get all applications for a group", async () => {
+			const application = await getApplicationsToGroupForDisplay(9);
+			const application_id = 2;
+			assert.equal(application_id, application[0].id);
 		});
 	});
 

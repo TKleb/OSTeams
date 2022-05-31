@@ -401,3 +401,7 @@ class GroupsController {
 	}
 }
 export default new GroupsController();
+export {
+	attachDeadlineDisplay,
+	getApplicationsToGroupForDisplay,
+};
