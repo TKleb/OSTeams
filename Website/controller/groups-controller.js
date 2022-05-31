@@ -13,15 +13,13 @@ import {
 	isApplicationTextValid,
 } from "../utils/input-validation-util.js";
 
-async function sendApplicationEmailToOwner(req, id, res) {
-	const htmlBody = `<p>You got a new application from ${req.session.email} for one of your groups.</p>`
+async function sendApplicationEmailToOwner(sourceUser, groupId) {
+	const htmlBody = `<p>You got a new application from ${sourceUser} for one of your groups.</p>`
 		+ "<p> Click on the following link to view all applicants: "
-		+ `<a href="${websiteConfig.hostname}:${websiteConfig.port}/groups/${id}">link</a></p>`;
+		+ `<a href="${websiteConfig.hostnameDisplay}/groups/${groupId}">link</a></p>`;
 
-	const groupOwner = await pgConnector.getOwnerByGroupId(id);
-	const response = await mailer.SendMail(groupOwner.email, "New Application - OSTeams", htmlBody);
-	req.flash("hint", response);
-	return res.redirect("/");
+	const groupOwner = await pgConnector.getOwnerByGroupId(groupId);
+	await mailer.SendMail(groupOwner.email, "New Application - OSTeams", htmlBody);
 }
 
 async function userLeaveGroup(req, groupId, res) {
@@ -397,7 +395,10 @@ class GroupsController {
 			return res.redirect("/");
 		}
 
-		return sendApplicationEmailToOwner(req, groupId, res);
+		await sendApplicationEmailToOwner(req.session.email, groupId);
+
+		req.flash("success", "Application has been registered and the group owner has been notified.");
+		return res.redirect("/groups/");
 	}
 }
 export default new GroupsController();

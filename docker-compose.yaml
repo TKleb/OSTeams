@@ -23,6 +23,18 @@ services:
       context: ./Website
       dockerfile: dockerfile
       target: ${TARGET:-development}
+    environment:
+      - DB_DNS_NAME=${DB_DNS_NAME:-database}
+      - DB_DATABASE=${DB_DATABASE:-osteams}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_BACKEND_USER=${DB_BACKEND_USER:-backend}
+      - DB_BACKEND_PASSWORD=${DB_BACKEND_PASSWORD:-password}
+
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD:-)L%&3Lm>7u;pDN<S}
+      - EMAIL_SERVICE=${EMAIL_SERVICE:-Hotmail}
+      - EMAIL_ADDRESS=${EMAIL_ADDRESS:-osteams@hotmail.com}
+
+      - DOMAIN=${DOMAIN:-localhost}
     restart: "no"
     extends:
       file: ./Website/docker-compose.web.yaml
@@ -45,17 +57,22 @@ services:
       - backend-db
   # Postgres Database
   db:
-    container_name: database
+    container_name: ${DB_DNS_NAME:-database}
     build:
       context: ./Database
       dockerfile: dockerfile
       target: postgres-${TARGET:-development}
+      args:
+        - DB_BACKEND_PASSWORD=${DB_BACKEND_PASSWORD:-password}
+        - DB_BACKEND_USER=${DB_BACKEND_USER:-backend}
+        - DB_PORT=${DB_PORT:-5432}
+        - DB_DATABASE=${DB_DATABASE:-osteams}
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-admin}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
-      POSTGRES_DB: ${POSTGRES_DB:-osteams}
+      POSTGRES_USER: ${DB_ADMIN_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_ADMIN_PASSWORD:-password}
+      POSTGRES_DB: ${DB_DATABASE:-osteams}
     ports:
-      - '${POSTGRES_PORT:-5432}:5432'
+      - '${DB_PORT:-5432}:5432'
     volumes:
       - postgres-db:/var/lib/postgresql/data
     networks:
@@ -69,6 +86,12 @@ services:
       context: ./Cron
       dockerfile: dockerfile
       target: cron
+      args:
+        - DB_ADMIN_USER=${DB_ADMIN_USER:-admin}
+        - DB_ADMIN_PASSWORD=${DB_ADMIN_PASSWORD:-password}
+        - DB_DATABASE=${DB_DATABASE:-osteams}
+        - DB_PORT=${DB_PORT:-5432}
+        - DB_DNS_NAME=${DB_DNS_NAME:-database}
     command: crond -f -l 8
     depends_on:
       - db

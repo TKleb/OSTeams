@@ -1,5 +1,5 @@
 export default {
-	service: "Hotmail",
-	email: "osteams@hotmail.com",
-	password: ")L%&3Lm>7u;pDN<S",
+	service: process.env.EMAIL_SERVICE,
+	email: process.env.EMAIL_ADDRESS,
+	password: process.env.EMAIL_PASSWORD,
 };

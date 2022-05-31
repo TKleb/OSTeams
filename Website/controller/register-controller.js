@@ -7,7 +7,7 @@ import { isEmailAddressValid, isPasswordValid, inputValidationSettings } from ".
 
 function sendVerificationEmail(verificationToken, email) {
 	const htmlBody = "<p>In order to use OSTeams, "
-		+ `click on the following link <a href="${websiteConfig.hostname}:${websiteConfig.port}/account/verifyEmail?token=${verificationToken}">link</a> `
+		+ `click on the following link <a href="${websiteConfig.hostnameDisplay}/account/verifyEmail?token=${verificationToken}">link</a> `
 		+ "to verify your email address</p>";
 	return mailer.SendMail(email, "Email verification - OSTeams", htmlBody);
 }
@@ -63,8 +63,8 @@ class RegisterController {
 		const encryptedPassword = hashPassword(password);
 		const verificationToken = generateToken();
 		await pgConnector.addUnverifiedUser(email, encryptedPassword, verificationToken);
-		const response = await sendVerificationEmail(verificationToken, email);
-		return res.render("login", { hint: response });
+		await sendVerificationEmail(verificationToken, email);
+		return res.render("login", { hint: "Signup successful. Check your inbox and click the included link to verify your email address." });
 	}
 
 	async verifyMail(req, res) {
