@@ -1,7 +1,15 @@
 FROM postgres:14-alpine3.15 AS postgres-production
 
+ARG DB_PORT DB_DATABASE DB_BACKEND_USER DB_BACKEND_PASSWORD
+
 RUN apk update && apk upgrade
-EXPOSE 5432
+EXPOSE $DB_PORT
+
+# Create backend user with password specified via build-args
+RUN touch /docker-entrypoint-initdb.d/0_init.sql && \
+  echo "CREATE USER $DB_BACKEND_USER WITH PASSWORD '$DB_BACKEND_PASSWORD';" >> /docker-entrypoint-initdb.d/0_init.sql && \
+  echo "GRANT ALL PRIVILEGES ON DATABASE $DB_DATABASE TO admin;" >> /docker-entrypoint-initdb.d/0_init.sql
+
 COPY schemas/*.sql /docker-entrypoint-initdb.d/
 COPY production/*.sql /docker-entrypoint-initdb.d/
 
