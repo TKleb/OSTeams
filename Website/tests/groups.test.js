@@ -27,6 +27,28 @@ before( async () => {
 });
 
 describe("Test groups page", () => {
+
+	describe("Close Application", () => {
+		it("It should close the application", function (done){
+			const req = {
+				session: {userId: 14},
+				params: {applicationId: 3, groupId: 10},
+				body: {
+					accept: "true",
+				},
+				flash: (status) => {
+					if (status === "success"){
+						done();
+					}
+				},
+			};
+			const res = {redirect: () => {
+				done();
+			}};
+			GroupsController.closeApplication(req, res);
+		});
+	});
+
 	describe("GET /groups", () => {
 		it("It should Load the page.", async () => {
 			const res = await chai.request(server)
@@ -35,7 +57,7 @@ describe("Test groups page", () => {
 		});
 	});
 
-	describe("attachDeadlineDisplay", () => {
+	describe("attach Deadline Display", () => {
 		it("It should attach Deadline to Group", async () => {
 			const group = {
 				id: '123',

@@ -52,7 +52,6 @@ $add_development_presets$ BEGIN
         'Hi default, i would like to join your team.',
         NOW()
     );
-    PERFORM do_close_application(3, 'true');
     PERFORM add_group(
         'Hansmusters group',
         (SELECT id FROM users ORDER BY id DESC LIMIT 1),
