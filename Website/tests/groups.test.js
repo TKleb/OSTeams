@@ -42,9 +42,9 @@ describe("Test groups page", () => {
 					}
 				},
 			};
-			const res = {redirect: () => {
-				done();
-			}};
+			const res = {
+				redirect: () => {},
+			};
 			GroupsController.closeApplication(req, res);
 		});
 	});
