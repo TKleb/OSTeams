@@ -16,7 +16,7 @@ class AccountController {
 	async showAccountById(req, res) {
 		const { id } = req.params;
 
-		if (!isNumeric) {
+		if (!isNumeric(id)) {
 			req.flash("error", "Invalid input");
 			return res.redirect("/");
 		}

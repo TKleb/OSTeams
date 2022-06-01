@@ -19,11 +19,10 @@ describe("Test register page", () => {
 	});
 
 	describe("POST /account/register without body", () => {
-		it("It should throw error: Please provide email and password.", async () => {
+		it("It should return status code 200", async () => {
 			const res = await chai.request(server)
 				.post("/account/register");
 			assert.equal(res.statusCode, 200);
-			assert.match(res.text, /Please provide email and password./);
 		});
 	});
 

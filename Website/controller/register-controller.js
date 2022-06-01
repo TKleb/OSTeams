@@ -44,7 +44,8 @@ class RegisterController {
 		} = req.body;
 
 		if (!email || !passwordConfirmation || !isPasswordValid(password)) {
-			return res.render("register", { error: "Please provide email and password." });
+			req.flash("error", "Please provide email and password.");
+			return res.redirect("/account/register");
 		}
 
 		if (password !== passwordConfirmation) {

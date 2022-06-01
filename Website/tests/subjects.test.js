@@ -14,26 +14,35 @@ const userCredentials = {
 
 var authenticatedUser = request.agent(server);
 
-before( function(done) {
+before( async () => {
 	authenticatedUser
 	.post("/account/login")
 	.type("form")
 	.send(userCredentials)
-	.end(function(err, response) {
+	.end((err, response) => {
 		expect('Location', '/');
-		done();
 	})
 });
 
 describe("Test subjects page", () => {
-	describe("GET /subjects", function(done) {
-		it("It should load the page", function(done) {
+	describe("GET /subjects", () => {
+		it("It should load the page", async () => {
 			authenticatedUser
 				.get("/subjects")
 				.end((error, res) => {
 					assert.equal(res.statusCode, 200);
 					assert.match(res.text, /Subjects/);
-					done();
+				});
+		});
+	});
+
+	describe("GET /subjects/CN1", () => {
+		it("It should Load the page.", async () => {
+			authenticatedUser
+				.get("/subjects/CN1")
+				.end((err, res) => {
+					assert.equal(res.statusCode, 200);
+					expect("Location", "/subjects/CN1");
 				});
 		});
 	});
